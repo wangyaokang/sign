@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.sign.persistence.UserMapper">
+
+	<resultMap type="com.wyk.sign.model.User" id="resultMap">
+		<id property="id" column="id" javaType="long" />
+		<result property="username" column="username" />
+		<!-- <result property="password" column="password"/> -->
+		<result property="mobile" column="mobile" />
+		<result property="regTime" column="reg_time" />
+		<result property="nickname" column="nickname" />
+		<result property="sex" column="sex" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+	</resultMap>
+
+	<sql id="selectSQL">
+		select * from tb_user
+	</sql>
+
+	<!-- Base Mapper -->
+
+	<select id="get" parameterType="hashmap" resultMap="resultMap">
+		<include refid="selectSQL" />
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+		limit 0,1
+	</select>
+
+	<select id="query" resultMap="resultMap">
+		<include refid="selectSQL" />
+	</select>
+
+	<select id="queryByMap" parameterType="hashmap" resultMap="resultMap">
+		<include refid="selectSQL" />
+		<where>
+			<if test="mobile != null">
+				mobile = #{mobile}
+			</if>
+			<if test="schoolSystem != null">
+				and school_system = #{schoolSystem}
+			</if>
+			<if test="grade != null">
+				and grade = #{grade}
+			</if>
+			<if test="sex != null">
+				and sex = #{sex}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+		order by seq
+	</select>
+
+	<insert id="insert" parameterType="com.wyk.sign.model.User"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_material (username,
+		password, mobile, reg_time, school_type, school_system, grade,
+		nickname, sex, avatar_url, mobile_view, mobile_down, status)
+		values
+		(#{username}, #{password}, #{mobile}, #{regTime}, #{schoolType},
+		#{schoolSystem}, #{grade}, #{nickname}, #{sex}, #{avatarUrl},
+		#{mobileView}, #{mobileDown}, #{status})
+	</insert>
+
+	<update id="update" parameterType="com.wyk.sign.model.User">
+		update tb_material set
+		username=#{username}, mobile=#{mobile}, reg_time=#{regTime},
+		school_type=#{schoolType}, school_system=#{schoolSystem},
+		grade=#{grade}, nickname=#{nickname}, sex=#{sex},
+		avatar_url=#{avatarUrl}, mobile_view=#{mobileView},
+		mobile_down=#{mobileDown}, status=#{status}, modify_time=#{modifyTime}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="com.wyk.sign.model.User">
+		delete from tb_material
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<!-- End of Base Mapper -->
+
+</mapper>

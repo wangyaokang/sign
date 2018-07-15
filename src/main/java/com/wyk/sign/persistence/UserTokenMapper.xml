@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.sign.persistence.UserTokenMapper">
+
+	<resultMap type="com.wyk.sign.model.UserToken" id="resultMap">
+		<id property="id" column="id" javaType="long" />
+		<result property="token" column="token"/>
+		<result property="lastTime" column="last_time"/>
+		<association property="user" javaType="com.wyk.sign.model.User">
+            <id property="id" column="user_id"/>
+            <result property="username" column="user_username"/>
+            <result property="mobile" column="user_mobile"/>
+            <result property="subject" column="user_subject"/>
+            <result property="schoolType" column="user_school_type"/>
+            <result property="schoolSystem" column="user_school_system"/>
+            <result property="grade" column="user_grade"/>
+            <result property="nickname" column="user_nickname"/>
+            <result property="sex" column="user_sex"/>
+            <result property="avatarUrl" column="user_avatar_url"/>
+            <result property="status" column="user_status"/>
+        </association>
+	</resultMap>
+
+	<sql id="selectSQL">
+		select ut.*,
+			u.username as user_username, u.mobile as user_mobile, u.subject as user_subject, u.school_type as user_school_type, u.school_system as user_school_system, u.grade as user_grade, u.nickname as user_nickname, u.sex as user_sex, u.avatar_url as user_avatar_url, u.status as user_status
+		from tb_user_token ut inner join tb_user u on ut.user_id=u.id
+	</sql>
+	
+	<!-- Base Mapper -->
+
+	<select id="get" parameterType="hashmap" resultMap="resultMap">
+		<include refid="selectSQL"/>
+		<where>
+			<if test="id != null">
+				ut.id = #{id}
+			</if>
+		</where>
+		limit 0,1
+	</select>
+	
+	<select id="query" resultMap="resultMap">
+		<include refid="selectSQL"/>
+	</select>
+
+	<select id="queryByMap" parameterType="hashmap" resultMap="resultMap">
+		<include refid="selectSQL" />
+		order by last_time desc
+	</select>
+
+	<insert id="insert" parameterType="com.wyk.sign.model.UserToken" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_user_token (user_id, token, lastTime)
+		values (#{user.id}, #{token}, #{last_time})
+	</insert>
+	
+	<update id="update" parameterType="com.wyk.sign.model.UserToken">
+		update tb_user_token set user_id=#{user.id}, token=#{token}, lastTime=#{last_time}
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="com.wyk.sign.model.UserToken">
+		delete from tb_user_token 
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+	
+	<!-- End of Base Mapper -->
+
+</mapper>

@@ -9,8 +9,5 @@
         <module name="sign" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="sign" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

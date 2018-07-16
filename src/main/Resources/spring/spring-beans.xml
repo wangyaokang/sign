@@ -14,11 +14,18 @@
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- Dialect for JDBC -->
-	<bean id="dialect" class="com.wyk.framework.jdbc.dialect.MySQLDialect" />
+    <!-- Dialect for JDBC -->
+    <bean id="dialect" class="com.wyk.framework.jdbc.dialect.MySQLDialect"/>
 
-	<!-- Cache Manager : 使用本地缓存 -->
-	<bean id="cacheManager" class="com.wyk.framework.cache.impl.LocalCacheManagerImpl" />
+    <!-- Cache Manager : 使用本地缓存 -->
+    <bean id="cacheManager" class="com.wyk.framework.cache.impl.LocalCacheManagerImpl"/>
 
-	
+    <!-- 读取properties文件的FactoryBean -->
+    <bean id="propertiesUtils" class="com.wyk.framework.factory.PropertiesFactoryBean">
+        <property name="properties">
+            <list>
+                <value>config.properties</value>
+            </list>
+        </property>
+    </bean>
 </beans>

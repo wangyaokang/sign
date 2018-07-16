@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.wyk.framework.web;
 
 import java.util.HashMap;

@@ -59,7 +59,7 @@ public final class DateUtils {
 	 * <p>
 	 * 默认格式是 "yyyy-MM-dd"
 	 * 
-	 * @param canlendar
+	 * @param calendar
 	 * @return
 	 */
 	public static String format(Calendar calendar) {
@@ -179,7 +179,7 @@ public final class DateUtils {
 	/**
 	 * 将Object类转换成制定格式的字符串
 	 * 
-	 * @param obj
+	 * @param strDate
 	 * @param format
 	 * @return
 	 */

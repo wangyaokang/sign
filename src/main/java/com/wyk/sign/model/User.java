@@ -1,131 +1,71 @@
-/**
- * 
- */
 package com.wyk.sign.model;
 
-import java.util.Date;
+public class User extends BaseModel{
 
-/**
- * @author Dareen-Leo
- *
- */
-public class User extends BaseModel {
+    /** 用户微信id */
+    private String wxId;
+    /** 用户微信名 */
+    private String wxName;
+    /** 用户微信头像 */
+    private String wxPortraitUrl;
+    /** 用户姓名 */
+    private String realName;
+    /** 用户类别 */
+    private String userType;
+    /** 对应的目标对象 */
+    private Object target;
 
-	private static final long serialVersionUID = 3474323268481100686L;
-	
-	/** 匿名用户 */
-	public static final User Anonymous;
+    public String getWxId() {
+        return wxId;
+    }
 
-	/** 用户名 */
-	private String username;
-	
-	/** 密码 */
-	private String password;
-	
-	/** 手机号 */
-	private String mobile;
-	
-	/** 昵称 */
-	private String nickname;
-	
-	/** 性别 */
-	private Integer sex;
-	
-	/** 注册时间 */
-	private Date regTime;
-	
-	/**
-	 * 匿名用户初始化
-	 */
-	static {
-		Anonymous = new User();
-		Anonymous.setId(0L);
-		Anonymous.setUsername("anonymous");
-		Anonymous.setNickname("匿名用户");
-	}
+    public User setWxId(String wxId) {
+        this.wxId = wxId;
+        return this;
+    }
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
+    public String getWxName() {
+        return wxName;
+    }
 
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public User setWxName(String wxName) {
+        this.wxName = wxName;
+        return this;
+    }
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    public String getWxPortraitUrl() {
+        return wxPortraitUrl;
+    }
 
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public User setWxPortraitUrl(String wxPortraitUrl) {
+        this.wxPortraitUrl = wxPortraitUrl;
+        return this;
+    }
 
-	/**
-	 * @return the mobile
-	 */
-	public String getMobile() {
-		return mobile;
-	}
+    public String getRealName() {
+        return realName;
+    }
 
-	/**
-	 * @param mobile the mobile to set
-	 */
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public User setRealName(String realName) {
+        this.realName = realName;
+        return this;
+    }
 
-	/**
-	 * @return the nickname
-	 */
-	public String getNickname() {
-		return nickname;
-	}
+    public String getUserType() {
+        return userType;
+    }
 
-	/**
-	 * @param nickname the nickname to set
-	 */
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public User setUserType(String userType) {
+        this.userType = userType;
+        return this;
+    }
 
-	/**
-	 * @return the sex
-	 */
-	public Integer getSex() {
-		return sex;
-	}
+    public Object getTarget() {
+        return target;
+    }
 
-	/**
-	 * @param sex the sex to set
-	 */
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
-
-	/**
-	 * @return the regTime
-	 */
-	public Date getRegTime() {
-		return regTime;
-	}
-
-	/**
-	 * @param regTime the regTime to set
-	 */
-	public void setRegTime(Date regTime) {
-		this.regTime = regTime;
-	}
-	
+    public User setTarget(Object target) {
+        this.target = target;
+        return this;
+    }
 }

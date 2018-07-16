@@ -32,7 +32,7 @@ import org.springframework.beans.factory.InitializingBean;
  * <pre>
  * &lt;beans&gt;
  * 	...
- * 	&lt;bean id="demoProperties" class="com.adinnet.framework.factory.PropertiesFactoryBean"&gt;
+ * 	&lt;bean id="demoProperties" class="com.wyk.framework.factory.PropertiesFactoryBean"&gt;
  *		&lt;property name="properties"&gt;
  *			&lt;list&gt;
  *				&lt;value&gt;demo.properties&lt;/value&gt;

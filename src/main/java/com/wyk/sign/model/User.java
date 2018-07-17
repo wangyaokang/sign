@@ -1,19 +1,21 @@
 package com.wyk.sign.model;
 
+/**
+ *
+ * 用户（教师或学生）
+ *
+ */
 public class User extends BaseModel{
-
     /** 用户微信id */
-    private String wxId;
+    protected String wxId;
     /** 用户微信名 */
-    private String wxName;
+    protected String wxName;
     /** 用户微信头像 */
-    private String wxPortraitUrl;
+    protected String wxAvatarUrl;
     /** 用户姓名 */
-    private String realName;
+    protected String realName;
     /** 用户类别 */
-    private String userType;
-    /** 对应的目标对象 */
-    private Object target;
+    protected String userType;
 
     public String getWxId() {
         return wxId;
@@ -33,13 +35,12 @@ public class User extends BaseModel{
         return this;
     }
 
-    public String getWxPortraitUrl() {
-        return wxPortraitUrl;
+    public String getWxAvatarUrl() {
+        return wxAvatarUrl;
     }
 
-    public User setWxPortraitUrl(String wxPortraitUrl) {
-        this.wxPortraitUrl = wxPortraitUrl;
-        return this;
+    public void setWxAvatarUrl(String wxAvatarUrl) {
+        this.wxAvatarUrl = wxAvatarUrl;
     }
 
     public String getRealName() {
@@ -60,12 +61,4 @@ public class User extends BaseModel{
         return this;
     }
 
-    public Object getTarget() {
-        return target;
-    }
-
-    public User setTarget(Object target) {
-        this.target = target;
-        return this;
-    }
 }

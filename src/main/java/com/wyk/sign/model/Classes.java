@@ -2,11 +2,16 @@ package com.wyk.sign.model;
 
 import java.util.List;
 
+/**
+ *
+ * 班级
+ *
+ */
 public class Classes extends BaseModel{
     /** 班级名称 */
     private String classname;
     /** 班级创建者 */
-    private String createUsername;
+    private String creator;
     /** 班级成员 */
     private List<User> userList;
 
@@ -19,13 +24,12 @@ public class Classes extends BaseModel{
         return this;
     }
 
-    public String getCreateUsername() {
-        return createUsername;
+    public String getCreator() {
+        return creator;
     }
 
-    public Classes setCreateUsername(String createUsername) {
-        this.createUsername = createUsername;
-        return this;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public List<User> getUserList() {

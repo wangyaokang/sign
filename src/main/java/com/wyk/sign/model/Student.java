@@ -2,17 +2,20 @@ package com.wyk.sign.model;
 
 import java.util.List;
 
-public class Student {
-    /** 用户微信id */
-    private String wxId;
+/**
+ *
+ * 学生（用户其中一种类型）
+ *
+ */
+public class Student extends User{
     /** 专业 */
     private String professional;
     /** 所属班级名 */
     private String className;
     /** 学号 */
     private String stduentno;
-    /** 我的课程 */
-    private List<Task> courses;
+    /** 我的作业 */
+    private List<Task> tasks;
     /** 我的考勤 */
     private List<Sign> signs;
 
@@ -59,5 +62,13 @@ public class Student {
     public Student setSigns(List<Sign> signs) {
         this.signs = signs;
         return this;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

@@ -23,7 +23,7 @@ public class SignInfo extends BaseModel{
     private Date stopDate;
 
     /** 签到地址 */
-    private String signAddress;
+    private String address;
 
     /** 对应班级 */
     private Classes classes;
@@ -58,12 +58,12 @@ public class SignInfo extends BaseModel{
         this.stopDate = stopDate;
     }
 
-    public String getSignAddress() {
-        return signAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setSignAddress(String signAddress) {
-        this.signAddress = signAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Classes getClasses() {

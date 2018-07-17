@@ -12,6 +12,5 @@ import com.wyk.framework.service.BaseService;
  */
 public interface UserService extends BaseService<User> {
 
-	public User getAnonymous();
 	
 }

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.sign.persistence.SignMapper">
+
+	<resultMap type="com.wyk.sign.model.Sign" id="SignMap">
+		<id property="id" column="id" javaType="long" />
+		<result property="sign_date" column="signDate" />
+		<result property="sign_address" column="signAddress" />
+		<result property="status" column="status" />
+		<association property="stu" javaType="com.wyk.sign.model.Student">
+			<id property="id" column="stu_id"/>
+			<result property="wxId" column="stu_wx_id" />
+			<result property="wxName" column="stu_wx_name" />
+			<result property="wxAvatarUrl" column="stu_wx_avatar_url" />
+			<result property="realName" column="stu_real_name" />
+			<result property="userType" column="stu_user_type" />
+			<result property="sno" column="stu_sno" />
+			<result property="status" column="stu_status" />
+		</association>
+		<association property="info" javaType="com.wyk.sign.model.SignInfo">
+			<result property="startDate" column="info_start_date" />
+			<result property="stopDate" column="info_stop_date" />
+			<result property="address" column="info_address" />
+			<result property="status" column="info_status" />
+		</association>
+	</resultMap>
+
+	<sql id="selectSQL">
+		select s.*,
+			stu.wxName as stu_wx_name,
+			stu.wxAvatarUrl as stu_wx_avatar_url,
+			stu.realName as stu_real_name,
+			stu.userType as stu_user_type,
+			stu.sno	as stu_sno,
+			stu.status as stu_status,
+			info.startDate as info_start_date,
+			info.stopDate as info_stop_date,
+			info.address as info_address,
+			info.status as info_status
+		  from (tb_sign s inner join tb_student stu on  s.stu_id = stu.id) inner join tb_sign info
+		  	on s.signinfo_id = info.id
+	</sql>
+
+	<!-- Base Mapper -->
+	<select id="get" parameterType="hashmap" resultMap="SignMap">
+		<include refid="selectSQL" />
+		<where>
+			<if test="id != null">
+				s.id = #{id}
+			</if>
+		</where>
+		limit 0,1
+	</select>
+
+	<select id="query" resultMap="resultMap">
+		<include refid="selectSQL" />
+	</select>
+
+	<select id="queryByMap" parameterType="hashmap" resultMap="SignMap">
+		<include refid="selectSQL" />
+		<where>
+			<if test="stu.wxName != null">
+				stu_wx_name = #{stu.wxName}
+			</if>
+			<if test="stu.sno != null">
+				and stu_sno = #{stu.sno}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insert" parameterType="com.wyk.sign.model.Sign"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sign (
+		stu_id,
+		class_id,
+		course_id,
+		start_date,
+		stop_date,
+		address,
+		status)
+		values
+		(#{admin.id},
+		#{class.id},
+		#{course.id},
+		#{startDate},
+		#{stopDate},
+		#{address},
+		#{status})
+	</insert>
+
+	<update id="update" parameterType="com.wyk.sign.model.Sign">
+		update tb_sign set
+		stu_id=#{admin.id},
+		class_id=#{class.id},
+		course_id=#{course.id},
+		start_date=#{startDate},
+		stop_date=#{stopDate},
+		address=#{address},
+		status=#{status},
+		modify_time=#{modifyTime}
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="com.wyk.sign.model.Sign">
+		delete from tb_sign
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+	<!-- End of Base Mapper -->
+
+</mapper>

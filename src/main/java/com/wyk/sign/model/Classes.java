@@ -2,38 +2,46 @@ package com.wyk.sign.model;
 
 import java.util.List;
 
+/**
+ * 班级
+ *
+ * @author wyk
+ *
+ */
 public class Classes extends BaseModel{
+
+    private static final long serialVersionUID = -7200916837317882197L;
+
     /** 班级名称 */
-    private String classname;
+    private String name;
+
     /** 班级创建者 */
-    private String createUsername;
+    private Administrator creator;
+
     /** 班级成员 */
-    private List<User> userList;
+    private List<Student> studentList;
 
-    public String getClassname() {
-        return classname;
+    public String getName() {
+        return name;
     }
 
-    public Classes setClassname(String classname) {
-        this.classname = classname;
-        return this;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCreateUsername() {
-        return createUsername;
+    public Administrator getCreator() {
+        return creator;
     }
 
-    public Classes setCreateUsername(String createUsername) {
-        this.createUsername = createUsername;
-        return this;
+    public void setCreator(Administrator creator) {
+        this.creator = creator;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public List<Student> getStudentList() {
+        return studentList;
     }
 
-    public Classes setUserList(List<User> userList) {
-        this.userList = userList;
-        return this;
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
     }
 }

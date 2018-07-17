@@ -11,7 +11,7 @@ import com.wyk.framework.page.PageBounds;
 /**
  * Mapper 基类
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public abstract interface BaseMapper<T> {

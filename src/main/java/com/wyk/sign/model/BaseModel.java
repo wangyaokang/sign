@@ -10,7 +10,7 @@ import com.wyk.framework.entity.AutoIdEntity;
 /**
  * 业务基础实体类
  * 
- * @author Dareen-Leo
+ * @author wyk
  *
  */
 @SuppressWarnings("serial")

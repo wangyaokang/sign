@@ -2,42 +2,49 @@ package com.wyk.sign.model;
 
 import java.util.Date;
 
+/**
+ * 具体签到（对应于学生）
+ *
+ * @author wyk
+ */
 public class Sign extends BaseModel{
-    /** 创建者 */
-    private String creator;
-    /** 签到开始时间 */
-    private Date startDate;
-    /** 签到截止时间 */
-    private Date stopDate;
-    /** 签到地址 */
+
+    private static final long serialVersionUID = 6536810760403103137L;
+
+    /** 签到信息 */
+    private SignInfo signInfo;
+
+    /** 签到学生 */
+    private User student;
+
+    /** 签到时间 */
+    private Date signDate;
+
+    /** 签到地点 */
     private String signAddress;
-    /** 签到对应班级 */
-    private Classes classes;
-    /** 签到对应课程 */
-    private Course course;
 
-    public String getCreator() {
-        return creator;
+    public SignInfo getSignInfo() {
+        return signInfo;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setSignInfo(SignInfo signInfo) {
+        this.signInfo = signInfo;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public User getStudent() {
+        return student;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStudent(User student) {
+        this.student = student;
     }
 
-    public Date getStopDate() {
-        return stopDate;
+    public Date getSignDate() {
+        return signDate;
     }
 
-    public void setStopDate(Date stopDate) {
-        this.stopDate = stopDate;
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
     }
 
     public String getSignAddress() {
@@ -46,21 +53,5 @@ public class Sign extends BaseModel{
 
     public void setSignAddress(String signAddress) {
         this.signAddress = signAddress;
-    }
-
-    public Classes getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Classes classes) {
-        this.classes = classes;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 }

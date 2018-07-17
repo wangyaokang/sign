@@ -44,9 +44,9 @@ import com.wyk.framework.web.WebxController;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ *
  * 基础Controller
- * 
- * @author Dareen-Leo
+ *
  *
  */
 public abstract class AbstractController implements WebxController {
@@ -161,7 +161,7 @@ public abstract class AbstractController implements WebxController {
 	 */
 	protected User getCurrentUser(String token) {
 		// TODO 获得当前用户
-		return User.Anonymous;
+		return null;
 	}
 
 	/**
@@ -186,7 +186,7 @@ public abstract class AbstractController implements WebxController {
 	/**
 	 * 用户
 	 * 
-	 * @param course
+	 * @param user
 	 * @return
 	 */
 	protected Map<String, Object> toMap(User user) {
@@ -196,11 +196,6 @@ public abstract class AbstractController implements WebxController {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("id", user.getId());
-		result.put("username", user.getUsername());
-		result.put("mobile", user.getMobile());
-		result.put("nickname", user.getNickname());
-		result.put("sex", user.getNickname());
-		result.put("regTime", user.getRegTime());
 		result.put("status", user.getStatus());
 		return result;
 	}
@@ -208,7 +203,7 @@ public abstract class AbstractController implements WebxController {
 	/**
 	 * 泛型列表
 	 * 
-	 * @param courses
+	 * @param list
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")

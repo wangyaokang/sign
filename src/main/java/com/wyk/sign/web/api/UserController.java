@@ -63,7 +63,6 @@ public class UserController extends AbstractController {
 		
 		result.setStatus(SUCCESS);
 		result.setMsg("个人信息修改成功");
-		result.setData(User.Anonymous);
 		return result;
 	}
 	

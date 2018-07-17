@@ -3,72 +3,57 @@ package com.wyk.sign.model;
 import java.util.List;
 
 /**
- *
  * 学生（用户其中一种类型）
+ *
+ * <pre> userType = 1</pre>
+ * @author wyk
  *
  */
 public class Student extends User{
-    /** 专业 */
-    private String professional;
-    /** 所属班级名 */
-    private String className;
+
+    private static final long serialVersionUID = 4679329916433276386L;
+
+    /** 所属班级 */
+    private Classes classes;
+
     /** 学号 */
-    private String stduentno;
+    private String sno;
+
     /** 我的作业 */
-    private List<Task> tasks;
-    /** 我的考勤 */
-    private List<Sign> signs;
+    private List<Task> taskList;
 
-    public String getWxId() {
-        return wxId;
+    /** 我的签到 */
+    private List<Sign> signList;
+
+    public Classes getClasses() {
+        return classes;
     }
 
-    public Student setWxId(String wxId) {
-        this.wxId = wxId;
-        return this;
+    public void setClasses(Classes classes) {
+        this.classes = classes;
     }
 
-    public String getProfessional() {
-        return professional;
+    public String getSno() {
+        return sno;
     }
 
-    public Student setProfessional(String professional) {
-        this.professional = professional;
-        return this;
+    public void setSno(String sno) {
+        this.sno = sno;
     }
 
-    public String getClassName() {
-        return className;
+    public List<Task> getTaskList() {
+        return taskList;
     }
 
-    public Student setClassName(String className) {
-        this.className = className;
-        return this;
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
-    public String getStduentno() {
-        return stduentno;
+    public List<Sign> getSignList() {
+        return signList;
     }
 
-    public Student setStduentno(String stduentno) {
-        this.stduentno = stduentno;
-        return this;
-    }
-
-    public List<Sign> getSigns() {
-        return signs;
-    }
-
-    public Student setSigns(List<Sign> signs) {
-        this.signs = signs;
-        return this;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setSignList(List<Sign> signList) {
+        this.signList = signList;
     }
 }

@@ -1,29 +1,33 @@
 package com.wyk.sign.model;
 
-import java.util.List;
-
 /**
  * 课程
+ *
+ * @author wyk
  */
 public class Course extends BaseModel{
+
+    private static final long serialVersionUID = -7522836192412894623L;
+
     /** 课程名 */
-    private String coursename;
-    /** 课程对应班级 */
-    private List<Classes> classesList;
+    private String name;
 
-    public String getCoursename() {
-        return coursename;
+    /** 授课老师 */
+    private Administrator teacher;
+
+    public String getName() {
+        return name;
     }
 
-    public void setCoursename(String coursename) {
-        this.coursename = coursename;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Classes> getClassesList() {
-        return classesList;
+    public Administrator getTeacher() {
+        return teacher;
     }
 
-    public void setClassesList(List<Classes> classesList) {
-        this.classesList = classesList;
+    public void setTeacher(Administrator teacher) {
+        this.teacher = teacher;
     }
 }

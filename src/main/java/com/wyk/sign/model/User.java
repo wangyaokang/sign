@@ -6,33 +6,49 @@ package com.wyk.sign.model;
  *
  */
 public class User extends BaseModel{
+
+    private static final long serialVersionUID = -3387809950289571218L;
+
+    /** 学生 */
+    public static int STU = 1;
+    /** 教师 */
+    public static int TEA = 2;
+    /** 辅导员 */
+    public static int COU = 3;
+
     /** 用户微信id */
     protected String wxId;
+
     /** 用户微信名 */
     protected String wxName;
+
     /** 用户微信头像 */
     protected String wxAvatarUrl;
+
     /** 用户姓名 */
     protected String realName;
-    /** 用户类别 */
-    protected String userType;
+
+    /**
+     * 用户类别
+     * <pre> 1: 学生，2：教师，3：辅导员</pre>
+     *
+     * */
+    protected Integer userType = STU;
 
     public String getWxId() {
         return wxId;
     }
 
-    public User setWxId(String wxId) {
+    public void setWxId(String wxId) {
         this.wxId = wxId;
-        return this;
     }
 
     public String getWxName() {
         return wxName;
     }
 
-    public User setWxName(String wxName) {
+    public void setWxName(String wxName) {
         this.wxName = wxName;
-        return this;
     }
 
     public String getWxAvatarUrl() {
@@ -47,18 +63,15 @@ public class User extends BaseModel{
         return realName;
     }
 
-    public User setRealName(String realName) {
+    public void setRealName(String realName) {
         this.realName = realName;
-        return this;
     }
 
-    public String getUserType() {
+    public Integer getUserType() {
         return userType;
     }
 
-    public User setUserType(String userType) {
+    public void setUserType(Integer userType) {
         this.userType = userType;
-        return this;
     }
-
 }

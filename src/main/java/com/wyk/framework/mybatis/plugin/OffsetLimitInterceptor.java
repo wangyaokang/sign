@@ -38,9 +38,8 @@ import com.wyk.framework.page.PageBounds;
  * 为MyBatis提供基于方言(Dialect)的分页查询的插件
  * <p>将拦截Executor.query()方法实现分页方言的插入.</p>
  * 
- * @author badqiu
- * @author miemiedev
- * @author bocar
+ * @author wyk
+ *
  */
 @Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class OffsetLimitInterceptor implements Interceptor {

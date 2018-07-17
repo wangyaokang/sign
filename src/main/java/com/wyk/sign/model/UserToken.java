@@ -8,7 +8,7 @@ import java.util.Date;
 import com.wyk.framework.entity.AutoIdEntity;
 
 /**
- * @author Dareen-Leo
+ * @author wyk
  *
  */
 public class UserToken extends AutoIdEntity {

@@ -2,125 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8b6224a-4b28-4c44-aff1-7bb684ac1ce3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/sign_war.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/sign_war_exploded.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_2_7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_6_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_6_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_6_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mchange_c3p0_0_9_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mchange_mchange_commons_java_0_2_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_10.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_3_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_38.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_ehcache_ehcache_2_10_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_javax_annotation_10_0_b28.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_3_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_2_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_2_2_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sign.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Administrator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/SignInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/TaskInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/AdministratorMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/AdministratorMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ClassesMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ClassesMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/CourseMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/CourseMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/mybatis/BaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/mybatis/BaseMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/BaseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/BaseModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Classes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Classes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Sign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Sign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/UserToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/UserToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/StudentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/StudentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/cache/CacheManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/cache/impl/EhcacheManagerImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/cache/impl/LocalCacheManagerImpl.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/entity/AutoIdEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wyk/framework/entity/AutoIdEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/factory/PropertiesFactoryBean.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/BaseDao$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/BaseDao$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/BaseDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/dialect/MySQLDialect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/dialect/OracleDialect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/dialect/SQLServer2005Dialect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/nameparam/NamedParameterBaseDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/support/OffsetLimitPreparedStatementCallback.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/jdbc/support/OffsetLimitResultSetExtractor.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/page/Page.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/service/BaseService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/service/impl/BaseServcieImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/util/DateUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/util/FileUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/util/HTTPUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/util/IPUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/util/MD5Util.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/util/RandomUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/web/BaseController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/annotation/Logined.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/exception/LibraryException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/model/BaseModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/model/UserToken.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/persistence/UserMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/persistence/UserTokenMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/service/UserTokenService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/service/impl/UserServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/service/impl/UserTokenServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/util/Constants$Favorite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/util/Constants$Subject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/util/Constants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/util/MockHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/UserTokenController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/api/AbstractController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/api/AppController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/api/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/api/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/api/param/Input.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/library/web/api/param/Output.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/spring/spring-beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring/spring-beans.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
@@ -196,7 +80,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SignInfoMapper.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SignInfoMapper.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="167">
@@ -205,11 +89,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserTokenMapper.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserTokenMapper.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/UserTokenMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1452">
-              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+            <state relative-caret-position="264">
+              <caret line="39" column="16" lean-forward="true" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -546,14 +430,21 @@
       <updated>1531752112903</updated>
       <workItem from="1531752114229" duration="5515000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/wangyaokang/sign&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+      <created>1531821243444</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1531821243444</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28331000" />
+    <option name="totallyTimeSpent" value="28726000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -570,7 +461,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20149253" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20149253" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -578,7 +469,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.24555555" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3422222" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -601,7 +492,8 @@
     <MESSAGE value="删除main.iml" />
     <MESSAGE value="新增用户等类" />
     <MESSAGE value="0717更新。" />
-    <option name="LAST_COMMIT_MESSAGE" value="0717更新。" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/wangyaokang/sign&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/wangyaokang/sign&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1003,13 +895,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/UserTokenMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1452">
-          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/CourseMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -1055,6 +940,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
           <caret line="34" column="19" lean-forward="true" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/UserTokenMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="39" column="16" lean-forward="true" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
         </state>
       </provider>
     </entry>

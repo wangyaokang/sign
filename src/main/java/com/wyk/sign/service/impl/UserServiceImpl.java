@@ -16,12 +16,5 @@ import com.wyk.framework.service.impl.BaseServcieImpl;
 @Service
 public class UserServiceImpl extends BaseServcieImpl<User> implements UserService {
 
-	/* (non-Javadoc)
-	 * @see com.wyk.sign.service.UserService#getAnonymous()
-	 */
-	@Override
-	public User getAnonymous() {
-		return User.Anonymous;
-	}
 
 }

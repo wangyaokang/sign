@@ -21,14 +21,13 @@
 
 	<sql id="selectSQL">
 		select co.*,
-			ad.wx_id as admin_wx_id,
 			ad.wx_name as admin_wx_name,
 			ad.wx_avatar_url as admin_wx_avatar_url,
 			ad.real_name as admin_real_name,
 			ad.user_type as admin_user_type,
 			ad.status as admin_status
 		from tb_course co
-		inner join tb_admin ad on co.admin_id=ad.id and ad.user_type = "2"
+		inner join tb_admin ad on co.admin_id=ad.id and ad.user_type = 2
 	</sql>
 
 	<!-- Base Mapper -->

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.wyk.sign.annotation.Logined;
+import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.exception.SignException;
 import com.wyk.sign.model.User;
 import com.wyk.sign.service.UserService;
@@ -106,7 +106,7 @@ public abstract class AbstractController implements WebxController {
 		try {
 			Method md = this.getClass().getDeclaredMethod(method, Input.class);
 			// 如果有@Logined注解的需要做登录判断
-			Annotation annotation = md.getAnnotation(Logined.class);
+			Annotation annotation = md.getAnnotation(Checked.class);
 			if (annotation != null) {
 				if (StringUtils.isEmpty(input.getToken())) {
 					return new Output(ERROR_UNKNOWN, "当前用户未登录");

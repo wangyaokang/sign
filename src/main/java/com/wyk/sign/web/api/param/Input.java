@@ -19,7 +19,9 @@ import com.wyk.sign.model.User;
 import com.wyk.framework.util.DateUtils;
 
 /**
- * @author Dareen-Leo
+ *
+ *
+ * @author wyk
  *
  */
 public class Input implements Serializable {

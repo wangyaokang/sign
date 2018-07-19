@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wyk.sign.annotation.Logined;
-import com.wyk.sign.model.User;
+import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.service.UserService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
@@ -36,7 +35,7 @@ public class UserController extends AbstractController {
 	 * @param input
 	 * @return
 	 */
-	@Logined
+	@Checked
 	public Output info(Input input) {
 		Output result = new Output();
 		
@@ -57,7 +56,7 @@ public class UserController extends AbstractController {
 	 * @param input
 	 * @return
 	 */
-	@Logined
+	@Checked
 	public Output modify(Input input) {
 		Output result = new Output();
 		
@@ -77,7 +76,7 @@ public class UserController extends AbstractController {
 	 * @param input
 	 * @return
 	 */
-	@Logined
+	@Checked
 	public Output feedback(Input input) {
 		Output result = new Output();
 		

@@ -12,7 +12,7 @@ import org.apache.ibatis.session.RowBounds;
  * PageBounds不提供独立的构造函数，必须包装Paginator使用<br>
  * 使用方法，根据传递过来的Paginator构造：<code>PageBounds.wrap(paginator)</code>
  * 
- * @author bocar
+ * @author wyk
  * 
  */
 public class PageBounds extends RowBounds implements Serializable {

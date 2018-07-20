@@ -20,6 +20,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wyk.sign.annotation.Checked;
+import com.wyk.sign.annotation.Item;
+import com.wyk.sign.util.Constants;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -32,11 +35,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.wyk.sign.annotation.Logined;
 import com.wyk.sign.exception.SignException;
 import com.wyk.sign.model.User;
 import com.wyk.sign.service.UserService;
-import com.wyk.sign.service.UserTokenService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import com.wyk.framework.util.RandomUtils;
@@ -44,10 +45,9 @@ import com.wyk.framework.web.WebxController;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- *
  * 基础Controller
  *
- *
+ * @author wyk
  */
 public abstract class AbstractController implements WebxController {
 
@@ -64,9 +64,6 @@ public abstract class AbstractController implements WebxController {
 
 	@Autowired
 	protected UserService userService;
-
-	@Autowired
-	protected UserTokenService userTokenService;
 
 	/**
 	 * Dispatch
@@ -105,18 +102,37 @@ public abstract class AbstractController implements WebxController {
 		String method = input.getMethod();
 		try {
 			Method md = this.getClass().getDeclaredMethod(method, Input.class);
-			// 如果有@Logined注解的需要做登录判断
-			Annotation annotation = md.getAnnotation(Logined.class);
+			// 如果有@Checked注解的需要做信息检测判断
+			Annotation annotation = md.getAnnotation(Checked.class);
 			if (annotation != null) {
-				if (StringUtils.isEmpty(input.getToken())) {
-					return new Output(ERROR_UNKNOWN, "当前用户未登录");
-				} else {
-					User currentUser = getCurrentUser(input.getToken());
-					if (currentUser == null) {
-						return new Output(ERROR_UNKNOWN, "当前用户未登录");
+				String itemValue = ((Checked) annotation).value().name();
+				User currentUser = input.getCurrentUser() == null ? getCurrentUserByToken(input.getToken()) : input.getCurrentUser();
+				if(Item.TYPE.equals(itemValue)){
+					if(currentUser == null){
+						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
-					input.setCurrentUser(currentUser); // 设置当前用户，便于复用
 				}
+
+				if(Item.STU.equals(itemValue)){
+					if(null == currentUser || null == currentUser.getUserType()){
+						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
+					}
+
+					if(!Constants.STU.equals(currentUser.getUserType())){
+						return new Output(ERROR_UNKNOWN, "用户类型非学生！");
+					}
+				}
+
+				if(Item.ADMIN.equals(itemValue)){
+					if(null == currentUser || null == currentUser.getUserType()){
+						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
+					}
+
+					if(!Constants.ADMIN.equals(currentUser.getUserType())){
+						return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
+					}
+				}
+				input.setCurrentUser(currentUser);
 			}
 			return (Output) md.invoke(this, input);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -159,9 +175,8 @@ public abstract class AbstractController implements WebxController {
 	 * @param token
 	 * @return
 	 */
-	protected User getCurrentUser(String token) {
-		// TODO 获得当前用户
-		return null;
+	protected User getCurrentUserByToken(String token) {
+		return userService.getUserByToken(token);
 	}
 
 	/**
@@ -175,7 +190,7 @@ public abstract class AbstractController implements WebxController {
 			Input input = getInput(request);
 			String token = input.getToken();
 			if (StringUtils.isNotEmpty(token)) {
-				return getCurrentUser(token);
+				return getCurrentUserByToken(token);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -193,7 +208,6 @@ public abstract class AbstractController implements WebxController {
 		if (user == null) {
 			return null;
 		}
-
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("id", user.getId());
 		result.put("status", user.getStatus());

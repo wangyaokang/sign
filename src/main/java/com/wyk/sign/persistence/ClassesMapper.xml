@@ -80,7 +80,7 @@
 	<update id="update" parameterType="com.wyk.sign.model.Classes">
 		update tb_classes set
 		admin_id=#{admin.id},
-		name=#{name},
+		`name`=#{name},
 		status=#{status},
 		modify_time=#{modifyTime}
 		where id = #{id}

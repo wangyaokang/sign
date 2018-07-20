@@ -6,7 +6,7 @@ package com.wyk.framework.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * @author bocar
+ * @author wyk
  *
  */
 public interface WebxController {

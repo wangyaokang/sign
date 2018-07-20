@@ -24,7 +24,7 @@ import com.wyk.framework.page.Paginator;
 import com.wyk.framework.service.BaseService;
 
 /**
- * @author bocar
+ * @author wyk
  *
  */
 public abstract class BaseController<T> implements WebxController {

@@ -15,8 +15,11 @@ public class Classes extends BaseModel{
     /** 班级名称 */
     private String name;
 
-    /** 班级创建者 */
-    private Administrator creator;
+    /** 班级管理者 */
+    private Administrator admin;
+
+    /** 授课老师 */
+    private List<Administrator> teacherList;
 
     /** 班级成员 */
     private List<Student> studentList;
@@ -29,12 +32,20 @@ public class Classes extends BaseModel{
         this.name = name;
     }
 
-    public Administrator getCreator() {
-        return creator;
+    public Administrator getAdmin() {
+        return admin;
     }
 
-    public void setCreator(Administrator creator) {
-        this.creator = creator;
+    public void setAdmin(Administrator admin) {
+        this.admin = admin;
+    }
+
+    public List<Administrator> getTeacherList() {
+        return teacherList;
+    }
+
+    public void setTeacherList(List<Administrator> teacherList) {
+        this.teacherList = teacherList;
     }
 
     public List<Student> getStudentList() {

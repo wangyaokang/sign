@@ -3,35 +3,36 @@
  */
 package com.wyk.sign.service;
 
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Student;
-import com.wyk.sign.model.User;
 import com.wyk.framework.service.BaseService;
+import com.wyk.sign.model.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wyk
  *
  */
-public interface UserService extends BaseService<User> {
+public interface ElectiveService extends BaseService<Elective> {
 
     /**
-     * 匿名登录
-     *
+     * 通过adminId 或 classId 获取课程列表
+     * @param param
      * @return
      */
-    User getAnonymous();
+    List<Course> getCourseList(Map<String, Object> param);
 
     /**
-     * 根据token获取user对象
-     * @param token
+     * 通过courseId 或 adminId 获取班级列表
+     * @param param
      * @return
      */
-    User getUserByToken(String token);
+    List<Classes> getClassesList(Map<String, Object> param);
 
     /**
-     * 保存user
-     * @param user
+     * 通过courseId 或 classId 获取授课老师列表
+     * @param param
+     * @return
      */
-    void saveUser(User user);
-
+    List<Administrator> getTeacherList(Map<String, Object> param);
 }

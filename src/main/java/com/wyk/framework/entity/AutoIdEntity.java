@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * 拥有自增长主键的Entity基础类
  * <p>推荐使用</p>
  *
- *
+ * @author wyk
  */
 public abstract class AutoIdEntity implements Serializable {
 

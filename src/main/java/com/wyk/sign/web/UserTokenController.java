@@ -10,7 +10,7 @@ import com.wyk.sign.model.UserToken;
 import com.wyk.framework.web.BaseController;
 
 /**
- * @author Dareen-Leo
+ * @author wyk
  *
  */
 @Controller

@@ -2,14 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wyk.sign.persistence.SignInfoMapper">
+<mapper namespace="com.wyk.sign.persistence.ElectiveMapper">
 
-	<resultMap type="com.wyk.sign.model.SignInfo" id="signInfoMap">
+	<resultMap type="com.wyk.sign.model.Elective" id="ElectiveMap">
 		<id property="id" column="id" javaType="long" />
-		<result property="startDate" column="start_date" />
-		<result property="stopDate" column="stop_date" />
-		<result property="address" column="address" />
-		<result property="status" column="status" />
 		<association property="admin" javaType="com.wyk.sign.model.Administrator">
 			<id property="id" column="admin_id"/>
 			<result property="wxId" column="admin_wx_id" />
@@ -41,17 +37,30 @@
 			cl.status as class_status,
 			co.name as course_name,
 			co.status as course_status
-		 from ((tb_sign_info s inner join tb_classes cl on s.class_id = cl.id)
+		 from ((tb_classes_course_admin s inner join tb_classes cl on s.class_id = cl.id)
 		 		inner join tb_course co on s.course_id = co.id)
-		 		inner join tb_admin ad as on s.admin_id = ad.id and ad.user_type = 2
+		 		inner join tb_admin ad as on s.admin_id = ad.id
+	</sql>
+
+	<sql id="get">
+
 	</sql>
 
 	<!-- Base Mapper -->
-	<select id="get" parameterType="hashmap" resultMap="signInfoMap">
+	<select id="get" parameterType="hashmap" resultMap="ElectiveMap">
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
 				s.id = #{id}
+			</if>
+			<if test="classId != null">
+				cl.id = #{classId}
+			</if>
+			<if test="courseId != null">
+				co.id = #{courseId}
+			</if>
+			<if test="adminId != null">
+				ad.id = #{adminId}
 			</if>
 		</where>
 		limit 0,1
@@ -61,60 +70,44 @@
 		<include refid="selectSQL" />
 	</select>
 
-	<select id="queryByMap" parameterType="hashmap" resultMap="signInfoMap">
+	<select id="queryByMap" parameterType="hashmap" resultMap="ElectiveMap">
 		<include refid="selectSQL" />
 		<where>
-			<if test="class.name != null">
-				class_name = #{class.name}
+			<if test="classId != null">
+				cl.id = #{classId}
 			</if>
-			<if test="course.name != null">
-				and course_name = #{course.name}
+			<if test="courseId != null">
+				co.id = #{courseId}
 			</if>
-			<if test="admin.wxName != null">
-				and admin_wx_name = #{admin.wxName}
-			</if>
-			<if test="admin.realName != null">
-				and real_name = #{admin.realName}
+			<if test="adminId != null">
+				ad.id = #{adminId}
 			</if>
 		</where>
-		order by seq
 	</select>
 
-	<insert id="insert" parameterType="com.wyk.sign.model.SignInfo"
+	<insert id="insert" parameterType="com.wyk.sign.model.Elective"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into tb_sign_info (
+		insert into tb_classes_course_admin (
 		admin_id,
 		class_id,
-		course_id,
-		start_date,
-		stop_date,
-		address,
-		status)
+		course_id)
 		values
 		(#{admin.id},
 		#{class.id},
-		#{course.id},
-		#{startDate},
-		#{stopDate},
-		#{address},
-		#{status})
+		#{course.id}
+		)
 	</insert>
 
-	<update id="update" parameterType="com.wyk.sign.model.SignInfo">
-		update tb_sign_info set
+	<update id="update" parameterType="com.wyk.sign.model.Elective">
+		update tb_classes_course_admin set
 		admin_id=#{admin.id},
 		class_id=#{class.id},
 		course_id=#{course.id},
-		start_date=#{startDate},
-		stop_date=#{stopDate},
-		address=#{address},
-		status=#{status},
-		modify_time=#{modifyTime}
 		where id = #{id}
 	</update>
 
-	<delete id="delete" parameterType="com.wyk.sign.model.SignInfo">
-		delete from tb_sign_info
+	<delete id="delete" parameterType="com.wyk.sign.model.Elective">
+		delete from tb_classes_course_admin
 		<where>
 			<if test="id != null">
 				id = #{id}

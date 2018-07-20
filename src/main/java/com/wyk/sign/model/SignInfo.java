@@ -13,8 +13,8 @@ public class SignInfo extends BaseModel{
 
     private static final long serialVersionUID = 3447772102234030500L;
 
-    /** 创建者（老师） */
-    private User teacher;
+    /** 管理者 */
+    private Administrator admin;
 
     /** 签到开始时间 */
     private Date startDate;
@@ -34,12 +34,12 @@ public class SignInfo extends BaseModel{
     /** 对应签到情况 */
     private List<Sign> signList;
 
-    public User getTeacher() {
-        return teacher;
+    public Administrator getAdmin() {
+        return admin;
     }
 
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
+    public void setAdmin(Administrator admin) {
+        this.admin = admin;
     }
 
     public Date getStartDate() {

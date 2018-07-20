@@ -14,7 +14,7 @@ import com.wyk.framework.page.Paginator;
  * @author bocar
  *
  */
-public abstract interface BaseService<T> {
+public interface BaseService<T> {
 
 	/**
 	 * 获得实体
@@ -22,7 +22,7 @@ public abstract interface BaseService<T> {
 	 * @param id
 	 * @return
 	 */
-	public T get(Long id);
+	T get(Long id);
 	
 	/**
 	 * 获得实体
@@ -30,28 +30,28 @@ public abstract interface BaseService<T> {
 	 * @param map
 	 * @return
 	 */
-	public T get(Map<String, Object> map);
+	T get(Map<String, Object> map);
 	
 	/**
 	 * 插叙
 	 * 
 	 * @return
 	 */
-	public List<T> query();
+	List<T> query();
 	
 	/**
 	 * 
 	 * @param page
 	 * @return
 	 */
-	public List<T> query(Paginator page);
+	List<T> query(Paginator page);
 	
 	/**
 	 * 
 	 * @param map
 	 * @return
 	 */
-	public List<T> query(Map<String, Object> map);
+	List<T> query(Map<String, Object> map);
 	
 	/**
 	 * 
@@ -59,30 +59,30 @@ public abstract interface BaseService<T> {
 	 * @param page
 	 * @return
 	 */
-	public List<T> query(Map<String, Object> map, Paginator page);
+	List<T> query(Map<String, Object> map, Paginator page);
 	
 	/**
 	 * 
 	 * @param entity
 	 */
-	public void insert(T entity);
+	void insert(T entity);
 	
 	/**
 	 * 
 	 * @param entity
 	 */
-	public void update(T entity);
+	void update(T entity);
 	
 	/**
 	 * Only For AutoIdEntity
 	 * 
 	 * @param entity
 	 */
-	public void save(T entity);
+	void save(T entity);
 	
 	/**
 	 * 
 	 * @param entity
 	 */
-	public void delete(T entity);
+	void delete(T entity);
 }

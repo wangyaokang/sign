@@ -19,14 +19,16 @@ import com.wyk.sign.model.User;
 import com.wyk.framework.util.DateUtils;
 
 /**
- * @author Dareen-Leo
+ * 输入参数封装类
+ *
+ * @author wyk
  *
  */
 public class Input implements Serializable {
 
 	private static final long serialVersionUID = -10090147927893672L;
 
-	/** TOKEN */
+	/** TOKEN （用微信ID作为token） */
 	private String token;
 	
 	private String method;
@@ -36,7 +38,7 @@ public class Input implements Serializable {
 
 	/** 当前用户 */
 	private User currentUser;
-	
+
 	/**
 	 * 
 	 * @return
@@ -180,7 +182,7 @@ public class Input implements Serializable {
 		}
 		return bean;
 	}
-	
+
 	/**
 	 * @return the token
 	 */

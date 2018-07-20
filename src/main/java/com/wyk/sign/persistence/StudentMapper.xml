@@ -32,6 +32,9 @@
 			<if test="id != null">
 				id = #{id}
 			</if>
+			<if test="wxId != null">
+				and wx_id = #{wxId}
+			</if>
 		</where>
 		limit 0,1
 	</select>
@@ -51,6 +54,9 @@
 			</if>
 			<if test="realName != null">
 				and real_name = #{realName}
+			</if>
+			<if test="classId != null">
+				and class_id = #{classId}
 			</if>
 		</where>
 		order by seq

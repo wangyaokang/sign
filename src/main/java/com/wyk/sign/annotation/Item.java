@@ -2,8 +2,16 @@ package com.wyk.sign.annotation;
 
 /**
  * 数据检测
+ *
+ * <pre>
+ *     用户类型：TYPE,
+ *     学生：STU,
+ *     管理者：ADMIN
+ * </pre>
+ *
+ * @author wyk
  */
-public enum CheckItem {
+public enum Item {
 
     /**
      * 用户类型

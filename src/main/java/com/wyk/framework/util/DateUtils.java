@@ -22,7 +22,7 @@ import java.util.Date;
  * <p>
  * 提供了对{@link Date}和{@link Calendar}的操作。
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public final class DateUtils {

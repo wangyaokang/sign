@@ -3,7 +3,6 @@
  */
 package com.wyk.sign.web.api;
 
-import com.sun.javaws.security.SigningInfo;
 import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
@@ -22,15 +21,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 签到信息相关接口
+ * 作业信息相关接口
  *
- * <pre>由管理者创建</pre>
+ * <pre>由教师创建</pre>
  *
  * @author wyk
  */
-@Controller("apiSignInfo")
-@RequestMapping("/api/signInfo")
-public class SignInfoController extends AbstractController {
+@Controller("apiTaskInfo")
+@RequestMapping("/api/taskInfo")
+public class TaskInfoController extends AbstractController {
 
     @Autowired
     SignInfoService signInfoService;

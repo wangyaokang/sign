@@ -6,7 +6,9 @@ package com.wyk.sign.web.api;
 import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
-import com.wyk.sign.model.*;
+import com.wyk.sign.model.Sign;
+import com.wyk.sign.model.SignInfo;
+import com.wyk.sign.model.User;
 import com.wyk.sign.service.SignInfoService;
 import com.wyk.sign.service.SignService;
 import com.wyk.sign.web.api.param.Input;
@@ -17,15 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 签到相关接口
+ * 作业相关接口
  *
  * <pre>由学生创建</pre>
  *
  * @author wyk
  */
-@Controller("apiSign")
-@RequestMapping("/api/sign")
-public class SignController extends AbstractController {
+@Controller("apiTask")
+@RequestMapping("/api/task")
+public class TaskController extends AbstractController {
 
     @Autowired
     SignInfoService signInfoService;
@@ -34,7 +36,7 @@ public class SignController extends AbstractController {
     SignService signService;
 
     /**
-     * 创建签到
+     * 创建任务
      * <p>
      * 传入参数
      * </p>

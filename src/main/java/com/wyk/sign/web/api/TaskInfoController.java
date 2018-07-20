@@ -3,22 +3,16 @@
  */
 package com.wyk.sign.web.api;
 
-import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
-import com.wyk.sign.model.*;
-import com.wyk.sign.service.SignInfoService;
-import com.wyk.sign.service.SignService;
+import com.wyk.sign.service.TaskInfoService;
+import com.wyk.sign.service.TaskService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 作业信息相关接口
@@ -32,13 +26,13 @@ import java.util.Map;
 public class TaskInfoController extends AbstractController {
 
     @Autowired
-    SignInfoService signInfoService;
+    TaskInfoService taskInfoService;
 
     @Autowired
-    SignService signService;
+    TaskService signService;
 
     /**
-     * 获取签到信息
+     * 获取任务信息
      * <p>
      * 传入参数
      * </p>
@@ -53,22 +47,14 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.TYPE)
     public Output info(Input input) {
         Output result = new Output();
-        SignInfo signInfo = signInfoService.get(input.getLong("id"));
-        if(null == signInfo){
-            return new Output(ERROR_NO_RECORD, "没有获取对应的签到信息！");
-        }
-        Map<String, Object> param = new HashMap<>();
-        param.put("adminId", signInfo.getId());
-        List<Sign> signs = signService.query(param);
-        signInfo.setSignList(signs);
-        result.setData(signInfo);
+
         result.setMsg("获取签到成功！");
         result.setStatus(SUCCESS);
         return result;
     }
 
     /**
-     * 创建签到
+     * 创建任务
      * <p>
      * 传入参数
      * </p>
@@ -84,30 +70,13 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output insert(Input input) {
         Output result = new Output();
-        Administrator admin = (Administrator) input.getCurrentUser();
-        SignInfo signInfo = new SignInfo();
-        signInfo.setAdmin(admin);
-        signInfo.setAddress(input.getString("address"));
-        if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_MIN_FORMAT));
-        }
-        if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_MIN_FORMAT));
-        }
-        Classes classes = new Classes();
-        classes.setId(input.getLong("classId"));
-        signInfo.setClasses(classes);
-        Course course = new Course();
-        course.setId(input.getLong("courseId"));
-        signInfo.setCourse(course);
-        signInfoService.insert(signInfo);
         result.setMsg("创建签到成功！");
         result.setStatus(SUCCESS);
         return result;
     }
 
     /**
-     * 修改签到信息
+     * 修改任务信息
      * <p>传入参数：</p>
      * <pre>
      *      method:modify
@@ -121,36 +90,18 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-        SignInfo signInfo = signInfoService.get(input.getLong("id"));
-        if(null == signInfo){
-            return new Output(ERROR_NO_RECORD, "未获取到对应的签到信息！");
-        }
-        signInfo.setAddress(input.getString("address"));
-        if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_MIN_FORMAT));
-        }
-        if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_MIN_FORMAT));
-        }
-        Classes classes = new Classes();
-        classes.setId(input.getLong("classId"));
-        signInfo.setClasses(classes);
-        Course course = new Course();
-        course.setId(input.getLong("courseId"));
-        signInfo.setCourse(course);
-        signInfoService.update(signInfo);
+
         result.setStatus(SUCCESS);
         result.setMsg("修改签到信息成功！");
-        result.setData(classes);
         return result;
     }
 
     /**
-     * 获取我的签到
+     * 获取我的任务信息
      *
      * <p>传入参数</p>
      * <pre>
-     *     method: getMySignInfoList
+     *     method: getMyTaskInfoList
      *     token: wxId
      * </pre>
      *
@@ -158,15 +109,10 @@ public class TaskInfoController extends AbstractController {
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output getMySignInfoList(Input input){
+    public Output getMyTaskInfoList(Input input){
         Output result = new Output();
-        User admin = input.getCurrentUser();
-        Map<String, Object> param = new HashMap<>();
-        param.put("adminId", admin.getId());
-        List<SignInfo> signingInfoList = signInfoService.query(param);
         result.setStatus(SUCCESS);
         result.setMsg("获取签到信息成功！");
-        result.setData(signingInfoList);
         return result;
     }
 
@@ -186,10 +132,6 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input){
         Output result = new Output();
-        SignInfo signingInfo = signInfoService.get(input.getLong("id"));
-        // 删除签到信息下，所有的签到
-        signService.deleteByInfoId(input.getInteger("infoId"));
-        signInfoService.delete(signingInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除签到信息成功！");
         return result;

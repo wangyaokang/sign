@@ -3,8 +3,7 @@
  */
 package com.wyk.sign.service;
 
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Student;
+import com.wyk.sign.model.Classes;
 import com.wyk.sign.model.User;
 import com.wyk.framework.service.BaseService;
 
@@ -12,7 +11,7 @@ import com.wyk.framework.service.BaseService;
  * @author wyk
  *
  */
-public interface UserService extends BaseService<User> {
+public interface ClassesService extends BaseService<Classes> {
 
     /**
      * 匿名登录

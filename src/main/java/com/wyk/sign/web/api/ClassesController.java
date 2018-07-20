@@ -7,8 +7,6 @@ import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.Administrator;
 import com.wyk.sign.model.Student;
-import com.wyk.sign.model.User;
-import com.wyk.sign.model.UserToken;
 import com.wyk.sign.service.ClassesService;
 import com.wyk.sign.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ import com.wyk.sign.web.api.param.Output;
  */
 @Controller("apiUser")
 @RequestMapping("/api/user")
-public class UserController extends AbstractController {
+public class ClassesController extends AbstractController {
 
     @Autowired
     UserService userService;

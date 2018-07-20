@@ -36,7 +36,6 @@ import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.exception.SignException;
 import com.wyk.sign.model.User;
 import com.wyk.sign.service.UserService;
-import com.wyk.sign.service.UserTokenService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import com.wyk.framework.util.RandomUtils;
@@ -64,9 +63,6 @@ public abstract class AbstractController implements WebxController {
 
 	@Autowired
 	protected UserService userService;
-
-	@Autowired
-	protected UserTokenService userTokenService;
 
 	/**
 	 * Dispatch

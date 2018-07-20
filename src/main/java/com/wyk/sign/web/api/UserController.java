@@ -135,13 +135,13 @@ public class UserController extends AbstractController {
         User user = input.getCurrentUser();
         Map<String, Object> param = new HashMap<>();
         param.put("adminId", user.getId());
-        List<Elective> electiveList = electiveService.query(param);
-        if(classes == null){
-            return new Output(ERROR_NO_RECORD, "没有对应管理的班级！");
+        List<Classes> classesList = electiveService.getClassesList(param);
+        if(classesList.size() == 0){
+            return new Output(ERROR_NO_RECORD, "没有对应的授课班级！");
         }
         result.setStatus(SUCCESS);
-        result.setMsg("获得班级成功！");
-        result.setData(classes);
+        result.setMsg("获得授课班级成功！");
+        result.setData(classesList);
         return result;
     }
 }

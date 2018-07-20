@@ -3,8 +3,6 @@
  */
 package com.wyk.sign.service.impl;
 
-import com.wyk.framework.mybatis.BaseMapper;
-import com.wyk.sign.model.Administrator;
 import com.wyk.sign.persistence.AdministratorMapper;
 import com.wyk.sign.persistence.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;

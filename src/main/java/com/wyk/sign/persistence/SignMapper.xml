@@ -20,6 +20,7 @@
 			<result property="status" column="stu_status" />
 		</association>
 		<association property="info" javaType="com.wyk.sign.model.SignInfo">
+			<id property="id" column="info"/>
 			<result property="startDate" column="info_start_date" />
 			<result property="stopDate" column="info_stop_date" />
 			<result property="address" column="info_address" />
@@ -113,4 +114,12 @@
 	</delete>
 	<!-- End of Base Mapper -->
 
+	<delete id="deleteByAdminId" parameterType="java.lang.String">
+		delete from tb_sign
+		<where>
+			<if test="infoId != null">
+				info_id = #{infoId}
+			</if>
+		</where>
+	</delete>
 </mapper>

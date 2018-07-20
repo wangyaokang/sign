@@ -35,6 +35,28 @@ public class ClassesController extends AbstractController {
     ClassesService classesService;
 
     /**
+     * 获取班级信息
+     * <p>传入参数</p>
+     * <pre>
+     *     method: info
+     *     token: 当前wxId
+     *     params: {classId}
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output info(Input input){
+        Output result = new Output();
+        Classes classes = classesService.get(input.getLong("id"));
+        classesService.save(classes);
+        result.setStatus(SUCCESS);
+        result.setMsg("查询班级信息成功！");
+        result.setData(classes);
+        return result;
+    }
+
+    /**
      * 修改班级信息
      * <p>传入参数：</p>
      * <pre>

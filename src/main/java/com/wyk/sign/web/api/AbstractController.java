@@ -118,7 +118,7 @@ public abstract class AbstractController implements WebxController {
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
 
-					if(!Constants.STU.equals(currentUser.getUserType())){
+					if(!Constants.User.STU.equals(currentUser.getUserType())){
 						return new Output(ERROR_UNKNOWN, "用户类型非学生！");
 					}
 				}
@@ -128,7 +128,7 @@ public abstract class AbstractController implements WebxController {
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
 
-					if(!Constants.ADMIN.equals(currentUser.getUserType())){
+					if(!Constants.User.ADMIN.equals(currentUser.getUserType())){
 						return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
 					}
 				}

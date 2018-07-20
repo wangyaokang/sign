@@ -1,5 +1,7 @@
 package com.wyk.sign.model;
 
+import com.wyk.sign.util.Constants;
+
 import java.util.Date;
 
 /**
@@ -22,6 +24,8 @@ public class Sign extends BaseModel{
 
     /** 签到地点 */
     private String signAddress;
+
+    protected Integer status = Constants.Sign.LATE;
 
     public SignInfo getSignInfo() {
         return signInfo;

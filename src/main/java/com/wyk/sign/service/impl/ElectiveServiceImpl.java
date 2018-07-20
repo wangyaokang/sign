@@ -9,7 +9,6 @@ import com.wyk.sign.model.Classes;
 import com.wyk.sign.model.Course;
 import com.wyk.sign.model.Elective;
 import com.wyk.sign.persistence.ElectiveMapper;
-import com.wyk.sign.service.ClassesService;
 import com.wyk.sign.service.ElectiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +43,31 @@ public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements El
 
     @Override
     public List<Classes> getClassesList(Map<String, Object> param) {
-        return null;
+        List<Classes> classesList = new ArrayList<>();
+        List<Elective> electiveList = mapper.queryByMap(param);
+
+        if(electiveList.size() != 0){
+            for(Elective elective : electiveList){
+                Classes classes = elective.getClasses();
+                classesList.add(classes);
+            }
+        }
+
+        return classesList;
     }
 
     @Override
     public List<Administrator> getTeacherList(Map<String, Object> param) {
-        return null;
+        List<Administrator> teacherList = new ArrayList<>();
+        List<Elective> electiveList = mapper.queryByMap(param);
+
+        if(electiveList.size() != 0){
+            for(Elective elective : electiveList){
+                Administrator teacher = elective.getTeacher();
+                teacherList.add(teacher);
+            }
+        }
+
+        return teacherList;
     }
 }

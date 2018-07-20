@@ -62,11 +62,14 @@
 	<select id="queryByMap" parameterType="hashmap" resultMap="SignMap">
 		<include refid="selectSQL" />
 		<where>
-			<if test="stu.wxName != null">
-				stu_wx_name = #{stu.wxName}
+			<if test="wxName != null">
+				stu.wx_name = #{stu.wxName}
 			</if>
-			<if test="stu.sno != null">
-				and stu_sno = #{stu.sno}
+			<if test="sno != null">
+				and stu.sno = #{sno}
+			</if>
+			<if test="infoId != null">
+				and info.id = #{infoId}
 			</if>
 		</where>
 	</select>
@@ -114,7 +117,7 @@
 	</delete>
 	<!-- End of Base Mapper -->
 
-	<delete id="deleteByAdminId" parameterType="java.lang.String">
+	<delete id="deleteByInfoId" parameterType="java.lang.Integer">
 		delete from tb_sign
 		<where>
 			<if test="infoId != null">

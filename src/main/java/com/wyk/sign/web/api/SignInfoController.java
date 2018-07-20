@@ -170,4 +170,31 @@ public class SignInfoController extends AbstractController {
         result.setData(signingInfoList);
         return result;
     }
+
+    /**
+     * 删除签到信息
+     *
+     * <p>传入参数</p>
+     * <pre>
+     *     method: delete
+     *     token: wxId
+     *     params: {id: 1}
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output delete(Input input){
+        Output result = new Output();
+        SignInfo signingInfo = signInfoService.get(input.getLong("id"));
+        Map<String, Object> param = new HashMap<>();
+        param.put("infoId", input.getString("id"));
+        // 删除签到信息下，所有的签到
+        signService.deleteByInfoId(input.getInteger("infoId"));
+        signInfoService.delete(signingInfo);
+        result.setStatus(SUCCESS);
+        result.setMsg("删除签到信息成功！");
+        return result;
+    }
 }

@@ -20,7 +20,7 @@ import com.wyk.framework.service.BaseService;
 /**
  * Service的CRUD基类
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public abstract class BaseServcieImpl<T> implements BaseService<T> {

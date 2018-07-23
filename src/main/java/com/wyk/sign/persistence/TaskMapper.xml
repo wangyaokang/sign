@@ -109,4 +109,12 @@
 	</delete>
 	<!-- End of Base Mapper -->
 
+	<delete id="deleteByInfoId" parameterType="java.lang.Integer">
+		delete from tb_task
+		<where>
+			<if test="infoId != null">
+				info_id = #{infoId}
+			</if>
+		</where>
+	</delete>
 </mapper>

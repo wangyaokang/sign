@@ -20,12 +20,4 @@
     <!-- Cache Manager : 使用本地缓存 -->
     <bean id="cacheManager" class="com.wyk.framework.cache.impl.LocalCacheManagerImpl"/>
 
-    <!-- 读取properties文件的FactoryBean -->
-    <bean id="propertiesUtils" class="com.wyk.framework.factory.PropertiesFactoryBean">
-        <property name="properties">
-            <list>
-                <value>config.properties</value>
-            </list>
-        </property>
-    </bean>
 </beans>

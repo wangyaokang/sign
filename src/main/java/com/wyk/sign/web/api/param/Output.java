@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * @author Dareen-Leo
+ * 输出参数封装类
+ *
+ * @author wyk
  *
  */
 public class Output implements Serializable {
@@ -36,7 +38,6 @@ public class Output implements Serializable {
 	/**
 	 * @param status
 	 * @param msg
-	 * @param data
 	 */
 	public Output(String status, String msg) {
 		super();

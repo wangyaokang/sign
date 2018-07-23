@@ -10,16 +10,14 @@ import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wyk.sign.annotation.Checked;
+import com.wyk.sign.annotation.Item;
+import com.wyk.sign.util.Constants;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -32,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.exception.SignException;
 import com.wyk.sign.model.User;
 import com.wyk.sign.service.UserService;
@@ -43,20 +40,19 @@ import com.wyk.framework.web.WebxController;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- *
  * 基础Controller
  *
- *
+ * @author wyk
  */
 public abstract class AbstractController implements WebxController {
 
 	protected transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Value("#{properties['web.upload.path']}")
-	protected String uploadPath = "attachment/images/";
+	protected String uploadPath;
 
 	@Value("#{properties['web.context.path']}")
-	protected String contextPath = "http://localhost:8080/sign/";
+	protected String contextPath;
 
 	@Autowired
 	protected ServletContext context;
@@ -78,7 +74,6 @@ public abstract class AbstractController implements WebxController {
 			// response.setContentType("text/html;charset=UTF-8");
 			// 设置Content-Type字段值
 			response.setContentType("application/json;charset=UTF-8"); // 设置Content-Type字段值
-
 			// 读取请求参数
 			Output result = doService(getInput(request));
 			logger.info("执行了的接口, 返回数据: " + JSONObject.toJSONString(result));
@@ -101,18 +96,37 @@ public abstract class AbstractController implements WebxController {
 		String method = input.getMethod();
 		try {
 			Method md = this.getClass().getDeclaredMethod(method, Input.class);
-			// 如果有@Logined注解的需要做登录判断
+			// 如果有@Checked注解的需要做信息检测判断
 			Annotation annotation = md.getAnnotation(Checked.class);
 			if (annotation != null) {
-				if (StringUtils.isEmpty(input.getToken())) {
-					return new Output(ERROR_UNKNOWN, "当前用户未登录");
-				} else {
-					User currentUser = getCurrentUser(input.getToken());
-					if (currentUser == null) {
-						return new Output(ERROR_UNKNOWN, "当前用户未登录");
+				String itemValue = ((Checked) annotation).value().name();
+				User currentUser = input.getCurrentUser() == null ? getCurrentUserByToken(input.getToken()) : input.getCurrentUser();
+				if(Item.TYPE.equals(itemValue)){
+					if(currentUser == null){
+						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
-					input.setCurrentUser(currentUser); // 设置当前用户，便于复用
 				}
+
+				if(Item.STU.equals(itemValue)){
+					if(null == currentUser || null == currentUser.getUserType()){
+						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
+					}
+
+					if(!Constants.User.STU.equals(currentUser.getUserType())){
+						return new Output(ERROR_UNKNOWN, "用户类型非学生！");
+					}
+				}
+
+				if(Item.ADMIN.equals(itemValue)){
+					if(null == currentUser || null == currentUser.getUserType()){
+						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
+					}
+
+					if(!Constants.User.ADMIN.equals(currentUser.getUserType())){
+						return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
+					}
+				}
+				input.setCurrentUser(currentUser);
 			}
 			return (Output) md.invoke(this, input);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -155,9 +169,8 @@ public abstract class AbstractController implements WebxController {
 	 * @param token
 	 * @return
 	 */
-	protected User getCurrentUser(String token) {
-		// TODO 获得当前用户
-		return null;
+	protected User getCurrentUserByToken(String token) {
+		return userService.getUserByToken(token);
 	}
 
 	/**
@@ -171,64 +184,12 @@ public abstract class AbstractController implements WebxController {
 			Input input = getInput(request);
 			String token = input.getToken();
 			if (StringUtils.isNotEmpty(token)) {
-				return getCurrentUser(token);
+				return getCurrentUserByToken(token);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	/**
-	 * 用户
-	 * 
-	 * @param user
-	 * @return
-	 */
-	protected Map<String, Object> toMap(User user) {
-		if (user == null) {
-			return null;
-		}
-
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("id", user.getId());
-		result.put("status", user.getStatus());
-		return result;
-	}
-
-	/**
-	 * 泛型列表
-	 * 
-	 * @param list
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	protected <T> List<Map<String, Object>> toArray(Collection<T> list) {
-		if (list == null || list.isEmpty()) {
-			return null;
-		}
-
-		List<Map<String, Object>> result = new ArrayList<>();
-		try {
-			// 反射执行 toMap 方法，获得数据
-			Class<T> typeClass = (Class<T>) list.iterator().next().getClass();
-			Method method = null;
-			try {
-				method = this.getClass().getDeclaredMethod("toMap", typeClass);
-			} catch (NoSuchMethodException ex) {
-				method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass);
-			}
-			if (method != null) {
-				method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
-				for (T entity : list) {
-					result.add((Map<String, Object>) method.invoke(this, entity));
-				}
-			}
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		return result;
 	}
 
 	/**
@@ -254,7 +215,7 @@ public abstract class AbstractController implements WebxController {
 	 * @param file
 	 *            上传文件
 	 */
-	protected String uploadImage(MultipartFile file) {
+	protected String uploadFile(MultipartFile file) {
 		String savePath = context.getRealPath("/") + "/" + uploadPath;
 		if (file != null && StringUtils.isNotEmpty(file.getOriginalFilename())) {
 			try {

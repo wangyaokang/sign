@@ -4,8 +4,8 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.Classes;
-import com.wyk.sign.service.ClassesService;
+import com.wyk.sign.model.SignInfo;
+import com.wyk.sign.service.SignInfoService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class ClassesServiceImpl extends BaseServiceImpl<Classes> implements ClassesService {
+public class SignInfoServiceImpl extends BaseServiceImpl<SignInfo> implements SignInfoService {
 
 }

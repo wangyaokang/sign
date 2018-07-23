@@ -27,6 +27,9 @@
 			<if test="id != null">
 				id = #{id}
 			</if>
+			<if test="wxId != null">
+				and wx_id = #{wxId}
+			</if>
 		</where>
 		limit 0,1
 	</select>
@@ -48,7 +51,6 @@
 				and real_name = #{realName}
 			</if>
 		</where>
-		order by seq
 	</select>
 
 	<insert id="insert" parameterType="com.wyk.sign.model.Administrator"

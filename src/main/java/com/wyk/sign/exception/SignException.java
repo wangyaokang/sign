@@ -6,7 +6,9 @@ package com.wyk.sign.exception;
 import static com.wyk.framework.web.WebxController.*;
 
 /**
- * @author Dareen-Leo
+ * 异常类
+ *
+ * @author wyk
  *
  */
 public class SignException extends RuntimeException {

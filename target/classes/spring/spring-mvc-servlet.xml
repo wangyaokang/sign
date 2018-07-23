@@ -12,15 +12,17 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.wyk" />
+    <context:component-scan base-package="com.wyk" use-default-filters="false">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+
 	<mvc:annotation-driven />
 
-    <mvc:resources mapping="/fonts/**" location="/WEB-INFO/resource/fonts/"/>
-    <mvc:resources mapping="/js/**" location="/WEB-INFO/resource/js/"/>
-    <mvc:resources mapping="/css/**" location="/WEB-INFO/resource/css/"/>
+    <context:annotation-config />
 
     <mvc:default-servlet-handler />
-    
     <!--
         - This bean resolves specific types of exceptions to corresponding logical 
         - view names for error views.

@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * 拥有自增长主键的Entity基础类
  * <p>推荐使用</p>
  *
- *
+ * @author wyk
  */
 public abstract class AutoIdEntity implements Serializable {
 
@@ -73,16 +73,4 @@ public abstract class AutoIdEntity implements Serializable {
 		return true;
 	}
 
-	private static final AtomicLong idSequence = new AtomicLong();
-
-	/**
-	 * 分配Id，仅用于单机测试阶段或数据库不支持主键自动生成
-	 * 正式环境建议采用数据库的主键生成机制
-	 * 
-	 * @return
-	 */
-	public long assignId() {
-		this.id = idSequence.incrementAndGet();
-		return this.id;
-	}
 }

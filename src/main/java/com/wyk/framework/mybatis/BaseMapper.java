@@ -14,7 +14,7 @@ import com.wyk.framework.page.PageBounds;
  * @author wyk
  *
  */
-public abstract interface BaseMapper<T> {
+public interface BaseMapper<T> {
 
 	/**
 	 * 获得实体
@@ -22,27 +22,27 @@ public abstract interface BaseMapper<T> {
 	 * @param map
 	 * @return
 	 */
-	public T get(Map<String, Object> map);
+	T get(Map<String, Object> map);
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public List<T> query();
+	List<T> query();
 	
 	/**
 	 * 
 	 * @param pageBounds
 	 * @return
 	 */
-	public List<T> query(PageBounds pageBounds);
+	List<T> query(PageBounds pageBounds);
 	
 	/**
 	 * 
 	 * @param map
 	 * @return
 	 */
-	public List<T> queryByMap(Map<String, Object> map);
+	List<T> queryByMap(Map<String, Object> map);
 	
 	/**
 	 * 
@@ -50,26 +50,26 @@ public abstract interface BaseMapper<T> {
 	 * @param pageBounds
 	 * @return
 	 */
-	public List<T> queryByMap(Map<String, Object> map, PageBounds pageBounds);
+	List<T> queryByMap(Map<String, Object> map, PageBounds pageBounds);
 	
 	/**
 	 * 新增实体
 	 * 
 	 * @param entity
 	 */
-	public void insert(T entity);
+	void insert(T entity);
 	
 	/**
 	 * 修改实体
 	 * 
 	 * @param entity
 	 */
-	public void update(T entity);
+	void update(T entity);
 	
 	/**
 	 * 删除实体
 	 * 
 	 * @param id
 	 */
-	public void delete(T entity);
+	void delete(T entity);
 }

@@ -23,7 +23,7 @@ import com.wyk.framework.service.BaseService;
  * @author wyk
  *
  */
-public abstract class BaseServcieImpl<T> implements BaseService<T> {
+public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	

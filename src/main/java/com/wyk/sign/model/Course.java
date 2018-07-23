@@ -1,5 +1,7 @@
 package com.wyk.sign.model;
 
+import java.util.List;
+
 /**
  * 课程
  *
@@ -13,7 +15,10 @@ public class Course extends BaseModel{
     private String name;
 
     /** 授课老师 */
-    private Administrator teacher;
+    private List<Administrator> teacherList;
+
+    /** 选课班级 */
+    private List<Classes> studentList;
 
     public String getName() {
         return name;
@@ -23,11 +28,19 @@ public class Course extends BaseModel{
         this.name = name;
     }
 
-    public Administrator getTeacher() {
-        return teacher;
+    public List<Administrator> getTeacherList() {
+        return teacherList;
     }
 
-    public void setTeacher(Administrator teacher) {
-        this.teacher = teacher;
+    public void setTeacherList(List<Administrator> teacherList) {
+        this.teacherList = teacherList;
+    }
+
+    public List<Classes> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Classes> studentList) {
+        this.studentList = studentList;
     }
 }

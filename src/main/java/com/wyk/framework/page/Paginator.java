@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * 分页器，根据pageNumber, pageSize, totalCount用于页面上分页显示多项内容，计算页码和当前页的偏移量，方便页面分页使用.
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public class Paginator implements Serializable {

@@ -9,6 +9,9 @@ public class User extends BaseModel{
 
     private static final long serialVersionUID = -3387809950289571218L;
 
+    /** 匿名用户 */
+    public static final User Anonymous;
+
     /** 学生 */
     public static int STU = 1;
     /** 教师 */
@@ -29,7 +32,16 @@ public class User extends BaseModel{
     protected String realName;
 
     /**
+     * 匿名用户初始化
+     */
+    static {
+        Anonymous = new User();
+        Anonymous.setId(0L);
+    }
+
+    /**
      * 用户类别
+     *
      * <pre> 1: 学生，2：教师，3：辅导员</pre>
      *
      * */

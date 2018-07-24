@@ -12,13 +12,6 @@ public class User extends BaseModel{
     /** 匿名用户 */
     public static final User Anonymous;
 
-    /** 学生 */
-    public static int STU = 1;
-    /** 教师 */
-    public static int TEA = 2;
-    /** 辅导员 */
-    public static int COU = 3;
-
     /** 用户微信id */
     protected String wxId;
 
@@ -45,7 +38,7 @@ public class User extends BaseModel{
      * <pre> 1: 学生，2：教师，3：辅导员</pre>
      *
      * */
-    protected Integer userType = STU;
+    protected Integer userType;
 
     public String getWxId() {
         return wxId;

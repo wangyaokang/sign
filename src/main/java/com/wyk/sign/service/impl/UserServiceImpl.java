@@ -58,8 +58,4 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("NIJJJ");
-    }
-
 }

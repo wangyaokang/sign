@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 /**
  * 作业信息相关接口
  *
@@ -29,7 +28,7 @@ public class TaskInfoController extends AbstractController {
     TaskInfoService taskInfoService;
 
     @Autowired
-    TaskService signService;
+    TaskService taskService;
 
     /**
      * 获取任务信息

@@ -54,10 +54,10 @@ public abstract class AbstractController implements WebxController {
 	protected transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Value("#{properties['web.upload.path']}")
-	protected String uploadPath = "attachment/images/";
+	protected String uploadPath;
 
 	@Value("#{properties['web.context.path']}")
-	protected String contextPath = "http://localhost:8080/sign/";
+	protected String contextPath;
 
 	@Autowired
 	protected ServletContext context;

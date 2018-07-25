@@ -41,6 +41,7 @@ com\wyk\framework\mybatis\plugin\OffsetLimitInterceptor$2.class
 com\wyk\framework\service\BaseService.class
 com\wyk\sign\util\Constants$User.class
 com\wyk\framework\cache\impl\LocalCacheManagerImpl.class
+com\wyk\sign\persistence\UserMapper.class
 com\wyk\sign\service\impl\UserServiceImpl.class
 com\wyk\framework\util\DateUtils.class
 com\wyk\sign\service\SignInfoService.class

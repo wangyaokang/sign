@@ -10,14 +10,10 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.wyk" />
+    <context:component-scan base-package="com.wyk"/>
 
 	<mvc:annotation-driven />
 
-    <!--
-        - This bean resolves specific types of exceptions to corresponding logical 
-        - view names for error views.
-    -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="exception"/>
         <property name="warnLogCategory" value="warn"/>

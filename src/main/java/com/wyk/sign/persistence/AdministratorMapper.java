@@ -4,7 +4,7 @@
 package com.wyk.sign.persistence;
 
 import com.wyk.framework.mybatis.BaseMapper;
-import com.wyk.sign.model.User;
+import com.wyk.sign.model.Administrator;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface AdministratorMapper extends BaseMapper<User> {
+public interface AdministratorMapper extends BaseMapper<Administrator> {
 
 }

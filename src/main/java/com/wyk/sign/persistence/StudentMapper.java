@@ -3,9 +3,8 @@
  */
 package com.wyk.sign.persistence;
 
+import com.wyk.sign.model.Student;
 import org.springframework.stereotype.Repository;
-
-import com.wyk.sign.model.User;
 import com.wyk.framework.mybatis.BaseMapper;
 
 
@@ -14,6 +13,6 @@ import com.wyk.framework.mybatis.BaseMapper;
  *
  */
 @Repository
-public interface StudentMapper extends BaseMapper<User> {
+public interface StudentMapper extends BaseMapper<Student> {
 
 }

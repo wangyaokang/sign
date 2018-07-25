@@ -53,10 +53,10 @@ public class TaskController extends AbstractController {
         Output result = new Output();
         Task task = taskService.get(input.getLong("id"));
         if (null == task) {
-            return new Output(ERROR_NO_RECORD, "未能获取签到信息！");
+            return new Output(ERROR_NO_RECORD, "未能获取作业信息！");
         }
         result.setData(task);
-        result.setMsg("创建任务成功！");
+        result.setMsg("创建作业成功！");
         result.setStatus(SUCCESS);
         return result;
     }

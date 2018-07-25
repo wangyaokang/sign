@@ -6,8 +6,8 @@ import java.util.List;
  * 管理人（用户中的一种）
  *
  *  <pre>
- *      userType = 2: 教师
- *      userType = 3: 辅导员
+ *      userType = 1: 教师
+ *      userType = 2: 辅导员
  *  </pre>
  *
  * @author wyk

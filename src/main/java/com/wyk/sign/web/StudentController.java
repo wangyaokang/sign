@@ -3,19 +3,17 @@
  */
 package com.wyk.sign.web;
 
-import com.wyk.sign.model.Administrator;
+import com.wyk.framework.web.BaseController;
+import com.wyk.sign.model.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.wyk.sign.model.User;
-import com.wyk.framework.web.BaseController;
 
 /**
  * @author wyk
  *
  */
 @Controller
-@RequestMapping("user/admin")
-public class AdministratorController extends BaseController<Administrator> {
+@RequestMapping("user/stu")
+public class StudentController extends BaseController<Student> {
 
 }

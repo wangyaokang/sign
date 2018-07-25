@@ -4,7 +4,7 @@
 
 <mapper namespace="com.wyk.sign.persistence.SignMapper">
 
-	<resultMap type="com.wyk.sign.model.Sign" id="SignMap">
+	<resultMap type="com.wyk.sign.model.Sign" id="signMap">
 		<id property="id" column="id" javaType="long" />
 		<result property="sign_date" column="signDate" />
 		<result property="sign_address" column="signAddress" />
@@ -45,7 +45,7 @@
 	</sql>
 
 	<!-- Base Mapper -->
-	<select id="get" parameterType="hashmap" resultMap="SignMap">
+	<select id="get" parameterType="hashmap" resultMap="signMap">
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
@@ -55,11 +55,11 @@
 		limit 0,1
 	</select>
 
-	<select id="query" resultMap="resultMap">
+	<select id="query" resultMap="signMap">
 		<include refid="selectSQL" />
 	</select>
 
-	<select id="queryByMap" parameterType="hashmap" resultMap="SignMap">
+	<select id="queryByMap" parameterType="hashmap" resultMap="signMap">
 		<include refid="selectSQL" />
 		<where>
 			<if test="wxName != null">

@@ -15,14 +15,14 @@
 		<result property="status" column="status" />
 		<result property="createTime" column="create_time" />
 		<result property="modifyTime" column="modify_time" />
-		<association property="class" javaType="com.wyk.sign.model.Classes">
+		<association property="classes" javaType="com.wyk.sign.model.Classes">
 			<id property="id" column="class_id"/>
 			<result property="name" column="class_name"/>
 		</association>
 	</resultMap>
 
 	<sql id="selectSQL">
-		select * from tb_student
+		select stu.*, cl.id, cl.name from tb_student stu inner join tb_classes cl on stu.class_id = cl.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -30,16 +30,16 @@
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
-				id = #{id}
+				stu.id = #{id}
 			</if>
 			<if test="wxId != null">
-				and wx_id = #{wxId}
+				and stu.wx_id = #{wxId}
 			</if>
 		</where>
 		limit 0,1
 	</select>
 
-	<select id="query" resultMap="resultMap">
+	<select id="query" resultMap="studentMap">
 		<include refid="selectSQL" />
 	</select>
 
@@ -47,16 +47,16 @@
 		<include refid="selectSQL" />
 		<where>
 			<if test="wxId != null">
-				wx_id = #{wxId}
+				stu.wx_id = #{wxId}
 			</if>
 			<if test="wxName != null">
-				and wxName = #{wxName}
+				and stu.wx_name = #{wxName}
 			</if>
 			<if test="realName != null">
-				and real_name = #{realName}
+				and stu.real_name = #{realName}
 			</if>
 			<if test="classId != null">
-				and class_id = #{classId}
+				and cl.id = #{classId}
 			</if>
 		</where>
 		order by seq
@@ -78,7 +78,7 @@
 		#{wxAvatarUrl},
 		#{realName},
 		#{userType},
-		#{class.id},
+		#{classes.id},
 		#{sno},
 		#{status})
 	</insert>
@@ -89,7 +89,7 @@
 		wx_name=#{wxName},
 		wx_avatar_url=#{wxAvatarUrl},
 		real_name=#{realName},
-		class_id=#{class.id},
+		class_id=#{classes.id},
 		sno=#{sno},
 		status=#{status},
 		modify_time=#{modifyTime}

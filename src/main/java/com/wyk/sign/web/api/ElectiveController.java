@@ -25,12 +25,9 @@ import java.util.Map;
  *
  * @author wyk
  */
-@Controller("apiClasses")
-@RequestMapping("/api/classes")
-public class ClassesController extends AbstractController {
-
-    @Autowired
-    ClassesService classesService;
+@Controller("apiElective")
+@RequestMapping("/api/elective")
+public class ElectiveController extends AbstractController {
 
     @Autowired
     ElectiveService electiveService;
@@ -41,7 +38,7 @@ public class ClassesController extends AbstractController {
      * <pre>
      *     method: insert
      *     token: 当前wxId
-     *     params: {name："英语11102班"，adminId:"2"}
+     *     params: {teacherId: "1", classId："2"，courseId:"2"}
      * </pre>
      *
      * @param input

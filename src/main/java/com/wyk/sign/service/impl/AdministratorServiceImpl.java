@@ -4,14 +4,13 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Student;
 import com.wyk.sign.persistence.AdministratorMapper;
 import com.wyk.sign.persistence.StudentMapper;
+import com.wyk.sign.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wyk.sign.model.User;
-import com.wyk.sign.service.UserService;
 import com.wyk.framework.service.impl.BaseServiceImpl;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ import java.util.Map;
  *
  */
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> implements AdministratorService {
 
     @Autowired
     private AdministratorMapper adminMapper;
@@ -36,26 +35,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User getUserByToken(String token) {
+    public Administrator getUserByToken(String token) {
         Map<String, Object> param = new HashMap<>();
         param.put("wxId", token);
-        User user = mapper.get(param);
-        if(null == user){
-            user = studentMapper.get(param);
-        }
+        Administrator user = adminMapper.get(param);
         return user;
-    }
-
-    @Override
-    public void saveUser(User user){
-        Integer userType = user.getUserType();
-        if(userType == 1){
-            studentMapper.insert((Student) user);
-            logger.info("学生【{}】保存学生成功！", user.getRealName());
-        }else if(userType == 2){
-            adminMapper.insert((Administrator) user);
-            logger.info("管理者【{}】保存成功！", user.getRealName());
-        }
     }
 
 }

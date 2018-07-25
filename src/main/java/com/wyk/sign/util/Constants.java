@@ -12,10 +12,12 @@ package com.wyk.sign.util;
 public abstract class Constants {
 
 	public abstract static class User{
+		/** userType 为教师 */
+		public static final Integer TEACHER = 1;
+		/** userType 为教师 */
+		public static final Integer COUNSELLOR = 2;
 		/** userType 为学生 */
-		public static final Integer STU = 1;
-		/** userType 为管理员（教师或辅导员） */
-		public static final Integer ADMIN = 2;
+		public static final Integer STUDENT = 3;
 	}
 
 	public abstract static class Sign{

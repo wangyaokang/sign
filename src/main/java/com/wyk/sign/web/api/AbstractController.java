@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
+import com.wyk.sign.model.Administrator;
+import com.wyk.sign.service.AdministratorService;
 import com.wyk.sign.util.Constants;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -32,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.wyk.sign.exception.SignException;
 import com.wyk.sign.model.User;
-import com.wyk.sign.service.UserService;
+import com.wyk.sign.service.StudentService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import com.wyk.framework.util.RandomUtils;
@@ -58,7 +60,10 @@ public abstract class AbstractController implements WebxController {
 	protected ServletContext context;
 
 	@Autowired
-	protected UserService userService;
+	StudentService studentService;
+
+	@Autowired
+	AdministratorService administratorService;
 
 	/**
 	 * Dispatch
@@ -99,7 +104,7 @@ public abstract class AbstractController implements WebxController {
 			// 如果有@Checked注解的需要做信息检测判断
 			Annotation annotation = md.getAnnotation(Checked.class);
 			if (annotation != null) {
-				String itemValue = ((Checked) annotation).value().name();
+				Item itemValue = ((Checked) annotation).value();
 				User currentUser = input.getCurrentUser() == null ? getCurrentUserByToken(input.getToken()) : input.getCurrentUser();
 				if(Item.TYPE.equals(itemValue)){
 					if(currentUser == null){
@@ -112,7 +117,7 @@ public abstract class AbstractController implements WebxController {
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
 
-					if(!Constants.User.STU.equals(currentUser.getUserType())){
+					if(!Constants.User.STUDENT.equals(currentUser.getUserType())){
 						return new Output(ERROR_UNKNOWN, "用户类型非学生！");
 					}
 				}
@@ -122,7 +127,7 @@ public abstract class AbstractController implements WebxController {
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
 
-					if(!Constants.User.ADMIN.equals(currentUser.getUserType())){
+					if(!(Constants.User.TEACHER.equals(currentUser.getUserType()) || Constants.User.COUNSELLOR.equals(currentUser.getUserType()))){
 						return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
 					}
 				}
@@ -170,7 +175,11 @@ public abstract class AbstractController implements WebxController {
 	 * @return
 	 */
 	protected User getCurrentUserByToken(String token) {
-		return userService.getUserByToken(token);
+		User user = administratorService.getUserByToken(token);
+		if(null == user){
+			user = studentService.getUserByToken(token);
+		}
+		return user;
 	}
 
 	/**

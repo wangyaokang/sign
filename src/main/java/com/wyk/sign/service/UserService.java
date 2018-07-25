@@ -3,8 +3,6 @@
  */
 package com.wyk.sign.service;
 
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Student;
 import com.wyk.sign.model.User;
 import com.wyk.framework.service.BaseService;
 

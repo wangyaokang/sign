@@ -5,7 +5,9 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:cache="http://www.springframework.org/schema/cache"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/cache
          http://www.springframework.org/schema/cache/spring-cache.xsd
@@ -18,12 +20,4 @@
     <!-- Cache Manager : 使用本地缓存 -->
     <bean id="cacheManager" class="com.wyk.framework.cache.impl.LocalCacheManagerImpl"/>
 
-    <!-- 读取properties文件的FactoryBean -->
-    <bean id="properties" class="com.wyk.framework.factory.PropertiesFactoryBean">
-        <property name="properties">
-            <list>
-                <value>config.properties</value>
-            </list>
-        </property>
-    </bean>
 </beans>

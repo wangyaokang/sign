@@ -3,7 +3,6 @@
  */
 package com.wyk.sign.web.api;
 
-import com.sun.javaws.security.SigningInfo;
 import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
@@ -58,10 +57,6 @@ public class SignInfoController extends AbstractController {
         if(null == signInfo){
             return new Output(ERROR_NO_RECORD, "没有获取对应的签到信息！");
         }
-        Map<String, Object> param = new HashMap<>();
-        param.put("adminId", signInfo.getId());
-        List<Sign> signs = signService.query(param);
-        signInfo.setSignList(signs);
         result.setData(signInfo);
         result.setMsg("获取签到成功！");
         result.setStatus(SUCCESS);

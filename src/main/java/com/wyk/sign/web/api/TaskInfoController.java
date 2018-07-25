@@ -3,15 +3,22 @@
  */
 package com.wyk.sign.web.api;
 
+import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
+import com.wyk.sign.model.*;
 import com.wyk.sign.service.TaskInfoService;
 import com.wyk.sign.service.TaskService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 作业信息相关接口
@@ -31,7 +38,7 @@ public class TaskInfoController extends AbstractController {
     TaskService taskService;
 
     /**
-     * 获取任务信息
+     * 获取作业信息
      * <p>
      * 传入参数
      * </p>
@@ -46,21 +53,25 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.TYPE)
     public Output info(Input input) {
         Output result = new Output();
-
-        result.setMsg("获取签到成功！");
+        TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
+        if(null == taskInfo){
+            return new Output(ERROR_NO_RECORD, "没有获取对应的作业信息！");
+        }
+        result.setData(taskInfo);
+        result.setMsg("获取作业信息成功！");
         result.setStatus(SUCCESS);
         return result;
     }
 
     /**
-     * 创建任务
+     * 创建作业信息
      * <p>
      * 传入参数
      * </p>
      * <pre>
      * token : wxid
      * method : insert
-     * params : {"startDate" : "2018-06-09 10:30", "stopDate" : "2018-06-09 12:30", "address" : "xxxx大楼", "classId" : "02", "courseId" : "2"}
+     * params : {"courseId" : "2", "teacherId" : "1", "deadlineTime" : "2018-12-12", "remark" : "带笔记本"}
      * </pre>
      *
      * @param input
@@ -69,18 +80,32 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output insert(Input input) {
         Output result = new Output();
-        result.setMsg("创建签到成功！");
+        User teacher = input.getCurrentUser();
+        TaskInfo taskInfo = new TaskInfo();
+        taskInfo.setTeacher(teacher);
+        taskInfo.setRemark(input.getString("remark"));
+        if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
+            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtils.DATE_FORMAT));
+        }
+        Classes classes = new Classes();
+        classes.setId(input.getLong("classId"));
+        taskInfo.setClasses(classes);
+        Course course = new Course();
+        course.setId(input.getLong("courseId"));
+        taskInfo.setCourse(course);
+        taskInfoService.insert(taskInfo);
+        result.setMsg("创建作业信息成功！");
         result.setStatus(SUCCESS);
         return result;
     }
 
     /**
-     * 修改任务信息
+     * 修改作业信息
      * <p>传入参数：</p>
      * <pre>
      *      method:modify
-     *      token: wxopenid, 微信wxid
-     *      params: 全部信息，例如：{id: "25", "startDate" : "2018-06-09 10:30", "stopDate" : "2018-06-09 12:30", "address" : "xxxx大楼", "classId" : "02", "courseId" : "2"}
+     *      token: wxopenid
+     *      params: 全部信息，例如：{id: "25", "classId" : "2", "courseId" : "2", deadlineTime : "2019-09-09", "remark" : "错了，带手机"}
      * </pre>
      *
      * @param input
@@ -89,18 +114,33 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-
+        TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
+        if(null == taskInfo){
+            return new Output(ERROR_NO_RECORD, "未获取到对应的作业信息！");
+        }
+        taskInfo.setRemark(input.getString("remark"));
+        if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
+            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtils.DATE_FORMAT));
+        }
+        Classes classes = new Classes();
+        classes.setId(input.getLong("classId"));
+        taskInfo.setClasses(classes);
+        Course course = new Course();
+        course.setId(input.getLong("courseId"));
+        taskInfo.setCourse(course);
+        taskInfoService.update(taskInfo);
         result.setStatus(SUCCESS);
-        result.setMsg("修改签到信息成功！");
+        result.setMsg("修改作业信息成功！");
+        result.setData(classes);
         return result;
     }
 
     /**
-     * 获取我的任务信息
+     * 获取我的作业信息
      *
      * <p>传入参数</p>
      * <pre>
-     *     method: getMyTaskInfoList
+     *     method: getMySignInfoList
      *     token: wxId
      * </pre>
      *
@@ -110,8 +150,13 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output getMyTaskInfoList(Input input){
         Output result = new Output();
+        User teacher = input.getCurrentUser();
+        Map<String, Object> param = new HashMap<>();
+        param.put("teachId", teacher.getId());
+        List<TaskInfo> signingInfoList = taskInfoService.query(param);
         result.setStatus(SUCCESS);
-        result.setMsg("获取签到信息成功！");
+        result.setMsg("获取我的作业信息成功！");
+        result.setData(signingInfoList);
         return result;
     }
 
@@ -131,8 +176,12 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input){
         Output result = new Output();
+        TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
+        // 删除签到信息下，所有的签到
+        taskService.deleteByInfoId(input.getInteger("infoId"));
+        taskInfoService.delete(taskInfo);
         result.setStatus(SUCCESS);
-        result.setMsg("删除签到信息成功！");
+        result.setMsg("删除作业信息成功！");
         return result;
     }
 }

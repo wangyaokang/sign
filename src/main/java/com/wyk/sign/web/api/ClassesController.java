@@ -73,7 +73,8 @@ public class ClassesController extends AbstractController {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
         classes.setName(input.getString("name"));
-        Administrator admin = (Administrator) userService.getUserByToken(input.getToken());
+//        Administrator admin = (Administrator) userService.getUserByToken(input.getToken());
+        Administrator admin = null;
         classes.setAdmin(admin);
         classesService.save(classes);
         result.setStatus(SUCCESS);

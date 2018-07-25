@@ -1,5 +1,3 @@
-package com.wyk.utils;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;

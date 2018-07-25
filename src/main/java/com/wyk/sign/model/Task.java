@@ -1,5 +1,7 @@
 package com.wyk.sign.model;
 
+import java.util.Date;
+
 /**
  * 上交作业（学生）
  *
@@ -14,7 +16,10 @@ public class Task extends BaseModel{
     private TaskInfo taskInfo;
 
     /** 学生 */
-    private User student;
+    private Student student;
+
+    /** 作业上传时间 */
+    private Date upDate;
 
     /**
      * 作业文件url
@@ -29,6 +34,14 @@ public class Task extends BaseModel{
     /** 评分 */
     private Integer score;
 
+    public Date getUpDate() {
+        return upDate;
+    }
+
+    public void setUpDate(Date upDate) {
+        this.upDate = upDate;
+    }
+
     public TaskInfo getTaskInfo() {
         return taskInfo;
     }
@@ -37,11 +50,11 @@ public class Task extends BaseModel{
         this.taskInfo = taskInfo;
     }
 
-    public User getStudent() {
+    public Student getStudent() {
         return student;
     }
 
-    public void setStudent(User student) {
+    public void setStudent(Student student) {
         this.student = student;
     }
 

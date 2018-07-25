@@ -79,11 +79,11 @@ public class UserController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         String userType = input.getString("userType");
-        if (userType.equals(Constants.STU)) {
+        if (userType.equals(Constants.User.STU)) {
             Student student = (Student) input.getCurrentUser();
             userService.saveUser(student);
             result.setData(student);
-        } else if (userType.equals(Constants.ADMIN)) {
+        } else if (userType.equals(Constants.User.ADMIN)) {
             Administrator admin = (Administrator) input.getCurrentUser();
             userService.saveUser(admin);
             result.setData(admin);

@@ -10,11 +10,6 @@ import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -79,7 +74,6 @@ public abstract class AbstractController implements WebxController {
 			// response.setContentType("text/html;charset=UTF-8");
 			// 设置Content-Type字段值
 			response.setContentType("application/json;charset=UTF-8"); // 设置Content-Type字段值
-
 			// 读取请求参数
 			Output result = doService(getInput(request));
 			logger.info("执行了的接口, 返回数据: " + JSONObject.toJSONString(result));
@@ -199,57 +193,6 @@ public abstract class AbstractController implements WebxController {
 	}
 
 	/**
-	 * 用户
-	 * 
-	 * @param user
-	 * @return
-	 */
-	protected Map<String, Object> toMap(User user) {
-		if (user == null) {
-			return null;
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("id", user.getId());
-		result.put("status", user.getStatus());
-		return result;
-	}
-
-	/**
-	 * 泛型列表
-	 * 
-	 * @param list
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	protected <T> List<Map<String, Object>> toArray(Collection<T> list) {
-		if (list == null || list.isEmpty()) {
-			return null;
-		}
-
-		List<Map<String, Object>> result = new ArrayList<>();
-		try {
-			// 反射执行 toMap 方法，获得数据
-			Class<T> typeClass = (Class<T>) list.iterator().next().getClass();
-			Method method = null;
-			try {
-				method = this.getClass().getDeclaredMethod("toMap", typeClass);
-			} catch (NoSuchMethodException ex) {
-				method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass);
-			}
-			if (method != null) {
-				method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
-				for (T entity : list) {
-					result.add((Map<String, Object>) method.invoke(this, entity));
-				}
-			}
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	/**
 	 * 获得图片完整的URL地址
 	 * 
 	 * @param imagePath
@@ -272,7 +215,7 @@ public abstract class AbstractController implements WebxController {
 	 * @param file
 	 *            上传文件
 	 */
-	protected String uploadImage(MultipartFile file) {
+	protected String uploadFile(MultipartFile file) {
 		String savePath = context.getRealPath("/") + "/" + uploadPath;
 		if (file != null && StringUtils.isNotEmpty(file.getOriginalFilename())) {
 			try {

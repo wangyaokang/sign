@@ -3,6 +3,8 @@
  */
 package com.wyk.sign.service.impl;
 
+import com.wyk.sign.model.Administrator;
+import com.wyk.sign.model.Student;
 import com.wyk.sign.persistence.AdministratorMapper;
 import com.wyk.sign.persistence.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,10 @@ import java.util.Map;
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
     @Autowired
-    public AdministratorMapper adminMapper;
+    private AdministratorMapper adminMapper;
 
     @Autowired
-    public StudentMapper studentMapper;
+    private StudentMapper studentMapper;
 
     @Override
     public User getAnonymous() {
@@ -48,12 +50,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public void saveUser(User user){
         Integer userType = user.getUserType();
         if(userType == 1){
-            studentMapper.insert(user);
+            studentMapper.insert((Student) user);
             logger.info("学生【{}】保存学生成功！", user.getRealName());
         }else if(userType == 2){
-            adminMapper.insert(user);
+            adminMapper.insert((Administrator) user);
             logger.info("管理者【{}】保存成功！", user.getRealName());
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("NIJJJ");
     }
 
 }

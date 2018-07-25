@@ -55,7 +55,7 @@
 		limit 0,1
 	</select>
 
-	<select id="query" resultMap="resultMap">
+	<select id="query" resultMap="taskInfoMap">
 		<include refid="selectSQL" />
 	</select>
 

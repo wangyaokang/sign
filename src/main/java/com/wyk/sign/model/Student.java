@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 学生（用户其中一种类型）
  *
- * <pre> userType = 1</pre>
+ * <pre> userType = 3</pre>
  * @author wyk
  *
  */

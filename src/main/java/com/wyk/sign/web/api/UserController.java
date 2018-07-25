@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wyk.sign.service.UserService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 
@@ -30,9 +29,6 @@ import java.util.Map;
 @Controller("apiUser")
 @RequestMapping("/api/user")
 public class UserController extends AbstractController {
-
-    @Autowired
-    UserService userService;
 
     @Autowired
     ClassesService classesService;
@@ -79,13 +75,13 @@ public class UserController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         String userType = input.getString("userType");
-        if (userType.equals(Constants.User.STU)) {
+        if (userType.equals(Constants.User.STUDENT)) {
             Student student = (Student) input.getCurrentUser();
-            userService.saveUser(student);
+            studentService.save(student);
             result.setData(student);
-        } else if (userType.equals(Constants.User.ADMIN)) {
+        } else if (userType.equals(Constants.User.TEACHER) || userType.equals(Constants.User.COUNSELLOR)) {
             Administrator admin = (Administrator) input.getCurrentUser();
-            userService.saveUser(admin);
+            administratorService.save(admin);
             result.setData(admin);
         }
         result.setStatus(SUCCESS);

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.wyk.sign.persistence.ElectiveMapper">
 
-	<resultMap type="com.wyk.sign.model.Elective" id="ElectiveMap">
+	<resultMap type="com.wyk.sign.model.Elective" id="electiveMap">
 		<id property="id" column="id" javaType="long" />
 		<association property="admin" javaType="com.wyk.sign.model.Administrator">
 			<id property="id" column="admin_id"/>
@@ -37,8 +37,9 @@
 			cl.status as class_status,
 			co.name as course_name,
 			co.status as course_status
-		 from ((tb_classes_course_admin s inner join tb_classes cl on s.class_id = cl.id)
-		 		inner join tb_course co on s.course_id = co.id)
+		 from tb_classes_course_admin s
+		 		inner join tb_classes cl on s.class_id = cl.id
+		 		inner join tb_course co on s.course_id = co.id
 		 		inner join tb_admin ad as on s.admin_id = ad.id
 	</sql>
 
@@ -47,7 +48,7 @@
 	</sql>
 
 	<!-- Base Mapper -->
-	<select id="get" parameterType="hashmap" resultMap="ElectiveMap">
+	<select id="get" parameterType="hashmap" resultMap="electiveMap">
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
@@ -66,11 +67,11 @@
 		limit 0,1
 	</select>
 
-	<select id="query" resultMap="resultMap">
+	<select id="query" resultMap="electiveMap">
 		<include refid="selectSQL" />
 	</select>
 
-	<select id="queryByMap" parameterType="hashmap" resultMap="ElectiveMap">
+	<select id="queryByMap" parameterType="hashmap" resultMap="electiveMap">
 		<include refid="selectSQL" />
 		<where>
 			<if test="classId != null">
@@ -92,7 +93,7 @@
 		class_id,
 		course_id)
 		values
-		(#{admin.id},
+		(#{teacher.id},
 		#{class.id},
 		#{course.id}
 		)
@@ -100,7 +101,7 @@
 
 	<update id="update" parameterType="com.wyk.sign.model.Elective">
 		update tb_classes_course_admin set
-		admin_id=#{admin.id},
+		admin_id=#{teacher.id},
 		class_id=#{class.id},
 		course_id=#{course.id},
 		where id = #{id}
@@ -115,5 +116,4 @@
 		</where>
 	</delete>
 	<!-- End of Base Mapper -->
-
 </mapper>

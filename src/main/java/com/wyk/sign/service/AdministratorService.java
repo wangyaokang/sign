@@ -3,14 +3,15 @@
  */
 package com.wyk.sign.service;
 
-import com.wyk.sign.model.User;
 import com.wyk.framework.service.BaseService;
+import com.wyk.sign.model.Administrator;
+import com.wyk.sign.model.User;
 
 /**
  * @author wyk
  *
  */
-public interface UserService extends BaseService<User> {
+public interface AdministratorService extends BaseService<Administrator> {
 
     /**
      * 匿名登录
@@ -20,16 +21,10 @@ public interface UserService extends BaseService<User> {
     User getAnonymous();
 
     /**
-     * 根据token获取user对象
+     * 根据token获取admin对象
      * @param token
      * @return
      */
-    User getUserByToken(String token);
-
-    /**
-     * 保存user
-     * @param user
-     */
-    void saveUser(User user);
+    Administrator getUserByToken(String token);
 
 }

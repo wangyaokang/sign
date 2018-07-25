@@ -2,8 +2,11 @@ package com.wyk.sign.model;
 
 /**
  *
- * 用户（教师或学生）
+ * 用户
  *
+ * <pre>管理员[教师、辅导员]和学生</pre>
+ *
+ * @author wyk
  */
 public class User extends BaseModel{
 
@@ -35,7 +38,7 @@ public class User extends BaseModel{
     /**
      * 用户类别
      *
-     * <pre> 1: 学生，2：教师，3：辅导员</pre>
+     * <pre> 1: 教师，2：辅导员，3：学生</pre>
      *
      * */
     protected Integer userType;

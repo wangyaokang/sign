@@ -22,7 +22,7 @@ public class HttpTest {
     //登录
     @Test
     public void login(){
-        long startTime = System.currentTimeMillis(); 
+        long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
         map.put("wxId", "13381503907");
         paramMap.put("method" , "login");
@@ -32,131 +32,102 @@ public class HttpTest {
         System.out.println("获取:" + (System.currentTimeMillis() - startTime));
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
-    
-    //注册用户
+
+    //注册
     @Test
     public void register(){
-    	long startTime = System.currentTimeMillis(); 
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("mobile", "13800138000");
-    	map.put("password", "123456");
-    	paramMap.put("method" , "register");
-    	paramMap.put("params", map);
-    	String content = invoker.post("/api/login", paramMap);
-    	System.out.println(content);
-    	System.out.println("获取:" + (System.currentTimeMillis() - startTime));
-    	System.out.println(" total time: ");
-    	System.out.println(System.currentTimeMillis() - startTime);
-    }
-    
-    @Test
-    public void logout(){
-    	long startTime = System.currentTimeMillis();
-    	paramMap.put("token", "iKVXAnYcxT0uHVbrpG0C9yXhkleKmtwB");
-    	paramMap.put("method", "logout");
-    	String content = invoker.post("/api/login", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void info(){
-    	long startTime = System.currentTimeMillis();
-    	paramMap.put("token", "lW9wJ0lcWhcxfUBjf97YO08zAYEjj3Qu");
-    	paramMap.put("method", "info");
-    	String content = invoker.post("/api/user", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void uploadPhoto(){
-    	long startTime = System.currentTimeMillis();
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("filePath", "C:\\Users\\Win7\\Desktop\\wode.jpg");
-    	paramMap.put("token", "GzgJ2YOEd8aqUOJkND7YLuOIi5FdfzQY");
-    	paramMap.put("method", "uploadPhoto");
-    	paramMap.put("params", map);
-    	String content = invoker.post("/api/user", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void addBook(){
-    	long startTime = System.currentTimeMillis();
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("bookNo", "2018012201");
-    	map.put("bookName", "刘心武揭秘红楼梦");
-    	map.put("author", "刘心武");
-    	map.put("publisher", "人民日报出版社");
-    	map.put("synopsis", "一部旷世奇书，。。。。");
-    	map.put("location", "TP-南-52.90");
-    	paramMap.put("method", "addBook");
-    	paramMap.put("params", map);
-    	String content = invoker.post("/api/book", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void bookInfo(){
-    	long startTime = System.currentTimeMillis();
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("bookNo", "2018012201");
-    	paramMap.put("method", "info");
-    	paramMap.put("params", map);
-    	String content = invoker.post("/api/book", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void queryBooks(){
-    	long startTime = System.currentTimeMillis();
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("type", "2");
-    	map.put("key", "人民");
-    	paramMap.put("method", "queryBooks");
-    	paramMap.put("params", map);
-    	String content = invoker.post("/api/book", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void addBook2Bag(){
-    	long startTime = System.currentTimeMillis();
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("bookId", "1");
-    	paramMap.put("token", "iKVXAnYcxT0uHVbrpG0C9yXhkleKmtwB");
-    	paramMap.put("method", "addBook2Bag");
-    	paramMap.put("params", map);
-    	String content = invoker.post("/api/bag", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void queryBags(){
-    	long startTime = System.currentTimeMillis();
-    	Map<String, String> map = new HashMap<String, String>();
-    	map.put("bookId", "1");
-    	paramMap.put("token", "iKVXAnYcxT0uHVbrpG0C9yXhkleKmtwB");
-    	paramMap.put("method", "queryBags");
-    	String content = invoker.post("/api/bag", paramMap);
-    	System.out.println(content);
-    	System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
-    }
-    
-    @Test
-    public void webBookTest(){
-        long startTime = System.currentTimeMillis(); 
+        long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-    	map.put("bookNo", "2018012201");
-        String content = invoker.get("/book/queryBook.json", map);
+        map.put("wxId", "15017803067");
+        map.put("wxName", "AngryAnt");
+        map.put("wxAvatarUrl", "wwww.youku.com");
+        map.put("userType", "3");
+        map.put("realName", "张三");
+        map.put("sno", "201106259");
+        map.put("classId", "1");
+        paramMap.put("method" , "register");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/login", paramMap);
         System.out.println(content);
         System.out.println("获取:" + (System.currentTimeMillis() - startTime));
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
+
+    //新增班级
+    @Test
+    public void insertClasses(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("name", "物理11102班");
+        map.put("adminId", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/classes", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //获取班级信息
+    @Test
+    public void classesInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "2");
+        paramMap.put("token" , "13381503907");
+        paramMap.put("method" , "info");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/classes", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //获取班级信息
+    @Test
+    public void deleteClasses(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "delete");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/classes", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //新增课程
+    @Test
+    public void insertCourse(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("name", "基础英语");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/course", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //获取班级信息
+    @Test
+    public void courseInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        paramMap.put("token" , "13381503907");
+        paramMap.put("method" , "info");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/course", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+
 }

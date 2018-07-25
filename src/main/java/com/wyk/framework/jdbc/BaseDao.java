@@ -10,8 +10,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -35,7 +35,7 @@ import com.wyk.framework.page.Paginator;
  */
 public abstract class BaseDao<T> {
 	
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected final Logger logger = LogManager.getLogger(this.getClass());
 	
 	@Resource(name = "dialect")
 	protected Dialect dialect;

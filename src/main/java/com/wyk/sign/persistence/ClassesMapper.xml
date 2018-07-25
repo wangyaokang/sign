@@ -36,13 +36,13 @@
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
-				id = #{id}
+				cl.id = #{id}
 			</if>
 		</where>
 		limit 0,1
 	</select>
 
-	<select id="query" resultMap="resultMap">
+	<select id="query" resultMap="classMap">
 		<include refid="selectSQL" />
 	</select>
 
@@ -52,14 +52,14 @@
 			<if test="name != null">
 				cl.name = #{name}
 			</if>
-			<if test="admin.wxId != null">
-				and ad.admin_wx_Id = #{admin.wxId}
+			<if test="wxId != null">
+				and ad.wx_Id = #{wxId}
 			</if>
-			<if test="admin.wxName != null">
-				and ad.admin_wx_name = #{admin.wxName}
+			<if test="wxName != null">
+				and ad.wx_name = #{wxName}
 			</if>
 			<if test="admin.realName != null">
-				and ad.real_name = #{admin.realName}
+				and ad.real_name = #{realName}
 			</if>
 		</where>
 		order by seq
@@ -69,7 +69,7 @@
 		useGeneratedKeys="true" keyProperty="id">
 		insert into tb_classes (
 		admin_id,
-		name,
+		`name`,
 		status)
 		values
 		(#{admin.id},

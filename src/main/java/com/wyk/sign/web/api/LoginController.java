@@ -4,10 +4,8 @@
 package com.wyk.sign.web.api;
 
 import java.util.Date;
-
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,9 +21,6 @@ import com.wyk.sign.web.api.param.Output;
 @RequestMapping("/api/login")
 public class LoginController extends AbstractController {
 
-    @Autowired
-    UserService userService;
-
     /**
      * 登录
      * <p>传入参数：</p>
@@ -40,7 +35,7 @@ public class LoginController extends AbstractController {
     public Output login(Input input) {
         Output result = new Output();
         String token = input.getParams().get("wxId").toString();
-        User user = userService.getUserByToken(token);
+        User user = getCurrentUserByToken(token);
         // 当用户未完善个人信息时，已匿名方式登录。
         if (null == user) {
             user = User.Anonymous;
@@ -79,29 +74,29 @@ public class LoginController extends AbstractController {
         Output result = new Output();
         UserToken userToken = new UserToken();
         Integer userType = input.getInteger("userType");
-        if (userType == 1) {
+        if (userType == 1 || userType == 2) {
             Administrator admin = new Administrator();
             admin.setWxId(input.getString("wxId"));
             admin.setWxName(input.getString("wxName"));
-            admin.setWxAvatarUrl(input.getString("AvatarUrl"));
+            admin.setWxAvatarUrl(input.getString("wxAvatarUrl"));
             admin.setRealName(input.getString("realName"));
             admin.setUserType(userType);
-            userService.saveUser(admin);
+            administratorService.save(admin);
             userToken.setUser(admin);
-        } else if (userType == 2) {
+        } else if (userType == 3) {
             Student student = new Student();
             student.setWxId(input.getString("wxId"));
             student.setWxName(input.getString("wxName"));
-            student.setWxAvatarUrl(input.getString("AvatarUrl"));
+            student.setWxAvatarUrl(input.getString("wxAvatarUrl"));
             student.setRealName(input.getString("realName"));
             student.setUserType(userType);
             student.setSno(input.getString("sno"));
-            if (input.getLong("classId") != null) {
+            if (!StringUtils.isEmpty(input.getString("classId"))) {
                 Classes classes = new Classes();
                 classes.setId(input.getLong("classId"));
                 student.setClasses(classes);
             }
-            userService.saveUser(student);
+            studentService.save(student);
             userToken.setUser(student);
         } else {
             result.setMsg("未设置【用户类型】，请重新设置！");

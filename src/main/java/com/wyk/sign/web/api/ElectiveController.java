@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.Map;
 
 /**
  * 授课相关接口
@@ -54,9 +53,9 @@ public class ElectiveController extends AbstractController {
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
         elective.setClasses(classes);
-        Administrator teacher = new Administrator();
-        teacher.setId(input.getLong("teacherId"));
-        elective.setTeacher(teacher);
+        Administrator administrator = new Administrator();
+        administrator.setId(input.getLong("adminId"));
+        elective.setAdmin(administrator);
         Course course = new Course();
         course.setId(input.getLong("courseId"));
         elective.setCourse(course);
@@ -122,9 +121,9 @@ public class ElectiveController extends AbstractController {
             return new Output(ERROR_NO_RECORD, "没有对应的课程！");
         }
 
-        if(StringUtils.isNotEmpty(input.getString("teacherId"))){
-            Administrator teacher = administratorService.get(input.getLong("teacherId"));
-            elective.setTeacher(teacher);
+        if(StringUtils.isNotEmpty(input.getString("adminId"))){
+            Administrator teacher = administratorService.get(input.getLong("adminId"));
+            elective.setAdmin(teacher);
         }else{
             return new Output(ERROR_NO_RECORD, "没有对应的教师！");
         }
@@ -150,7 +149,6 @@ public class ElectiveController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input) {
         Output result = new Output();
-        Map<String, Object> params = input.getParams();
         Elective elective = electiveService.get(input.getLong("id"));
         if(null == elective){
             return new Output(ERROR_NO_RECORD, "没有此条授课信息！");

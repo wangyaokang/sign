@@ -19,7 +19,7 @@ public class Elective extends AutoIdEntity {
     private Course course;
 
     /** 授课教师 */
-    private Administrator teacher;
+    private Administrator admin;
 
     public Classes getClasses() {
         return classes;
@@ -37,11 +37,11 @@ public class Elective extends AutoIdEntity {
         this.course = course;
     }
 
-    public Administrator getTeacher() {
-        return teacher;
+    public Administrator getAdmin() {
+        return admin;
     }
 
-    public void setTeacher(Administrator teacher) {
-        this.teacher = teacher;
+    public void setAdmin(Administrator admin) {
+        this.admin = admin;
     }
 }

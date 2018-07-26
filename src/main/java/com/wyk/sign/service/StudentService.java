@@ -6,7 +6,7 @@ package com.wyk.sign.service;
 import com.wyk.sign.model.Student;
 import com.wyk.framework.service.BaseService;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author wyk
@@ -31,7 +31,7 @@ public interface StudentService extends BaseService<Student> {
     /**
      * 批量更新
      *
-     * @param param
+     * @param studentList
      */
-    int batchUpdate(Map<String, Object> param);
+    int batchUpdate(List<Student> studentList);
 }

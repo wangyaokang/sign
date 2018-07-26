@@ -14,10 +14,10 @@ public class Sign extends BaseModel{
     private static final long serialVersionUID = 6536810760403103137L;
 
     /** 签到信息 */
-    private SignInfo signInfo;
+    private SignInfo info;
 
     /** 签到学生 */
-    private User student;
+    private Student student;
 
     /** 签到时间 */
     private Date signDate;
@@ -27,19 +27,19 @@ public class Sign extends BaseModel{
 
     protected Integer status = Constants.Sign.LATE;
 
-    public SignInfo getSignInfo() {
-        return signInfo;
+    public SignInfo getInfo() {
+        return info;
     }
 
-    public void setSignInfo(SignInfo signInfo) {
-        this.signInfo = signInfo;
+    public void setInfo(SignInfo info) {
+        this.info = info;
     }
 
-    public User getStudent() {
+    public Student getStudent() {
         return student;
     }
 
-    public void setStudent(User student) {
+    public void setStudent(Student student) {
         this.student = student;
     }
 

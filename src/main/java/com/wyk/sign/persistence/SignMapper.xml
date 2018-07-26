@@ -86,7 +86,7 @@
 		status)
 		values
 		(#{admin.id},
-		#{class.id},
+		#{classes.id},
 		#{course.id},
 		#{startDate},
 		#{stopDate},
@@ -97,7 +97,7 @@
 	<update id="update" parameterType="com.wyk.sign.model.Sign">
 		update tb_sign set
 		stu_id=#{admin.id},
-		class_id=#{class.id},
+		class_id=#{classes.id},
 		course_id=#{course.id},
 		start_date=#{startDate},
 		stop_date=#{stopDate},

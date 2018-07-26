@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 班级相关接口
@@ -82,7 +79,7 @@ public class ClassesController extends AbstractController {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
         if(null == classes){
-            return new Output(ERROR_NO_RECORD, "没有对应的班级");
+            return new Output(ERROR_NO_RECORD, "没有对应的班级！");
         }
         result.setStatus(SUCCESS);
         result.setMsg("查询班级信息成功！");
@@ -109,6 +106,7 @@ public class ClassesController extends AbstractController {
         classes.setName(input.getString("name"));
         Administrator admin = administratorService.getUserByToken(input.getToken());
         classes.setAdmin(admin);
+        classes.setModifyTime(new Date());
         classesService.save(classes);
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
@@ -141,12 +139,11 @@ public class ClassesController extends AbstractController {
                 student.setClasses(null);
                 paramList.add(student);
             }
-            param.put("list", paramList);
-            int rows = studentService.batchUpdate(param);
+            int rows = studentService.batchUpdate(paramList);
             logger.debug("{}条数据更新成功！", rows);
         }
         classesService.delete(classes);
-        result.setMsg("删除课程成功");
+        result.setMsg("删除班级成功");
         result.setStatus(SUCCESS);
         return result;
     }

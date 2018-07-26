@@ -75,9 +75,8 @@ public abstract class AbstractController implements WebxController {
 	public @ResponseBody Output dispatch(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			response.setCharacterEncoding("UTF-8");
-	 		// response.setContentType("text/html;charset=UTF-8");
 			// 设置Content-Type字段值
-			response.setContentType("application/json;charset=UTF-8"); // 设置Content-Type字段值
+			response.setContentType("application/json;charset=UTF-8");
 			// 读取请求参数
 			Output result = doService(getInput(request));
 			logger.info("执行了的接口, 返回数据: " + JSONObject.toJSONString(result));
@@ -115,6 +114,10 @@ public abstract class AbstractController implements WebxController {
 				if(Item.STU.equals(itemValue)){
 					if(null == currentUser || null == currentUser.getUserType()){
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
+					}
+
+					if(null == currentUser.getClass()){
+						return new Output(ERROR_UNKNOWN, "未选择【班级】，请先完善个人信息！");
 					}
 
 					if(!Constants.User.STUDENT.equals(currentUser.getUserType())){

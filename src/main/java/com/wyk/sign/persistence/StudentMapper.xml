@@ -22,7 +22,7 @@
     </resultMap>
 
     <sql id="selectSQL">
-		select stu.*, cl.id, cl.name from tb_student stu inner join tb_classes cl on stu.class_id = cl.id
+		select stu.*, cl.id as class_id, cl.name as class_name from tb_student stu left join tb_classes cl on stu.class_id = cl.id
 	</sql>
 
     <!-- Base Mapper -->
@@ -105,7 +105,7 @@
     </delete>
     <!-- End of Base Mapper -->
 
-    <update id="batchUpdate" parameterType="hashmap">
+    <update id="batchUpdate" parameterType="List">
         <foreach collection="list" separator=";" item="stu">
             update tb_student set
                 wx_id=#{stu.wxId},

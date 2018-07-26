@@ -17,8 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 班级相关接口
@@ -80,7 +79,7 @@ public class ClassesController extends AbstractController {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
         if(null == classes){
-            return new Output(ERROR_NO_RECORD, "没有对应的班级");
+            return new Output(ERROR_NO_RECORD, "没有对应的班级！");
         }
         result.setStatus(SUCCESS);
         result.setMsg("查询班级信息成功！");
@@ -107,10 +106,45 @@ public class ClassesController extends AbstractController {
         classes.setName(input.getString("name"));
         Administrator admin = administratorService.getUserByToken(input.getToken());
         classes.setAdmin(admin);
+        classes.setModifyTime(new Date());
         classesService.save(classes);
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
         result.setData(classes);
+        return result;
+    }
+
+    /**
+     * 删除班级
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token: wxId
+     *     method: delete
+     *     params: {id : 2}
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output delete(Input input){
+        Output result = new Output();
+        Classes classes = classesService.get(input.getLong("id"));
+        Map<String, Object> param = new HashMap<>();
+        param.put("classId", classes.getId());
+        List<Student> studentList = studentService.query(param);
+        if(studentList.size() != 0){
+            List<Student> paramList = new ArrayList<>();
+            for(Student student : studentList){
+                student.setClasses(null);
+                paramList.add(student);
+            }
+            int rows = studentService.batchUpdate(paramList);
+            logger.debug("{}条数据更新成功！", rows);
+        }
+        classesService.delete(classes);
+        result.setMsg("删除班级成功");
+        result.setStatus(SUCCESS);
         return result;
     }
 

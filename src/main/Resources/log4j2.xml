@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <Properties>
+        <Property name="backupFilePath">log/app/</Property>
+        <Property name="fileName">sign.log</Property>
+    </Properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5p %l{36} - %m%n"/>
+        </Console>
+
+        <RollingFile name="log" fileName="${backupFilePath}/${fileName}" filePattern="${backupFilePath}sign-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS z} [%t] %-5p %l{36} - %m%n"/>
+            <SizeBasedTriggeringPolicy size="20MB"/>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <Logger name="com.wyk.sign" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="log"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </loggers>
+</configuration>

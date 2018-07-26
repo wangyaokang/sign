@@ -37,6 +37,9 @@
 
         <!-- Test -->
         <junit.version>4.11</junit.version>
+
+        <!-- log4j2.version -->
+        <log4j2.version>2.8.2</log4j2.version>
     </properties>
 
     <dependencies>
@@ -171,6 +174,22 @@
             <artifactId>javax.annotation</artifactId>
             <version>10.0-b28</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <version>${log4j2.version}</version>
         </dependency>
     </dependencies>
 

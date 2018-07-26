@@ -70,4 +70,9 @@ public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements El
 
         return teacherList;
     }
+
+    @Override
+    public int deleteElectiveByMap(Map<String, Object> param) {
+        return mapper.deleteElectiveByMap(param);
+    }
 }

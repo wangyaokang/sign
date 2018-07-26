@@ -7,6 +7,7 @@ import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
+import com.wyk.sign.service.ElectiveService;
 import com.wyk.sign.service.SignInfoService;
 import com.wyk.sign.service.SignService;
 import com.wyk.sign.web.api.param.Input;
@@ -36,6 +37,9 @@ public class SignInfoController extends AbstractController {
 
     @Autowired
     SignService signService;
+
+    @Autowired
+    ElectiveService electiveService;
 
     /**
      * 获取签到信息
@@ -95,6 +99,10 @@ public class SignInfoController extends AbstractController {
         signInfo.setClasses(classes);
         Course course = new Course();
         course.setId(input.getLong("courseId"));
+        Elective elective = electiveService.get(input.getParams());
+        if(null == elective){
+            return new Output(ERROR_NO_RECORD, "");
+        }
         signInfo.setCourse(course);
         signInfoService.insert(signInfo);
         result.setMsg("创建签到成功！");

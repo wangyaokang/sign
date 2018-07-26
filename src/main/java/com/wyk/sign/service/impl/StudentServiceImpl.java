@@ -4,17 +4,15 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.Administrator;
 import com.wyk.sign.model.Student;
 import com.wyk.sign.model.User;
-import com.wyk.sign.persistence.AdministratorMapper;
 import com.wyk.sign.persistence.StudentMapper;
-import com.wyk.sign.service.AdministratorService;
 import com.wyk.sign.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +36,11 @@ public class StudentServiceImpl extends BaseServiceImpl<Student> implements Stud
         param.put("wxId", token);
         Student user = studentMapper.get(param);
         return user;
+    }
+
+    @Override
+    public int batchUpdate(List<Student> studentList) {
+        return studentMapper.batchUpdate(studentList);
     }
 
 }

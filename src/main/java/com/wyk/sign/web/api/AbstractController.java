@@ -17,14 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
-import com.wyk.sign.model.Administrator;
 import com.wyk.sign.service.AdministratorService;
 import com.wyk.sign.util.Constants;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +47,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 public abstract class AbstractController implements WebxController {
 
-	protected transient Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected transient Logger logger = LogManager.getLogger(this.getClass());
 
 	@Value("#{properties['web.upload.path']}")
 	protected String uploadPath;
@@ -76,9 +75,8 @@ public abstract class AbstractController implements WebxController {
 	public @ResponseBody Output dispatch(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			response.setCharacterEncoding("UTF-8");
-			// response.setContentType("text/html;charset=UTF-8");
 			// 设置Content-Type字段值
-			response.setContentType("application/json;charset=UTF-8"); // 设置Content-Type字段值
+			response.setContentType("application/json;charset=UTF-8");
 			// 读取请求参数
 			Output result = doService(getInput(request));
 			logger.info("执行了的接口, 返回数据: " + JSONObject.toJSONString(result));
@@ -110,11 +108,16 @@ public abstract class AbstractController implements WebxController {
 					if(currentUser == null){
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
+					logger.info("验证的对象userType为：{}", itemValue.toString());
 				}
 
 				if(Item.STU.equals(itemValue)){
 					if(null == currentUser || null == currentUser.getUserType()){
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
+					}
+
+					if(null == currentUser.getClass()){
+						return new Output(ERROR_UNKNOWN, "未选择【班级】，请先完善个人信息！");
 					}
 
 					if(!Constants.User.STUDENT.equals(currentUser.getUserType())){
@@ -131,6 +134,8 @@ public abstract class AbstractController implements WebxController {
 						return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
 					}
 				}
+
+				logger.info("验证的对象userType为：{}", itemValue.toString());
 				input.setCurrentUser(currentUser);
 			}
 			return (Output) md.invoke(this, input);

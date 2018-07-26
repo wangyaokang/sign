@@ -1,69 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wyk.sign.persistence.StudentMapper">
 
-	<resultMap type="com.wyk.sign.model.Student" id="studentMap">
-		<id property="id" column="id" javaType="long" />
-		<result property="wxId" column="wx_id" />
-		<result property="wxName" column="wx_name" />
-		<result property="wxAvatarUrl" column="wx_avatar_url" />
-		<result property="realName" column="real_name" />
-		<result property="userType" column="user_type" />
-		<result property="sno" column="sno" />
-		<result property="status" column="status" />
-		<result property="createTime" column="create_time" />
-		<result property="modifyTime" column="modify_time" />
-		<association property="classes" javaType="com.wyk.sign.model.Classes">
-			<id property="id" column="class_id"/>
-			<result property="name" column="class_name"/>
-		</association>
-	</resultMap>
+    <resultMap type="com.wyk.sign.model.Student" id="studentMap">
+        <id property="id" column="id" javaType="long"/>
+        <result property="wxId" column="wx_id"/>
+        <result property="wxName" column="wx_name"/>
+        <result property="wxAvatarUrl" column="wx_avatar_url"/>
+        <result property="realName" column="real_name"/>
+        <result property="userType" column="user_type"/>
+        <result property="sno" column="sno"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <association property="classes" javaType="com.wyk.sign.model.Classes">
+            <id property="id" column="class_id"/>
+            <result property="name" column="class_name"/>
+        </association>
+    </resultMap>
 
-	<sql id="selectSQL">
-		select stu.*, cl.id, cl.name from tb_student stu inner join tb_classes cl on stu.class_id = cl.id
+    <sql id="selectSQL">
+		select stu.*, cl.id as class_id, cl.name as class_name from tb_student stu left join tb_classes cl on stu.class_id = cl.id
 	</sql>
 
-	<!-- Base Mapper -->
-	<select id="get" parameterType="hashmap" resultMap="studentMap">
-		<include refid="selectSQL" />
-		<where>
-			<if test="id != null">
-				stu.id = #{id}
-			</if>
-			<if test="wxId != null">
-				and stu.wx_id = #{wxId}
-			</if>
-		</where>
-		limit 0,1
-	</select>
+    <!-- Base Mapper -->
+    <select id="get" parameterType="hashmap" resultMap="studentMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="id != null">
+                stu.id = #{id}
+            </if>
+            <if test="wxId != null">
+                and stu.wx_id = #{wxId}
+            </if>
+        </where>
+        limit 0,1
+    </select>
 
-	<select id="query" resultMap="studentMap">
-		<include refid="selectSQL" />
-	</select>
+    <select id="query" resultMap="studentMap">
+        <include refid="selectSQL"/>
+    </select>
 
-	<select id="queryByMap" parameterType="hashmap" resultMap="studentMap">
-		<include refid="selectSQL" />
-		<where>
-			<if test="wxId != null">
-				stu.wx_id = #{wxId}
-			</if>
-			<if test="wxName != null">
-				and stu.wx_name = #{wxName}
-			</if>
-			<if test="realName != null">
-				and stu.real_name = #{realName}
-			</if>
-			<if test="classId != null">
-				and cl.id = #{classId}
-			</if>
-		</where>
-		order by seq
-	</select>
+    <select id="queryByMap" parameterType="hashmap" resultMap="studentMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="wxId != null">
+                stu.wx_id = #{wxId}
+            </if>
+            <if test="wxName != null">
+                and stu.wx_name = #{wxName}
+            </if>
+            <if test="realName != null">
+                and stu.real_name = #{realName}
+            </if>
+            <if test="classId != null">
+                and cl.id = #{classId}
+            </if>
+        </where>
+    </select>
 
-	<insert id="insert" parameterType="com.wyk.sign.model.Student"
-		useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.wyk.sign.model.Student"
+            useGeneratedKeys="true" keyProperty="id">
 		insert into tb_student (wx_id,
 		wx_name,
 		wx_avatar_url,
@@ -83,7 +82,7 @@
 		#{status})
 	</insert>
 
-	<update id="update" parameterType="com.wyk.sign.model.Student">
+    <update id="update" parameterType="com.wyk.sign.model.Student">
 		update tb_student set
 		wx_id=#{wxId},
 		wx_name=#{wxName},
@@ -96,14 +95,29 @@
 		where id = #{id}
 	</update>
 
-	<delete id="delete" parameterType="com.wyk.sign.model.Student">
-		delete from tb_student
-		<where>
-			<if test="id != null">
-				id = #{id}
-			</if>
-		</where>
-	</delete>
-	<!-- End of Base Mapper -->
+    <delete id="delete" parameterType="com.wyk.sign.model.Student">
+        delete from tb_student
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
+
+    <update id="batchUpdate" parameterType="List">
+        <foreach collection="list" separator=";" item="stu">
+            update tb_student set
+                wx_id=#{stu.wxId},
+                wx_name=#{stu.wxName},
+                wx_avatar_url=#{stu.wxAvatarUrl},
+                real_name=#{stu.realName},
+                class_id=#{stu.classes.id},
+                sno=#{stu.sno},
+                status=#{stu.status},
+                modify_time=#{stu.modifyTime}
+            where id = #{stu.id}
+        </foreach>
+    </update>
 
 </mapper>

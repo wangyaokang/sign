@@ -24,7 +24,7 @@ public class HttpTest {
     public void login(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("wxId", "13381503908");
+        map.put("wxId", "13381503907");
         paramMap.put("method" , "login");
         paramMap.put("params", map);
         String content = invoker.post("/api/login", paramMap);
@@ -38,7 +38,7 @@ public class HttpTest {
     public void register(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("wxId", "13381503907");
+        map.put("wxId", "15017803067");
         map.put("wxName", "AngryAnt");
         map.put("wxAvatarUrl", "wwww.youku.com");
         map.put("userType", "3");
@@ -75,8 +75,23 @@ public class HttpTest {
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", "2");
-        paramMap.put("token" , "0");
+        paramMap.put("token" , "13381503907");
         paramMap.put("method" , "info");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/classes", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //获取班级信息
+    @Test
+    public void deleteClasses(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "delete");
         paramMap.put("params", map);
         String content = invoker.post("/api/classes", paramMap);
         System.out.println(content);
@@ -99,7 +114,7 @@ public class HttpTest {
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
 
-    //获取班级信息
+    //获取课程信息
     @Test
     public void courseInfo(){
         long startTime = System.currentTimeMillis();
@@ -109,6 +124,40 @@ public class HttpTest {
         paramMap.put("method" , "info");
         paramMap.put("params", map);
         String content = invoker.post("/api/course", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //获取课程信息
+    @Test
+    public void deleteCourse(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "delete");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/course", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //新增签到信息
+    @Test
+    public void insertSignInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("startDate", "2018-07-26 09:00");
+        map.put("stopDate", "2018-07-26 10:00");
+        map.put("address", "凌阳大厦");
+        map.put("classId", "1");
+        map.put("courseId", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/signInfo", paramMap);
         System.out.println(content);
         System.out.println("获取:" + (System.currentTimeMillis() - startTime));
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));

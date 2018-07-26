@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public interface ElectiveService extends BaseService<Elective> {
 
+
     /**
      * 通过adminId 或 classId 获取课程列表
      * @param param
@@ -35,4 +36,12 @@ public interface ElectiveService extends BaseService<Elective> {
      * @return
      */
     List<Administrator> getTeacherList(Map<String, Object> param);
+
+
+    /**
+     * 根据课程id、教师id、班级id删除授课信息
+     * @param param
+     * @return
+     */
+    int deleteElectiveByMap(Map<String, Object> param);
 }

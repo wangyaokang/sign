@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wyk.framework.entity.AutoIdEntity;
@@ -24,8 +24,8 @@ import com.wyk.framework.service.BaseService;
  *
  */
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
-	
-	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	protected final Logger logger = LogManager.getLogger(this.getClass());
 	
 	@Autowired
 	protected BaseMapper<T> mapper;

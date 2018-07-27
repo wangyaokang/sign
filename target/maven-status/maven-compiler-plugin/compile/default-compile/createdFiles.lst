@@ -22,6 +22,7 @@ com\wyk\sign\util\Constants$Sign.class
 com\wyk\sign\annotation\Item.class
 com\wyk\sign\model\Sign.class
 com\wyk\sign\persistence\AdministratorMapper.class
+com\wyk\sign\web\api\ElectiveController.class
 com\wyk\framework\mybatis\plugin\OffsetLimitInterceptor$1.class
 com\wyk\sign\persistence\SignInfoMapper.class
 com\wyk\framework\jdbc\support\OffsetLimitPreparedStatementCallback.class

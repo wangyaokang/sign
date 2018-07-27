@@ -19,7 +19,7 @@
 			<result property="userType" column="admin_user_type" />
 			<result property="status" column="admin_status" />
 		</association>
-		<association property="class" javaType="com.wyk.sign.model.Classes">
+		<association property="classes" javaType="com.wyk.sign.model.Classes">
 			<id property="id" column="class_id"/>
 			<result property="name" column="class_name" />
 			<result property="status" column="class_status" />
@@ -41,9 +41,9 @@
 			cl.status as class_status,
 			co.name as course_name,
 			co.status as course_status
-		 from ((tb_sign_info s inner join tb_classes cl on s.class_id = cl.id)
-		 		inner join tb_course co on s.course_id = co.id)
-		 		inner join tb_admin ad as on s.admin_id = ad.id and ad.user_type = 2
+		 from tb_sign_info s inner join tb_classes cl on s.class_id = cl.id
+		 		inner join tb_admin ad on s.admin_id = ad.id
+		 		left join tb_course co on s.course_id = co.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -64,46 +64,52 @@
 	<select id="queryByMap" parameterType="hashmap" resultMap="signInfoMap">
 		<include refid="selectSQL" />
 		<where>
-			<if test="class.name != null">
-				class_name = #{class.name}
+			<if test="class_name != null">
+				cl.name = #{className}
 			</if>
-			<if test="course.name != null">
-				and course_name = #{course.name}
+			<if test="courseName != null">
+				and co.name = #{courseName}
 			</if>
-			<if test="admin.wxName != null">
-				and admin_wx_name = #{admin.wxName}
+			<if test="wxId != null">
+				and ad.wx_id = #{wxId}
 			</if>
-			<if test="admin.realName != null">
-				and real_name = #{admin.realName}
+			<if test="wxName != null">
+				and ad.wx_name = #{wxName}
+			</if>
+			<if test="realName != null">
+				and ad.real_name = #{realName}
+			</if>
+			<if test="selectDate != null">
+				and DATEDIFF(s.start_date, selectDate) = 0
 			</if>
 		</where>
-		order by seq
+		order by start_date desc
 	</select>
 
 	<insert id="insert" parameterType="com.wyk.sign.model.SignInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into tb_sign_info (
-		admin_id,
-		class_id,
-		course_id,
-		start_date,
-		stop_date,
-		address,
-		status)
+			admin_id,
+			class_id,
+			course_id,
+			start_date,
+			stop_date,
+			address,
+			status)
 		values
-		(#{admin.id},
-		#{class.id},
-		#{course.id},
-		#{startDate},
-		#{stopDate},
-		#{address},
-		#{status})
+			(#{admin.id},
+			#{classes.id},
+			#{course.id},
+			#{startDate},
+			#{stopDate},
+			#{address},
+			#{status})
 	</insert>
 
 	<update id="update" parameterType="com.wyk.sign.model.SignInfo">
 		update tb_sign_info set
 		admin_id=#{admin.id},
-		class_id=#{class.id},
+		class_id=#{classes.id},
 		course_id=#{course.id},
 		start_date=#{startDate},
 		stop_date=#{stopDate},

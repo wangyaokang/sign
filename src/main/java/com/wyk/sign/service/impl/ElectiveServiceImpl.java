@@ -63,7 +63,7 @@ public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements El
 
         if(electiveList.size() != 0){
             for(Elective elective : electiveList){
-                Administrator teacher = elective.getTeacher();
+                Administrator teacher = elective.getAdmin();
                 teacherList.add(teacher);
             }
         }

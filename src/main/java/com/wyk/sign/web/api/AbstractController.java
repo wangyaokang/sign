@@ -108,7 +108,6 @@ public abstract class AbstractController implements WebxController {
 					if(currentUser == null){
 						return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
 					}
-					logger.info("验证的对象userType为：{}", itemValue.toString());
 				}
 
 				if(Item.STU.equals(itemValue)){

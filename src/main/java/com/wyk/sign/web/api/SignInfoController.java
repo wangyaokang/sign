@@ -10,6 +10,7 @@ import com.wyk.sign.model.*;
 import com.wyk.sign.service.ElectiveService;
 import com.wyk.sign.service.SignInfoService;
 import com.wyk.sign.service.SignService;
+import com.wyk.sign.util.Constants;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,11 +101,14 @@ public class SignInfoController extends AbstractController {
         signInfo.setClasses(classes);
         Course course = new Course();
         course.setId(input.getLong("courseId"));
-        Elective elective = electiveService.get(input.getParams());
-        if(null == elective){
-            return new Output(ERROR_NO_RECORD, "");
-        }
         signInfo.setCourse(course);
+        if(admin.getUserType().equals(Constants.User.TEACHER)){
+            input.getParams().put("adminId", admin.getId());
+            Elective elective = electiveService.get(input.getParams());
+            if (null == elective) {
+                return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
+            }
+        }
         signInfoService.insert(signInfo);
         result.setMsg("创建签到成功！");
         result.setStatus(SUCCESS);
@@ -116,7 +121,7 @@ public class SignInfoController extends AbstractController {
      * <pre>
      *      method:modify
      *      token: wxopenid, 微信wxid
-     *      params: 全部信息，例如：{id: "25", "startDate" : "2018-06-09 10:30", "stopDate" : "2018-06-09 12:30", "address" : "xxxx大楼", "classId" : "02", "courseId" : "2"}
+     *      params: 全部信息，例如：{id: "25", "startDate" : "2018-06-09 10:30", "stopDate" : "2018-06-09 12:30", "address" : "xxxx大楼", "classId" : "2", "courseId" : "2"}
      * </pre>
      *
      * @param input
@@ -142,6 +147,7 @@ public class SignInfoController extends AbstractController {
         Course course = new Course();
         course.setId(input.getLong("courseId"));
         signInfo.setCourse(course);
+        signInfo.setModifyTime(new Date());
         signInfoService.update(signInfo);
         result.setStatus(SUCCESS);
         result.setMsg("修改签到信息成功！");

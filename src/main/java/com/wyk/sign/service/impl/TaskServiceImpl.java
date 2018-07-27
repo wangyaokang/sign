@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.wyk.sign.service.impl;
 
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author wyk
- *
  */
 @Service
 public class TaskServiceImpl extends BaseServiceImpl<Task> implements TaskService {
@@ -22,6 +21,7 @@ public class TaskServiceImpl extends BaseServiceImpl<Task> implements TaskServic
 
     @Override
     public void deleteByInfoId(Integer infoId) {
+        cacheMap.removeContainsKey(this.getClass().getSimpleName());
         mapper.deleteByInfoId(infoId);
     }
 }

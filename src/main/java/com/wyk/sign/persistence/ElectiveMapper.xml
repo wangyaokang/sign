@@ -15,7 +15,7 @@
 			<result property="userType" column="admin_user_type" />
 			<result property="status" column="admin_status" />
 		</association>
-		<association property="class" javaType="com.wyk.sign.model.Classes">
+		<association property="classes" javaType="com.wyk.sign.model.Classes">
 			<id property="id" column="class_id"/>
 			<result property="name" column="class_name" />
 			<result property="status" column="class_status" />
@@ -28,23 +28,22 @@
 	</resultMap>
 
 	<sql id="selectSQL">
-		select s.*,
+		select e.*,
+			ad.id as admin_id,
 			ad.wx_name as admin_wx_name,
 			ad.wx_avatar_url as admin_wx_avatar_url,
 			ad.real_name as admin_real_name,
 			ad.user_type as admin_user_type,
+			cl.id as class_id,
 			cl.name as class_name,
 			cl.status as class_status,
+			co.id as course_id,
 			co.name as course_name,
 			co.status as course_status
-		 from tb_classes_course_admin s
-		 		inner join tb_classes cl on s.class_id = cl.id
-		 		inner join tb_course co on s.course_id = co.id
-		 		inner join tb_admin ad as on s.admin_id = ad.id
-	</sql>
-
-	<sql id="get">
-
+		 from tb_classes_course_admin e
+		 		inner join tb_classes cl on e.class_id = cl.id
+		 		inner join tb_course co on e.course_id = co.id
+		 		inner join tb_admin ad on e.admin_id = ad.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -52,16 +51,10 @@
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
-				s.id = #{id}
+				e.id = #{id}
 			</if>
-			<if test="classId != null">
-				cl.id = #{classId}
-			</if>
-			<if test="courseId != null">
-				co.id = #{courseId}
-			</if>
-			<if test="adminId != null">
-				ad.id = #{adminId}
+			<if test="classId != null and courseId != null and adminId != null">
+				and cl.id = #{classId} and co.id = #{courseId} and ad.id = #{adminId}
 			</if>
 		</where>
 		limit 0,1
@@ -78,10 +71,10 @@
 				cl.id = #{classId}
 			</if>
 			<if test="courseId != null">
-				co.id = #{courseId}
+				and co.id = #{courseId}
 			</if>
 			<if test="adminId != null">
-				ad.id = #{adminId}
+				and ad.id = #{adminId}
 			</if>
 		</where>
 	</select>
@@ -93,16 +86,16 @@
 		class_id,
 		course_id)
 		values
-		(#{teacher.id},
-		#{class.id},
+		(#{admin.id},
+		#{classes.id},
 		#{course.id}
 		)
 	</insert>
 
 	<update id="update" parameterType="com.wyk.sign.model.Elective">
 		update tb_classes_course_admin set
-		admin_id=#{teacher.id},
-		class_id=#{class.id},
+		admin_id=#{admin.id},
+		class_id=#{classes.id},
 		course_id=#{course.id},
 		where id = #{id}
 	</update>
@@ -129,8 +122,8 @@
 			<if test="courseId != null">
 				and course_id = #{courseId}
 			</if>
-			<if test="teacherId != null">
-				and admin_id = #{teacherId}
+			<if test="adminId != null">
+				and admin_id = #{adminId}
 			</if>
 		</where>
 	</delete>

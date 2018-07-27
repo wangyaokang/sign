@@ -39,6 +39,9 @@
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.8.2" />
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-web:2.8.2" />
         </element>
+        <element id="directory" name="classes">
+          <element id="module-output" name="sign" />
+        </element>
       </element>
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/META-INF/MANIFEST.MF" />

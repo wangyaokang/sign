@@ -78,8 +78,8 @@ public class SignController extends AbstractController {
         Output result = new Output();
         Sign sign = new Sign();
         SignInfo signInfo = signInfoService.get(input.getLong("info_id"));
-        sign.setSignInfo(signInfo);
-        User student = input.getCurrentUser();
+        sign.setInfo(signInfo);
+        Student student = (Student) input.getCurrentUser();
         sign.setStudent(student);
         sign.setSignAddress(input.getString("signAddress"));
 

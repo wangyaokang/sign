@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.wyk.framework.service.impl;
 
@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wyk.framework.cache.impl.LocalCacheManagerImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,128 +18,144 @@ import com.wyk.framework.page.PageBounds;
 import com.wyk.framework.page.Paginator;
 import com.wyk.framework.service.BaseService;
 
+import javax.swing.*;
+
 /**
  * Service的CRUD基类
- * 
- * @author wyk
  *
+ * @author wyk
  */
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
-	protected final Logger logger = LogManager.getLogger(this.getClass());
-	
-	@Autowired
-	protected BaseMapper<T> mapper;
+    protected final Logger logger = LogManager.getLogger(this.getClass());
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#get(java.lang.Long)
-	 */
-	@Override
-	public T get(Long id) {
-		if (id == null) {
-			return null;
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
-		return get(map);
-	}
+    @Autowired
+    protected LocalCacheManagerImpl cacheMap;
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#get(java.lang.Long)
-	 */
-	@Override
-	public T get(Map<String, Object> map) {
-		if (map == null || map.isEmpty()) {
-			return null;
-		}
-		return mapper.get(map);
-	}
+    @Autowired
+    protected BaseMapper<T> mapper;
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#query()
-	 */
-	@Override
-	public List<T> query() {
-		return mapper.query();
-	}
+    @Override
+    public T get(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#query(com.wyk.framework.page.Paginator)
-	 */
-	@Override
-	public List<T> query(Paginator page) {
-		return mapper.query(PageBounds.wrap(page));
-	}
+        String tokenKey = this.getClass().getSimpleName() + id;
+        if (null != cacheMap.get(tokenKey)) {
+            return (T) cacheMap.get(tokenKey);
+        }
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#query(java.util.Map)
-	 */
-	@Override
-	public List<T> query(Map<String, Object> map) {
-		if (map == null || map.isEmpty()) {
-			return query();
-		}
-		return mapper.queryByMap(map);
-	}
+        T obj = mapper.get(map);
+        if (null != obj) {
+            cacheMap.set(tokenKey, obj);
+        }
+        return obj;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#query(java.util.Map, com.wyk.framework.page.Paginator)
-	 */
-	@Override
-	public List<T> query(Map<String, Object> map, Paginator page) {
-		if (map == null || map.isEmpty()) {
-			return query(page);
-		}
-		return mapper.queryByMap(map, PageBounds.wrap(page));
-	}
+    @Override
+    public T get(Map<String, Object> map) {
+        if (map == null || map.isEmpty()) {
+            return null;
+        }
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#insert(java.lang.Object)
-	 */
-	@Override
-	public void insert(T entity) {
-		if (entity == null) {
-			return;
-		}
-		mapper.insert(entity);
-	}
+        String tokenKey = this.getClass().getSimpleName() + map.get("wxId");
+        if (null != cacheMap.get(tokenKey)) {
+            return (T) cacheMap.get(tokenKey);
+        }
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#update(java.lang.Object)
-	 */
-	@Override
-	public void update(T entity) {
-		if (entity == null) {
-			return;
-		}
-		mapper.update(entity);
-	}
+        T obj = mapper.get(map);
+        if (null != obj) {
+            cacheMap.set(tokenKey, obj);
+        }
+        return obj;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#save(java.lang.Object)
-	 */
-	@Override
-	public void save(T entity) {
-		if (!(entity instanceof AutoIdEntity)) {
-			return;
-		}
-		AutoIdEntity baseEntity = (AutoIdEntity) entity;
-		if (baseEntity.getId() == null || baseEntity.getId() == 0) {
-			insert(entity);
-		} else {
-			update(entity);
-		}
-	}
+    @Override
+    public List<T> query() {
+        String tokenKey = this.getClass().getSimpleName() + "query";
+        if (null != cacheMap.get(tokenKey)) {
+            return (List<T>) cacheMap.get(tokenKey);
+        }
 
-	/* (non-Javadoc)
-	 * @see com.wyk.framework.service.BaseService#delete(java.lang.Long)
-	 */
-	@Override
-	public void delete(T entity) {
-		if (entity == null) {
-			return;
-		}
-		mapper.delete(entity);
-	}
+        List<T> objList = mapper.query();
+        if (null != objList && objList.size() != 0) {
+            cacheMap.set(tokenKey, objList);
+        }
+
+        return objList;
+    }
+
+    @Override
+    public List<T> query(Paginator page) {
+        return mapper.query(PageBounds.wrap(page));
+    }
+
+    @Override
+    public List<T> query(Map<String, Object> map) {
+        if (map == null || map.isEmpty()) {
+            return query();
+        }
+        return mapper.queryByMap(map);
+    }
+
+    @Override
+    public List<T> query(Map<String, Object> map, Paginator page) {
+        if (map == null || map.isEmpty()) {
+            return query(page);
+        }
+        return mapper.queryByMap(map, PageBounds.wrap(page));
+    }
+
+    @Override
+    public void insert(T entity) {
+        if (entity == null) {
+            return;
+        }
+        mapper.insert(entity);
+    }
+
+    @Override
+    public void update(T entity) {
+        if (entity == null) {
+            return;
+        }
+
+        String tokenKey = this.getClass().getSimpleName() + ((AutoIdEntity) entity).getId();
+        if (null != cacheMap.get(tokenKey)) {
+            cacheMap.delete(tokenKey);
+        }
+
+        mapper.update(entity);
+    }
+
+    @Override
+    public void save(T entity) {
+        if (!(entity instanceof AutoIdEntity)) {
+            return;
+        }
+        AutoIdEntity baseEntity = (AutoIdEntity) entity;
+        if (baseEntity.getId() == null || baseEntity.getId() == 0) {
+            insert(entity);
+        } else {
+            update(entity);
+        }
+    }
+
+    @Override
+    public void delete(T entity) {
+        if (entity == null) {
+            return;
+        }
+
+        String tokenKey = this.getClass().getSimpleName() + ((AutoIdEntity) entity).getId();
+        if (null != cacheMap.get(tokenKey)) {
+           cacheMap.delete(tokenKey);
+        }
+
+        mapper.delete(entity);
+    }
 
 }

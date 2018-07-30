@@ -89,21 +89,21 @@
 	<insert id="insert" parameterType="com.wyk.sign.model.SignInfo"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into tb_sign_info (
-		admin_id,
-		class_id,
-		course_id,
-		start_date,
-		stop_date,
-		address,
-		status)
+			admin_id,
+			class_id,
+			course_id,
+			start_date,
+			stop_date,
+			address,
+			status)
 		values
-		(#{admin.id},
-		#{classes.id},
-		#{course.id},
-		#{startDate},
-		#{stopDate},
-		#{address},
-		#{status})
+			(#{admin.id},
+			#{classes.id},
+			#{course.id},
+			#{startDate},
+			#{stopDate},
+			#{address},
+			#{status})
 	</insert>
 
 	<update id="update" parameterType="com.wyk.sign.model.SignInfo">

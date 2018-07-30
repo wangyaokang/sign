@@ -26,9 +26,6 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
     @Autowired
     private AdministratorMapper adminMapper;
 
-    @Autowired
-    private StudentMapper studentMapper;
-
     @Override
     public User getAnonymous() {
         return User.Anonymous;

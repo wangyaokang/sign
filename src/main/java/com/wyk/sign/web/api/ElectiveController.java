@@ -158,5 +158,4 @@ public class ElectiveController extends AbstractController {
         result.setMsg("删除授课信息成功！");
         return result;
     }
-
 }

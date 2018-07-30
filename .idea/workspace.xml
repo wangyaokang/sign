@@ -3,6 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="f7ea17c3-43a4-4461-b899-703f2aa77002" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/app/sign.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/app/sign.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/CacheManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/CacheManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/EhcacheManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/EhcacheManagerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/BaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/BaseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/AdministratorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/AdministratorServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/TaskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +30,8 @@
       <file leaf-file-name="HttpTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4312">
-              <caret line="201" selection-start-line="201" selection-end-line="201" />
+            <state relative-caret-position="269">
+              <caret line="205" column="31" lean-forward="true" selection-start-line="205" selection-start-column="31" selection-end-line="205" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -26,11 +39,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SignInfoMapper.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml">
+      <file leaf-file-name="BaseServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="803">
-              <caret line="126" column="17" selection-start-line="126" selection-start-column="17" selection-end-line="126" selection-end-column="17" />
+            <state relative-caret-position="374">
+              <caret line="73" column="5" lean-forward="true" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1027#1043#0" expanded="true" />
+                <element signature="e#2298#2299#0" expanded="true" />
+                <element signature="e#2356#2357#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalCacheManagerImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EhcacheManagerImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/EhcacheManagerImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="406">
+              <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CacheManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/CacheManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="51" selection-start-line="51" selection-end-line="61" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -38,8 +84,20 @@
       <file leaf-file-name="SignInfoController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignInfoController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2530">
-              <caret line="135" column="9" selection-start-line="135" selection-start-column="9" selection-end-line="135" selection-end-column="9" />
+            <state relative-caret-position="-934">
+              <caret line="112" column="33" lean-forward="true" selection-start-line="112" selection-start-column="33" selection-end-line="112" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SignController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,15 +110,11 @@
       <find>library</find>
       <find>mapper</find>
       <find>adminMap</find>
-      <find>class.id</find>
-      <find>setSignInfo</find>
     </findStrings>
     <replaceStrings>
       <replace>sign</replace>
       <replace>baseMapper</replace>
       <replace>userMap</replace>
-      <replace>classes.id</replace>
-      <replace>setInfo</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -85,6 +139,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/TaskInfoServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/CourseController.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/wyk/sign/utils/HttpInvoker.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java" />
         <option value="$PROJECT_DIR$/src/main/Resources/spring/spring-mvc-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" />
@@ -97,18 +152,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/UserMapper.xml" />
         <option value="$PROJECT_DIR$/target/classes/com/wyk/sign/persistence/UserMapper.xml" />
-        <option value="$PROJECT_DIR$/target/classes/com/wyk/sign/persistence/SignInfoMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Elective.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ElectiveServiceImpl.java" />
-        <option value="$PROJECT_DIR$/target/classes/com/wyk/sign/persistence/ElectiveMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Sign.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignInfoController.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/BaseService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/EhcacheManagerImpl.java" />
       </list>
     </option>
   </component>
@@ -141,7 +186,24 @@
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
           <item name="sign" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="sign" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="clean" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="sign" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="compiler" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="sign" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Run Configurations" type="21c1f71a:MavenProjectsStructure$RunConfigurationsNode" />
         </path>
       </expand>
       <select />
@@ -168,7 +230,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,7 +278,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
+              <item name="framework" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
@@ -224,71 +288,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="wyk" type="462c0819:PsiDirectoryNode" />
               <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="Elective" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="Sign" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="SignInfo" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
@@ -321,31 +320,7 @@
               <item name="sign" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="CourseController" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="ElectiveController" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="SignInfoController" type="1a9f42e2:ClassTreeNode" />
+              <item name="SignController" type="1a9f42e2:ClassTreeNode" />
             </path>
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
@@ -475,8 +450,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -519,68 +492,33 @@
     </option>
   </component>
   <component name="RunManager" selected="JUnit.HttpTest.signInfo">
+    <configuration name="UserServiceImpl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wyk.sign.service.impl.UserServiceImpl" />
+      <module name="sign" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wyk.sign.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="HttpTest.insertCourse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="HttpTest.login" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="sign" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.wyk.sign.*" />
+          <option name="PATTERN" value="com.wyk.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.wyk.sign" />
-      <option name="MAIN_CLASS_NAME" value="com.wyk.sign.HttpTest" />
-      <option name="METHOD_NAME" value="insertCourse" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="HttpTest.insertElective" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="sign" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wyk.sign.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.wyk.sign" />
-      <option name="MAIN_CLASS_NAME" value="com.wyk.sign.HttpTest" />
-      <option name="METHOD_NAME" value="insertElective" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="HttpTest.insertSignInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="sign" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wyk.sign.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.wyk.sign" />
-      <option name="MAIN_CLASS_NAME" value="com.wyk.sign.HttpTest" />
-      <option name="METHOD_NAME" value="insertSignInfo" />
+      <option name="PACKAGE_NAME" value="com.wyk" />
+      <option name="MAIN_CLASS_NAME" value="com.wyk.HttpTest" />
+      <option name="METHOD_NAME" value="login" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -621,29 +559,6 @@
       <option name="PACKAGE_NAME" value="com.wyk.sign" />
       <option name="MAIN_CLASS_NAME" value="com.wyk.sign.HttpTest" />
       <option name="METHOD_NAME" value="signInfo" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="HttpTest.signInfoModify" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="sign" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.wyk.sign.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.wyk.sign" />
-      <option name="MAIN_CLASS_NAME" value="com.wyk.sign.HttpTest" />
-      <option name="METHOD_NAME" value="signInfoModify" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -718,19 +633,15 @@
     </configuration>
     <list>
       <item itemvalue="Maven.sign" />
-      <item itemvalue="JUnit.HttpTest.insertSignInfo" />
-      <item itemvalue="JUnit.HttpTest.insertCourse" />
-      <item itemvalue="JUnit.HttpTest.insertElective" />
-      <item itemvalue="JUnit.HttpTest.signInfoModify" />
+      <item itemvalue="JUnit.HttpTest.login" />
+      <item itemvalue="Application.UserServiceImpl" />
       <item itemvalue="JUnit.HttpTest.signInfo" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.HttpTest.signInfo" />
-        <item itemvalue="JUnit.HttpTest.signInfoModify" />
-        <item itemvalue="JUnit.HttpTest.insertSignInfo" />
-        <item itemvalue="JUnit.HttpTest.insertElective" />
-        <item itemvalue="JUnit.HttpTest.insertCourse" />
+        <item itemvalue="JUnit.HttpTest.login" />
+        <item itemvalue="Application.UserServiceImpl" />
       </list>
     </recent_temporary>
   </component>
@@ -749,7 +660,7 @@
       <workItem from="1532343553144" duration="9312000" />
       <workItem from="1532358016000" duration="1013000" />
       <workItem from="1532429951761" duration="14708000" />
-      <workItem from="1532689872659" duration="594000" />
+      <workItem from="1532851665899" duration="3840000" />
     </task>
     <task id="LOCAL-00001" summary="0717更新。">
       <created>1531843976980</created>
@@ -765,82 +676,76 @@
       <option name="project" value="LOCAL" />
       <updated>1532358843234</updated>
     </task>
-    <task id="LOCAL-00003" summary="新增签到信息逻辑 add by wyk 0727">
-      <created>1532623687927</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1532623687927</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="HttpTest_insertSignInfo - 2018.07.26 at 23h 41m 28s.xml">
-      <configuration name="HttpTest.insertSignInfo" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 22h 17m 00s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_insertSignInfo - 2018.07.26 at 23h 42m 37s.xml">
-      <configuration name="HttpTest.insertSignInfo" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 22h 19m 09s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_insertSignInfo - 2018.07.26 at 23h 48m 59s.xml">
-      <configuration name="HttpTest.insertSignInfo" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 22h 31m 01s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_insertSignInfo - 2018.07.26 at 23h 50m 30s.xml">
-      <configuration name="HttpTest.insertSignInfo" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 22h 32m 08s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_insertSignInfo - 2018.07.26 at 23h 51m 39s.xml">
-      <configuration name="HttpTest.insertSignInfo" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 22h 49m 09s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_insertSignInfo - 2018.07.26 at 23h 53m 22s.xml">
-      <configuration name="HttpTest.insertSignInfo" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 22h 59m 55s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_signInfoModify - 2018.07.26 at 23h 54m 28s.xml">
-      <configuration name="HttpTest.signInfoModify" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 23h 01m 51s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_signInfoModify - 2018.07.26 at 23h 58m 22s.xml">
-      <configuration name="HttpTest.signInfoModify" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 23h 07m 31s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_signInfoModify - 2018.07.27 at 00h 00m 53s.xml">
-      <configuration name="HttpTest.signInfoModify" configurationId="JUnit" />
+    <history-entry file="HttpTest_login - 2018.07.24 at 23h 25m 10s.xml">
+      <configuration name="HttpTest.login" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="HttpTest_signInfo - 2018.07.27 at 00h 01m 51s.xml">
+    <history-entry file="HttpTest_signInfo - 2018.07.29 at 16h 44m 03s.xml">
       <configuration name="HttpTest.signInfo" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30515000" />
+    <option name="totallyTimeSpent" value="25997000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info id="Image Layers" order="2" />
-      <window_info anchor="bottom" id="Java Enterprise" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5010661" side_tool="true" weight="0.30144605" />
       <window_info anchor="right" id="Maven Projects" order="3" weight="0.32995737" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.48164627" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.25583982" />
-      <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2457356" />
-      <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38820913" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.34816462" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.48164627" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4989339" weight="0.40266964" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2457356" />
+      <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.38820913" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.34816462" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -871,12 +776,17 @@
     <MESSAGE value="新增用户等类" />
     <MESSAGE value="0717更新。" />
     <MESSAGE value="Merge remote-tracking branch 'remotes/origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/com/wyk/sign/annotation/Checked.java&#10;#&#9;src/main/java/com/wyk/sign/annotation/Item.java&#10;#&#9;src/main/java/com/wyk/sign/service/ClassesService.java&#10;#&#9;src/main/java/com/wyk/sign/service/ElectiveService.java&#10;#&#9;src/main/java/com/wyk/sign/util/Constants.java&#10;#&#9;src/main/java/com/wyk/sign/web/UserTokenController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/AbstractController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/ClassesController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/UserController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/param/Input.java" />
-    <MESSAGE value="新增签到信息逻辑 add by wyk 0727" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增签到信息逻辑 add by wyk 0727" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'remotes/origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/com/wyk/sign/annotation/Checked.java&#10;#&#9;src/main/java/com/wyk/sign/annotation/Item.java&#10;#&#9;src/main/java/com/wyk/sign/service/ClassesService.java&#10;#&#9;src/main/java/com/wyk/sign/service/ElectiveService.java&#10;#&#9;src/main/java/com/wyk/sign/util/Constants.java&#10;#&#9;src/main/java/com/wyk/sign/web/UserTokenController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/AbstractController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/ClassesController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/UserController.java&#10;#&#9;src/main/java/com/wyk/sign/web/api/param/Input.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java</url>
+          <line>72</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java</url>
           <line>154</line>
@@ -884,22 +794,86 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java</url>
+          <line>95</line>
+          <properties />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/UserServiceImpl.java</url>
           <line>41</line>
           <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignInfoController.java</url>
-          <line>87</line>
-          <properties />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="16" />
+      <option name="time" value="13" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.3.0/mybatis-3.3.0.jar!/org/apache/ibatis/session/Configuration.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="676" selection-start-line="676" selection-end-line="676" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.3.0/mybatis-3.3.0.jar!/org/apache/ibatis/binding/MapperMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="344" selection-start-line="344" selection-end-line="344" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/param/Input.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="217" selection-start-line="217" selection-end-line="217" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/param/Output.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.2.2.RELEASE/spring-webmvc-4.2.2.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.2.2.RELEASE/spring-webmvc-4.2.2.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="453" selection-start-line="453" selection-end-line="453" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.2.2.RELEASE/spring-webmvc-4.2.2.RELEASE.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.2.2.RELEASE/spring-webmvc-4.2.2.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="458" selection-start-line="458" selection-end-line="458" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Resources/log4j.properties" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Administrator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -936,6 +910,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2772">
+          <caret line="126" column="17" selection-start-line="126" selection-start-column="17" selection-end-line="126" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/persistence/TaskInfoMapper.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/persistence/ElectiveMapper.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/persistence/UserMapper.java" />
@@ -962,6 +943,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/target/classes/com/wyk/sign/service/impl/UserServiceImpl.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/UserServiceImpl.java" />
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.2.2.RELEASE/spring-web-4.2.2.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="62" lean-forward="true" selection-start-line="62" selection-end-line="62" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/BaseModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="327">
@@ -996,50 +984,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+        <state relative-caret-position="398">
+          <caret line="216" column="27" lean-forward="true" selection-start-line="216" selection-start-column="27" selection-end-line="216" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/log/app/sign.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/param/Input.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-734">
-          <caret line="36" column="38" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.2.2.RELEASE/spring-web-4.2.2.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.2.2.RELEASE/spring-webmvc-4.2.2.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="76" column="13" lean-forward="true" selection-start-line="76" selection-start-column="13" selection-end-line="76" selection-end-column="13" />
+        <state relative-caret-position="-1338">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="76" column="51" lean-forward="true" selection-start-line="76" selection-start-column="51" selection-end-line="76" selection-end-column="51" />
+        <state relative-caret-position="1035">
+          <caret line="75" column="13" lean-forward="true" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -1047,118 +1007,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Resources/log4j2.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/com/wyk/sign/persistence/SignInfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="97" column="18" lean-forward="true" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ElectiveServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/com/wyk/sign/persistence/ElectiveMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="74" column="17" lean-forward="true" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/CourseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="105" column="22" selection-start-line="105" selection-start-column="22" selection-end-line="105" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/CourseMapper.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/service/BaseService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Elective.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="374">
+          <caret line="73" column="5" lean-forward="true" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1027#1043#0" expanded="true" />
+            <element signature="e#2298#2299#0" expanded="true" />
+            <element signature="e#2356#2357#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        <state relative-caret-position="198">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/CacheManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="76" column="60" lean-forward="true" selection-start-line="76" selection-start-column="60" selection-end-line="76" selection-end-column="60" />
+        <state relative-caret-position="450">
+          <caret line="51" selection-start-line="51" selection-end-line="61" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Sign.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/EhcacheManagerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="78" column="31" lean-forward="true" selection-start-line="78" selection-start-column="31" selection-end-line="78" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/SignInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="64" column="16" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
+        <state relative-caret-position="406">
+          <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignInfoController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2530">
-          <caret line="135" column="9" selection-start-line="135" selection-start-column="9" selection-end-line="135" selection-end-column="9" />
+        <state relative-caret-position="-934">
+          <caret line="112" column="33" lean-forward="true" selection-start-line="112" selection-start-column="33" selection-end-line="112" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4312">
-          <caret line="201" selection-start-line="201" selection-end-line="201" />
+        <state relative-caret-position="269">
+          <caret line="205" column="31" lean-forward="true" selection-start-line="205" selection-start-column="31" selection-end-line="205" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="803">
-          <caret line="126" column="17" selection-start-line="126" selection-start-column="17" selection-end-line="126" selection-end-column="17" />
+        <state relative-caret-position="330">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1168,7 +1081,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>sign:war exploded</last-edited>
+          <last-edited>sign:war</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

@@ -11,7 +11,7 @@ import com.wyk.framework.page.Paginator;
 /**
  * Single Entity<T> CRUD Service
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public interface BaseService<T> {

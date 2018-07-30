@@ -89,4 +89,14 @@ public class EhcacheManagerImpl implements CacheManager, InitializingBean {
 		ehcache.remove(key);
 	}
 
+	@Override
+	public void removeContainsKey(String key) {
+
+	}
+
+	@Override
+	public void removeAll() {
+
+	}
+
 }

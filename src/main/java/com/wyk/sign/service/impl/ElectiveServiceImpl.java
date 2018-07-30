@@ -29,7 +29,7 @@ public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements El
     @Override
     public List<Course> getCourseList(Map<String, Object> param) {
         List<Course> courseList = new ArrayList<>();
-        List<Elective> electiveList = mapper.queryByMap(param);
+        List<Elective> electiveList = query(param);
 
         if(electiveList.size() != 0){
             for(Elective elective : electiveList){
@@ -44,7 +44,7 @@ public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements El
     @Override
     public List<Classes> getClassesList(Map<String, Object> param) {
         List<Classes> classesList = new ArrayList<>();
-        List<Elective> electiveList = mapper.queryByMap(param);
+        List<Elective> electiveList = query(param);
 
         if(electiveList.size() != 0){
             for(Elective elective : electiveList){
@@ -59,7 +59,7 @@ public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements El
     @Override
     public List<Administrator> getTeacherList(Map<String, Object> param) {
         List<Administrator> teacherList = new ArrayList<>();
-        List<Elective> electiveList = mapper.queryByMap(param);
+        List<Elective> electiveList = query(param);
 
         if(electiveList.size() != 0){
             for(Elective elective : electiveList){

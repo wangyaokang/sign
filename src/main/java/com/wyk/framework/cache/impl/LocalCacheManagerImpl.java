@@ -40,12 +40,12 @@ public class LocalCacheManagerImpl implements CacheManager {
 
 	@Override
 	public void removeContainsKey(String key) {
-		Iterator<Map.Entry<Object, Object>> iterator = map.entrySet().iterator();
-		while (iterator.hasNext()){
-			Map.Entry<Object, Object> item = iterator.next();
+		Iterator<Map.Entry<Object, Object>> iter = map.entrySet().iterator();
+		while (iter.hasNext()){
+			Map.Entry<Object, Object> item = iter.next();
 			String mapKey = item.getKey().toString();
 			if(mapKey.contains(key)){
-				iterator.remove();
+				iter.remove();
 			}
 		}
 	}

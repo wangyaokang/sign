@@ -103,6 +103,9 @@ public class ClassesController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
+        if(null == classes){
+            return new Output(ERROR_NO_RECORD, "没有对应的班级！");
+        }
         classes.setName(input.getString("name"));
         Administrator admin = administratorService.getUserByToken(input.getToken());
         classes.setAdmin(admin);

@@ -45,7 +45,6 @@ D:\project\IdeaProjects\sign\src\main\java\com\wyk\sign\web\api\param\Output.jav
 D:\project\IdeaProjects\sign\src\main\java\com\wyk\sign\model\SignInfo.java
 D:\project\IdeaProjects\sign\src\main\java\com\wyk\framework\service\impl\BaseServiceImpl.java
 D:\project\IdeaProjects\sign\src\main\java\com\wyk\sign\service\SignService.java
-D:\project\IdeaProjects\sign\src\main\java\com\wyk\framework\cache\impl\EhcacheManagerImpl.java
 D:\project\IdeaProjects\sign\src\main\java\com\wyk\sign\persistence\TaskMapper.java
 D:\project\IdeaProjects\sign\src\main\java\com\wyk\framework\entity\AutoIdEntity.java
 D:\project\IdeaProjects\sign\src\main\java\com\wyk\framework\util\DateUtils.java

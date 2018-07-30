@@ -3,6 +3,7 @@ package com.wyk.sign;
 import com.wyk.sign.utils.HttpInvoker;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -214,4 +215,51 @@ public class HttpTest {
         System.out.println("获取:" + (System.currentTimeMillis() - startTime));
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
+
+    private static class TestInfoThread implements Runnable{
+        @Override
+        public void run() {
+            HttpInvoker invoker = HttpInvoker.getInstance();
+            invoker.setHost("http://localhost:8080/sign/");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("id", "1");
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("token" , "15000496839");
+            paramMap.put("method" , "info");
+            paramMap.put("params", map);
+            String content = invoker.post("/api/classes", paramMap);
+            System.out.println("查询：" + content);
+        }
+    }
+
+    private static class TestModifyThread implements Runnable{
+        private String testName;
+
+        public TestModifyThread(String testName){
+            this.testName = testName;
+        }
+
+        @Override
+        public void run() {
+            HttpInvoker invoker = HttpInvoker.getInstance();
+            invoker.setHost("http://localhost:8080/sign/");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("id", "1");
+            map.put("name", testName);
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("token" , "13764177152");
+            paramMap.put("method" , "modify");
+            paramMap.put("params", map);
+            String content = invoker.post("/api/classes", paramMap);
+            System.out.println("修改：" + content);
+        }
+    }
+
+    public static void main(String[] args) {
+        new Thread(new TestInfoThread()).start();
+        //new Thread(new TestModifyThread("英语11103班")).start();
+        //new Thread(new TestInfoThread()).start();
+    }
+
+
 }

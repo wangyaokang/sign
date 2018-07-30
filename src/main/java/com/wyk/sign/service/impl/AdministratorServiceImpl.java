@@ -23,9 +23,6 @@ import java.util.Map;
 @Service
 public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> implements AdministratorService {
 
-    @Autowired
-    private AdministratorMapper adminMapper;
-
     @Override
     public User getAnonymous() {
         return User.Anonymous;
@@ -35,7 +32,7 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
     public Administrator getUserByToken(String token) {
         Map<String, Object> param = new HashMap<>();
         param.put("wxId", token);
-        Administrator user = adminMapper.get(param);
+        Administrator user = get(param);
         return user;
     }
 

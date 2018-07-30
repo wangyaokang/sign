@@ -34,7 +34,7 @@ public class StudentServiceImpl extends BaseServiceImpl<Student> implements Stud
     public Student getUserByToken(String token) {
         Map<String, Object> param = new HashMap<>();
         param.put("wxId", token);
-        Student user = studentMapper.get(param);
+        Student user = get(param);
         return user;
     }
 

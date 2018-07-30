@@ -45,11 +45,13 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
         String tokenKey = this.getClass().getSimpleName() + id;
         if (null != cacheMap.get(tokenKey)) {
+            logger.info("获取缓存key:{} ", tokenKey);
             return (T) cacheMap.get(tokenKey);
         }
 
         T obj = mapper.get(map);
         if (null != obj) {
+            logger.info("设置缓存key:{} value:{}", tokenKey, obj);
             cacheMap.set(tokenKey, obj);
         }
         return obj;
@@ -63,11 +65,13 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
         String tokenKey = this.getClass().getSimpleName() + map.get("wxId");
         if (null != cacheMap.get(tokenKey)) {
+            logger.info("获取缓存key:{} ", tokenKey);
             return (T) cacheMap.get(tokenKey);
         }
 
         T obj = mapper.get(map);
         if (null != obj) {
+            logger.info("设置缓存key:{} value:{}", tokenKey, obj);
             cacheMap.set(tokenKey, obj);
         }
         return obj;
@@ -77,11 +81,13 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     public List<T> query() {
         String tokenKey = this.getClass().getSimpleName() + "query";
         if (null != cacheMap.get(tokenKey)) {
+            logger.info("获取缓存key:{} ", tokenKey);
             return (List<T>) cacheMap.get(tokenKey);
         }
 
         List<T> objList = mapper.query();
         if (null != objList && objList.size() != 0) {
+            logger.info("设置缓存key:{} value:{}", tokenKey, objList);
             cacheMap.set(tokenKey, objList);
         }
 
@@ -115,6 +121,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             return;
         }
         mapper.insert(entity);
+
+        String tokenKey = this.getClass().getSimpleName() + "query";
+        if(null != cacheMap.get(tokenKey)){
+            logger.info("删除缓存key:{} ", tokenKey);
+            cacheMap.delete(tokenKey);
+        }
     }
 
     @Override
@@ -123,12 +135,19 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             return;
         }
 
+        mapper.update(entity);
+
         String tokenKey = this.getClass().getSimpleName() + ((AutoIdEntity) entity).getId();
         if (null != cacheMap.get(tokenKey)) {
+            logger.info("删除缓存key:{} ", tokenKey);
             cacheMap.delete(tokenKey);
         }
 
-        mapper.update(entity);
+        tokenKey = this.getClass().getSimpleName() + "query";
+        if(null != cacheMap.get(tokenKey)){
+            logger.info("删除缓存key:{} ", tokenKey);
+            cacheMap.delete(tokenKey);
+        }
     }
 
     @Override
@@ -150,12 +169,18 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             return;
         }
 
+        mapper.delete(entity);
         String tokenKey = this.getClass().getSimpleName() + ((AutoIdEntity) entity).getId();
         if (null != cacheMap.get(tokenKey)) {
+            logger.info("删除缓存key:{} ", tokenKey);
            cacheMap.delete(tokenKey);
         }
 
-        mapper.delete(entity);
+        tokenKey = this.getClass().getSimpleName() + "query";
+        if(null != cacheMap.get(tokenKey)){
+            logger.info("删除缓存key:{} ", tokenKey);
+            cacheMap.delete(tokenKey);
+        }
     }
 
 }

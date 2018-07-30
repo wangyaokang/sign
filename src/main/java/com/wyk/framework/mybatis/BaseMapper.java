@@ -65,6 +65,13 @@ public interface BaseMapper<T> {
 	 * @param entity
 	 */
 	void update(T entity);
+
+	/**
+	 * 批量修改数据
+	 *
+	 * @param entity
+	 */
+	void updateBatch(List<T> entity);
 	
 	/**
 	 * 删除实体
@@ -72,4 +79,11 @@ public interface BaseMapper<T> {
 	 * @param id
 	 */
 	void delete(T entity);
+
+	/**
+	 * 根据条件删除数据
+	 *
+	 * @param map
+	 */
+	void deleteByMap(Map<String, Object> map);
 }

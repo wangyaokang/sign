@@ -80,7 +80,7 @@ public class TaskController extends AbstractController {
         Output result = new Output();
         Task task = new Task();
         TaskInfo taskInfo = taskInfoService.get(input.getLong("infoId"));
-        task.setTaskInfo(taskInfo);
+        task.setInfo(taskInfo);
         Student student = (Student) input.getCurrentUser();
         task.setStudent(student);
         if (StringUtils.isNotEmpty(input.getString("upDate"))) {

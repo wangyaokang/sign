@@ -16,7 +16,6 @@ com\wyk\sign\web\StudentController.class
 com\wyk\framework\service\impl\BaseServiceImpl.class
 com\wyk\sign\service\ClassesService.class
 com\wyk\sign\persistence\TaskInfoMapper.class
-com\wyk\framework\cache\impl\EhcacheManagerImpl.class
 com\wyk\sign\service\impl\SignServiceImpl.class
 com\wyk\sign\util\Constants$Sign.class
 com\wyk\sign\annotation\Item.class

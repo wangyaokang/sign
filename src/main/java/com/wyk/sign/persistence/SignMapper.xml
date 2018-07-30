@@ -9,7 +9,7 @@
 		<result property="sign_date" column="signDate" />
 		<result property="sign_address" column="signAddress" />
 		<result property="status" column="status" />
-		<association property="stu" javaType="com.wyk.sign.model.Student">
+		<association property="student" javaType="com.wyk.sign.model.Student">
 			<id property="id" column="stu_id"/>
 			<result property="wxId" column="stu_wx_id" />
 			<result property="wxName" column="stu_wx_name" />
@@ -30,18 +30,21 @@
 
 	<sql id="selectSQL">
 		select s.*,
-			stu.wxName as stu_wx_name,
-			stu.wxAvatarUrl as stu_wx_avatar_url,
-			stu.realName as stu_real_name,
-			stu.userType as stu_user_type,
+		    stu.id as stu_id,
+		    stu.wx_id as stu_wx_id,
+			stu.wx_name as stu_wx_name,
+			stu.wx_avatar_url as stu_wx_avatar_url,
+			stu.real_name as stu_real_name,
+			stu.user_type as stu_user_type,
 			stu.sno	as stu_sno,
 			stu.status as stu_status,
-			info.startDate as info_start_date,
-			info.stopDate as info_stop_date,
+			info.start_date as info_start_date,
+			info.stop_date as info_stop_date,
 			info.address as info_address,
 			info.status as info_status
-		  from (tb_sign s inner join tb_student stu on  s.stu_id = stu.id) inner join tb_sign info
-		  	on s.signinfo_id = info.id
+		  from tb_sign s
+		  	inner join tb_student stu on  s.stu_id = stu.id
+		  	inner join tb_sign_info info on s.info_id = info.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -51,6 +54,9 @@
 			<if test="id != null">
 				s.id = #{id}
 			</if>
+            <if test="wxId != null">
+                stu.wx_id = #{wxId}
+            </if>
 		</where>
 		limit 0,1
 	</select>
@@ -63,7 +69,7 @@
 		<include refid="selectSQL" />
 		<where>
 			<if test="wxName != null">
-				stu.wx_name = #{stu.wxName}
+				stu.wx_name = #{wxName}
 			</if>
 			<if test="sno != null">
 				and stu.sno = #{sno}
@@ -77,34 +83,41 @@
 	<insert id="insert" parameterType="com.wyk.sign.model.Sign"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into tb_sign (
+		info_id,
 		stu_id,
-		class_id,
-		course_id,
-		start_date,
-		stop_date,
-		address,
+		sign_date,
+		sign_address,
 		status)
 		values
-		(#{admin.id},
-		#{classes.id},
-		#{course.id},
-		#{startDate},
-		#{stopDate},
-		#{address},
+		(#{info.id},
+		#{student.id},
+		#{signDate},
+		#{signAddress},
 		#{status})
 	</insert>
 
 	<update id="update" parameterType="com.wyk.sign.model.Sign">
 		update tb_sign set
-		stu_id=#{admin.id},
-		class_id=#{classes.id},
-		course_id=#{course.id},
-		start_date=#{startDate},
-		stop_date=#{stopDate},
-		address=#{address},
+		info_id=#{info.id},
+		stu_id=#{student.id},
+		sign_date=#{signDate},
+		sign_address=#{signAddress},
 		status=#{status},
 		modify_time=#{modifyTime}
 		where id = #{id}
+	</update>
+
+	<update id="updateBatch" parameterType="List">
+		<foreach collection="list" separator=";" item="sign">
+            update tb_sign set
+            info_id=#{info.id},
+            stu_id=#{student.id},
+            sign_date=#{signDate},
+            sign_address=#{signAddress},
+            status=#{status},
+            modify_time=#{modifyTime}
+            where id = #{id}
+		</foreach>
 	</update>
 
 	<delete id="delete" parameterType="com.wyk.sign.model.Sign">
@@ -115,9 +128,8 @@
 			</if>
 		</where>
 	</delete>
-	<!-- End of Base Mapper -->
 
-	<delete id="deleteByInfoId" parameterType="java.lang.Integer">
+	<delete id="deleteByMap" parameterType="hashmap">
 		delete from tb_sign
 		<where>
 			<if test="infoId != null">
@@ -125,4 +137,5 @@
 			</if>
 		</where>
 	</delete>
+	<!-- End of Base Mapper -->
 </mapper>

@@ -25,7 +25,7 @@ public class Sign extends BaseModel{
     /** 签到地点 */
     private String signAddress;
 
-    protected Integer status = Constants.Sign.LATE;
+    protected Integer status = Constants.Sign.NOT_SIGNED;
 
     public SignInfo getInfo() {
         return info;

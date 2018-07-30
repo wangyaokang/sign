@@ -4,10 +4,7 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.sign.model.Administrator;
-import com.wyk.sign.persistence.AdministratorMapper;
-import com.wyk.sign.persistence.StudentMapper;
 import com.wyk.sign.service.AdministratorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wyk.sign.model.User;
@@ -23,9 +20,6 @@ import java.util.Map;
 @Service
 public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> implements AdministratorService {
 
-    @Autowired
-    private AdministratorMapper adminMapper;
-
     @Override
     public User getAnonymous() {
         return User.Anonymous;
@@ -35,7 +29,7 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
     public Administrator getUserByToken(String token) {
         Map<String, Object> param = new HashMap<>();
         param.put("wxId", token);
-        Administrator user = adminMapper.get(param);
+        Administrator user = get(param);
         return user;
     }
 

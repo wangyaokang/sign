@@ -72,6 +72,12 @@ public interface BaseService<T> {
 	 * @param entity
 	 */
 	void update(T entity);
+
+	/**
+	 *
+	 * @param entity
+	 */
+	void updateBatch(List<T> entity);
 	
 	/**
 	 * Only For AutoIdEntity
@@ -85,4 +91,10 @@ public interface BaseService<T> {
 	 * @param entity
 	 */
 	void delete(T entity);
+
+	/**
+	 *
+	 * @param map
+	 */
+	void deleteByMap(Map<String, Object> map);
 }

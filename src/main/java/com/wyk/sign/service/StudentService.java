@@ -28,10 +28,4 @@ public interface StudentService extends BaseService<Student> {
      */
     Student getUserByToken(String token);
 
-    /**
-     * 批量更新
-     *
-     * @param studentList
-     */
-    int batchUpdate(List<Student> studentList);
 }

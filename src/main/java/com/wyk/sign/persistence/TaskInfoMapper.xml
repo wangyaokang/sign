@@ -107,7 +107,30 @@
 		where id = #{id}
 	</update>
 
+	<update id="updateBatch" parameterType="List">
+		<foreach collection="list" separator=";" item="info">
+			update tb_task_info set
+			admin_id=#{info.admin.id},
+			course_id=#{info.course.id},
+			class_id=#{info.class.id},
+			deadline_time=#{info.deadlineTime},
+			remark=#{info.remark},
+			status=#{info.status},
+			modify_time=#{info.modifyTime}
+			where id = #{info.id}
+		</foreach>
+	</update>
+
 	<delete id="delete" parameterType="com.wyk.sign.model.TaskInfo">
+		delete from tb_task_info
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<delete id="deleteByMap" parameterType="hashmap">
 		delete from tb_task_info
 		<where>
 			<if test="id != null">

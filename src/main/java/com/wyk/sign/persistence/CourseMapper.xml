@@ -59,7 +59,26 @@
 		where id = #{id}
 	</update>
 
+	<update id="updateBatch" parameterType="List">
+		<foreach collection="list" separator=";" item="course">
+			update tb_course set
+			`name`=#{course.name},
+			status=#{course.status},
+			modify_time=#{course.modifyTime}
+			where id = #{course.id}
+		</foreach>
+	</update>
+
 	<delete id="delete" parameterType="com.wyk.sign.model.Course">
+		delete from tb_course
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<delete id="deleteByMap" parameterType="hashmap">
 		delete from tb_course
 		<where>
 			<if test="id != null">

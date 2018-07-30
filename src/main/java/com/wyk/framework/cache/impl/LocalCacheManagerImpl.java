@@ -39,6 +39,20 @@ public class LocalCacheManagerImpl implements CacheManager {
 	}
 
 	@Override
+	public void removeAll() {
+		map.clear();
+	}
+
+	public boolean isContainsKey(String key){
+		for(Object mapKey : map.keySet()){
+			if(key.contains(mapKey.toString()) && mapKey.toString().contains(key)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public void removeContainsKey(String key) {
 		Iterator<Map.Entry<Object, Object>> iterator = map.entrySet().iterator();
 		while (iterator.hasNext()){
@@ -50,9 +64,13 @@ public class LocalCacheManagerImpl implements CacheManager {
 		}
 	}
 
-	@Override
-	public void removeAll() {
-		map.clear();
+	public Object getContainsKeyOfValue(String key){
+		for(Object mapKey : map.keySet()){
+			if(key.contains(mapKey.toString()) && mapKey.toString().contains(key)){
+				return map.get(mapKey);
+			}
+		}
+		return null;
 	}
 
 }

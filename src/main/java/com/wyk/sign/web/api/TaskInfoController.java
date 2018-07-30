@@ -177,8 +177,13 @@ public class TaskInfoController extends AbstractController {
     public Output delete(Input input){
         Output result = new Output();
         TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
-        // 删除签到信息下，所有的签到
-        taskService.deleteByInfoId(input.getInteger("infoId"));
+        if(null == taskInfo){
+            return new Output(ERROR_NO_RECORD, "没有对应的作业信息！");
+        }
+        // 删除作业信息下，所有的作业
+        Map<String, Object> param = new HashMap<>();
+        param.put("infoId", input.getLong("id"));
+        taskService.deleteByMap(param);
         taskInfoService.delete(taskInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除作业信息成功！");

@@ -98,8 +98,7 @@ public class CourseController extends AbstractController {
         Course course = courseService.get(input.getLong("id"));
         Map<String, Object> param = new HashMap<>();
         param.put("courseId", course.getId());
-        int rows = electiveService.deleteElectiveByMap(param);
-        logger.debug("删除{}条授课信息数据！", rows);
+        electiveService.deleteByMap(param);
         courseService.delete(course);
         result.setMsg("删除课程成功");
         result.setStatus(SUCCESS);

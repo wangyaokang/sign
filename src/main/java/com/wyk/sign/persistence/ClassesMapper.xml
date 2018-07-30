@@ -86,7 +86,27 @@
 		where id = #{id}
 	</update>
 
+	<update id="updateBatch" parameterType="List">
+		<foreach collection="list" separator=";" item="classes">
+			update tb_classes set
+			admin_id=#{classes.admin.id},
+			`name`=#{classes.name},
+			status=#{classes.status},
+			modify_time=#{classes.modifyTime}
+			where id = #{classes.id}
+		</foreach>
+	</update>
+
 	<delete id="delete" parameterType="com.wyk.sign.model.Classes">
+		delete from tb_classes
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<delete id="deleteByMap" parameterType="hashmap">
 		delete from tb_classes
 		<where>
 			<if test="id != null">

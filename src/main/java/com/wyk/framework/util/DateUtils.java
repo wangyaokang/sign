@@ -31,31 +31,21 @@ public final class DateUtils {
 	 * 日期格式yyyy-MM-dd字符串常量
 	 */
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
-	
-	/**
-	 * 日期格式yyyy-MM-dd HH:mm字符串常量
-	 */
-	public static final String DATETIME_MIN_FORMAT = "yyyy-MM-dd HH:mm";
 
 	/**
 	 * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
 	 */
-	public static final String DATETIME_SEC_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 		
 	/**
 	 * 日期格式 yyyy-MM-dd 转换类
 	 */
 	public static final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-	
-	/**
-	 * 日期格式 yyyy-MM-dd HH:mm 转换类
-	 */
-	public static final DateFormat datetimeMinFormat = new SimpleDateFormat(DATETIME_MIN_FORMAT);
 
 	/**
 	 * 日期格式 yyyy-MM-dd HH:mm:ss 转换类
 	 */
-	public static final DateFormat datetimeSecFormat = new SimpleDateFormat(DATETIME_SEC_FORMAT);
+	public static final DateFormat datetimeSecFormat = new SimpleDateFormat(DATETIME_FORMAT);
 	
 	/** 
 	 * 一个月时间大约的long型数字 

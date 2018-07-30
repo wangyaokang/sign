@@ -16,12 +16,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class TaskServiceImpl extends BaseServiceImpl<Task> implements TaskService {
 
-    @Autowired
-    TaskMapper mapper;
-
-    @Override
-    public void deleteByInfoId(Integer infoId) {
-        cacheMap.removeContainsKey(this.getClass().getSimpleName());
-        mapper.deleteByInfoId(infoId);
-    }
 }

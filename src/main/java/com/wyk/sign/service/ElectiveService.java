@@ -36,12 +36,4 @@ public interface ElectiveService extends BaseService<Elective> {
      * @return
      */
     List<Administrator> getTeacherList(Map<String, Object> param);
-
-
-    /**
-     * 根据课程id、教师id、班级id删除授课信息
-     * @param param
-     * @return
-     */
-    int deleteElectiveByMap(Map<String, Object> param);
 }

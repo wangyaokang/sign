@@ -3,6 +3,7 @@ package com.wyk.sign;
 import com.wyk.sign.utils.HttpInvoker;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +39,12 @@ public class HttpTest {
     public void register(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("wxId", "15017803067");
-        map.put("wxName", "AngryAnt");
+        map.put("wxId", "17717543071");
+        map.put("wxName", "Mrwang");
         map.put("wxAvatarUrl", "wwww.youku.com");
         map.put("userType", "3");
-        map.put("realName", "张三");
-        map.put("sno", "201106259");
+        map.put("realName", "王五");
+        map.put("sno", "201106214");
         map.put("classId", "1");
         paramMap.put("method" , "register");
         paramMap.put("params", map);
@@ -210,6 +211,108 @@ public class HttpTest {
         paramMap.put("method" , "info");
         paramMap.put("params", map);
         String content = invoker.post("/api/signInfo", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    private static class TestInfoThread implements Runnable{
+        @Override
+        public void run() {
+            HttpInvoker invoker = HttpInvoker.getInstance();
+            invoker.setHost("http://localhost:8080/sign/");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("id", "1");
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("token" , "15000496839");
+            paramMap.put("method" , "info");
+            paramMap.put("params", map);
+            String content = invoker.post("/api/classes", paramMap);
+            System.out.println("查询：" + content);
+        }
+    }
+
+    private static class TestModifyThread implements Runnable{
+        private String testName;
+
+        public TestModifyThread(String testName){
+            this.testName = testName;
+        }
+
+        @Override
+        public void run() {
+            HttpInvoker invoker = HttpInvoker.getInstance();
+            invoker.setHost("http://localhost:8080/sign/");
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("info", "1");
+            map.put("name", testName);
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("token" , "13764177152");
+            paramMap.put("method" , "modify");
+            paramMap.put("params", map);
+            String content = invoker.post("/api/classes", paramMap);
+            System.out.println("修改：" + content);
+        }
+    }
+
+    //新增签到信息
+    @Test
+    public void addSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("infoId", "1");
+        map.put("signDate", "2018-07-26 09:30:00");
+        map.put("signAddress", "凌阳大厦");
+        paramMap.put("token" , "13381503907");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //新增签到信息
+    @Test
+    public void deleteSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        paramMap.put("token" , "13381503907");
+        paramMap.put("method" , "delete");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //申请补签
+    @Test
+    public void suppleSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("infoId", "1");
+        paramMap.put("token" , "17717543071");
+        paramMap.put("method" , "suppleSign");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //同意补签
+    @Test
+    public void acceptSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "3");
+        map.put("stuId", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "acceptSign");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
         System.out.println(content);
         System.out.println("获取:" + (System.currentTimeMillis() - startTime));
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));

@@ -32,5 +32,4 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
         Administrator user = get(param);
         return user;
     }
-
 }

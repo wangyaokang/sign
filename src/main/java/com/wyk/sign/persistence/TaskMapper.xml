@@ -9,7 +9,9 @@
 		<result property="upFileUrl" column="up_file_url" />
 		<result property="desc" column="desc" />
 		<result property="score" column="score" />
-		<association property="stu" javaType="com.wyk.sign.model.Student">
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+		<association property="student" javaType="com.wyk.sign.model.Student">
 			<id property="id" column="stu_id"/>
 			<result property="wxId" column="stu_wx_id" />
 			<result property="wxName" column="stu_wx_name" />
@@ -29,12 +31,15 @@
 
 	<sql id="selectSQL">
 		select t.*,
-			stu.wxName as stu_wx_name,
-			stu.wxAvatarUrl as stu_wx_avatar_url,
-			stu.realName as stu_real_name,
-			stu.userType as stu_user_type,
+			stu.id as stu_id,
+			stu.wx_id as stu_wx_id,
+			stu.wx_name as stu_wx_name,
+			stu.wx_avatar_url as stu_wx_avatar_url,
+			stu.real_name as stu_real_name,
+			stu.user_type as stu_user_type,
 			stu.sno	as stu_sno,
 			stu.status as stu_status,
+			info.id as info_id,
 			info.deadline_time as info_deadline_time,
 			info.remark as info_address,
 			info.status as info_status
@@ -80,8 +85,8 @@
 		score,
 		status)
 		values
-		(#{stu.id},
-		#{taskinfo.id},
+		(#{student.id},
+		#{info.id},
 		#{upFileUrl},
 		#{desc},
 		#{score},
@@ -90,8 +95,8 @@
 
 	<update id="update" parameterType="com.wyk.sign.model.Task">
 		update tb_task set
-		stu_id=#{stu.id},
-		taskinfo_id=#{taskinfo.id},
+		stu_id=#{student.id},
+		info_id=#{info.id},
 		up_file_url=#{upFileUrl},
 		`desc`=#{desc},
 		score=#{score},
@@ -103,7 +108,7 @@
 	<update id="updateBatch" parameterType="List">
 		<foreach collection="list" separator=";" item="task">
 			update tb_task set
-			stu_id=#{task.stu.id},
+			stu_id=#{task.student.id},
 			info_id=#{task.info.id},
 			up_file_url=#{task.upFileUrl},
 			`desc`=#{task.desc},

@@ -105,10 +105,10 @@ public class SignController extends AbstractController {
         }
 
         if (sign.getSignDate().after(signInfo.getStopDate())) {
-            result.setMsg("你的签到状态为：【迟到】！");
-            sign.setStatus(Constants.Sign.LATE);
+            result.setMsg("你的签到状态为：【未签到】！");
+            sign.setStatus(Constants.Sign.NOT_SIGNED);
         }else{
-            result.setMsg("你的签到状态为：【正常签到】！");
+            result.setMsg("你的签到状态为：【签到】！");
             sign.setStatus(Constants.Sign.SIGNED);
         }
         signService.insert(sign);
@@ -147,9 +147,9 @@ public class SignController extends AbstractController {
      * 申请补签
      * <p>传入参数：</p>
      * <pre>
-     *      method:modify
+     *      method:suppleSign
      *      token: wxopenid
-     *      params: {id: 2, stuId: 2, infoId: 1}
+     *      params: {infoId: 1}
      * </pre>
      *
      * @param input
@@ -160,8 +160,9 @@ public class SignController extends AbstractController {
         Output result = new Output();
         Map<String, Object> param = new HashMap<>();
         Student student = (Student) input.getCurrentUser();
-        param.put("stuId", student.getWxId());
+        param.put("wxId", student.getWxId());
         Sign sign = signService.get(param);
+
         if(null == sign){
             sign = new Sign();
             sign.setStudent(student);
@@ -171,6 +172,8 @@ public class SignController extends AbstractController {
             }
             sign.setInfo(info);
             sign.setSignDate(new Date());
+        }else{
+            sign.setModifyTime(new Date());
         }
         sign.setStatus(Constants.Sign.SUPPLE_SIGN);
         signService.save(sign);
@@ -186,7 +189,7 @@ public class SignController extends AbstractController {
      * <pre>
      *      method:modify
      *      token: wxopenid
-     *      params: {id: 2, stuId: 2}
+     *      params: {id: 2, isAccept: 1}
      * </pre>
      *
      * @param input
@@ -199,10 +202,18 @@ public class SignController extends AbstractController {
         if(null == sign){
             return new Output(ERROR_NO_RECORD, "没有对应的签到！");
         }
-        sign.setStatus(Constants.Sign.SIGNED);
+
+        if(Constants.Sign.NOT_SIGNED.equals(input.getInteger("isAccept"))){
+            sign.setStatus(Constants.Sign.NOT_SIGNED);
+            result.setMsg("补签未批准！");
+        }else if(Constants.Sign.SIGNED.equals(input.getInteger("isAccept"))){
+            sign.setStatus(Constants.Sign.SIGNED);
+            result.setMsg("补签成功！");
+        }else{
+            return new Output(ERROR_NO_RECORD,"请选择是否同意补签！【1：批准；2：不批准】");
+        }
         signService.update(sign);
         result.setStatus(SUCCESS);
-        result.setMsg("补签成功！");
         result.setData(sign);
         return result;
     }

@@ -19,7 +19,7 @@ public class TaskInfo extends BaseModel{
     private Course course;
 
     /** 教师 (创建者）*/
-    private User teacher;
+    private Administrator admin;
 
     /** 班级 */
     private Classes classes;
@@ -27,10 +27,21 @@ public class TaskInfo extends BaseModel{
     /** 上传截止时间 */
     private Date deadlineTime;
 
+    /** 作业内容 */
+    private String content;
+
     /** 备注 */
     private String remark;
 
     private List<Task> taskList;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Course getCourse() {
         return course;
@@ -40,12 +51,12 @@ public class TaskInfo extends BaseModel{
         this.course = course;
     }
 
-    public User getTeacher() {
-        return teacher;
+    public Administrator getAdmin() {
+        return admin;
     }
 
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
+    public void setAdmin(Administrator admin) {
+        this.admin = admin;
     }
 
     public Classes getClasses() {

@@ -6,8 +6,8 @@
 
 	<resultMap type="com.wyk.sign.model.Sign" id="signMap">
 		<id property="id" column="id" javaType="long" />
-		<result property="sign_date" column="signDate" />
-		<result property="sign_address" column="signAddress" />
+		<result property="signDate" column="sign_date" />
+		<result property="signAddress" column="sign_address" />
 		<result property="status" column="status" />
 		<association property="student" javaType="com.wyk.sign.model.Student">
 			<id property="id" column="stu_id"/>
@@ -20,7 +20,7 @@
 			<result property="status" column="stu_status" />
 		</association>
 		<association property="info" javaType="com.wyk.sign.model.SignInfo">
-			<id property="id" column="info"/>
+			<id property="id" column="info_id"/>
 			<result property="startDate" column="info_start_date" />
 			<result property="stopDate" column="info_stop_date" />
 			<result property="address" column="info_address" />
@@ -38,6 +38,7 @@
 			stu.user_type as stu_user_type,
 			stu.sno	as stu_sno,
 			stu.status as stu_status,
+			info.id as info_id,
 			info.start_date as info_start_date,
 			info.stop_date as info_stop_date,
 			info.address as info_address,
@@ -54,8 +55,8 @@
 			<if test="id != null">
 				s.id = #{id}
 			</if>
-            <if test="wxId != null">
-                stu.wx_id = #{wxId}
+            <if test="wxId != null and infoId != null">
+                and stu.wx_id = #{wxId} and info.id = #{infoId}
             </if>
 		</where>
 		limit 0,1

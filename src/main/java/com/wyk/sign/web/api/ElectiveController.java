@@ -40,7 +40,7 @@ public class ElectiveController extends AbstractController {
      * <pre>
      *     method: insert
      *     token: 当前wxId
-     *     params: {teacherId: "1", classId："2"，courseId:"2"}
+     *     params: {adminId: "1", classId："2"，courseId:"2"}
      * </pre>
      *
      * @param input

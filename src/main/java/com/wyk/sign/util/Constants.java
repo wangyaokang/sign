@@ -22,9 +22,7 @@ public abstract class Constants {
 
 	public abstract static class Sign{
 		/** 未签到 */
-		public static final Integer NOT_SIGNED = 0;
-		/** 迟到 */
-		public static final Integer LATE = 1;
+		public static final Integer NOT_SIGNED = 1;
 		/** 签到 */
 		public static final Integer SIGNED = 2;
 		/** 申请补签 */

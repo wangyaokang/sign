@@ -7,17 +7,21 @@
 	<resultMap type="com.wyk.sign.model.TaskInfo" id="taskInfoMap">
 		<id property="id" column="id" javaType="long" />
 		<result property="deadlineTime" column="deadline_time" />
+		<result property="content" column="content" />
 		<result property="remark" column="remark" />
 		<result property="status" column="status" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
 		<association property="admin" javaType="com.wyk.sign.model.Administrator">
 			<id property="id" column="admin_id"/>
+			<result property="wxId" column="admin_wx_id" />
 			<result property="wxName" column="admin_wx_name" />
 			<result property="wxAvatarUrl" column="admin_wx_avatar_url" />
 			<result property="realName" column="admin_real_name" />
 			<result property="userType" column="admin_user_type" />
 			<result property="status" column="admin_status" />
 		</association>
-		<association property="class" javaType="com.wyk.sign.model.Classes">
+		<association property="classes" javaType="com.wyk.sign.model.Classes">
 			<id property="id" column="class_id"/>
 			<result property="name" column="class_name" />
 			<result property="status" column="class_status" />
@@ -31,17 +35,22 @@
 
 	<sql id="selectSQL">
 		select t.*,
+			ad.id as admin_id,
+			ad.wx_id as admin_wx_id,
 			ad.wx_name as admin_wx_name,
 			ad.wx_avatar_url as admin_wx_avatar_url,
 			ad.real_name as admin_real_name,
 			ad.user_type as admin_user_type,
+			cl.id as class_id,
 			cl.name as class_name,
 			cl.status as class_status,
+			co.id as course_id,
 			co.name as course_name,
 			co.status as course_status
-		 from ((tb_task_info t inner join tb_classes cl on t.class_id = cl.id)
-		 		inner join tb_course co on t.course_id = co.id)
-		 		inner join tb_admin ad as on t.admin_id = ad.id
+		 from tb_task_info t
+		 		inner join tb_classes cl on t.class_id = cl.id
+		 		inner join tb_course co on t.course_id = co.id
+		 		inner join tb_admin ad on t.admin_id = ad.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -49,7 +58,7 @@
 		<include refid="selectSQL" />
 		<where>
 			<if test="id != null">
-				id = #{id}
+				t.id = #{id}
 			</if>
 		</where>
 		limit 0,1
@@ -62,17 +71,29 @@
 	<select id="queryByMap" parameterType="hashmap" resultMap="taskInfoMap">
 		<include refid="selectSQL" />
 		<where>
-			<if test="admin.wxName != null">
-				and wxName = #{admin.wxName}
+			<if test="adminId != null">
+				ad.id = #{adminId}
 			</if>
-			<if test="admin.realName != null">
-				and real_name = #{admin.realName}
+			<if test="wxId != null">
+				and ad.wx_id = #{wxId}
 			</if>
-			<if test="class.name != null">
-				and class_name = #{class.name}
+			<if test="wxName != null">
+				and ad.wx_name = #{wxName}
 			</if>
-			<if test="course.name != null">
-				and course_name = #{course.name}
+			<if test="realName != null">
+				and ad.real_name = #{realName}
+			</if>
+			<if test="classId != null">
+				and cl.id = #{classId}
+			</if>
+			<if test="className != null">
+				and cl.class_name = #{className}
+			</if>
+			<if test="courseId != null">
+				and co.id = #{courseId}
+			</if>
+			<if test="courseName != null">
+				and co.name = #{courseName}
 			</if>
 		</where>
 	</select>
@@ -83,13 +104,15 @@
 		admin_id,
 		course_id,
 		class_id,
+		content,
 		deadline_time,
 		remark,
 		status)
 		values
 		(#{admin.id},
 		#{course.id},
-		#{class.id},
+		#{classes.id},
+		#{content},
 		#{deadlineTime},
 		#{remark},
 		#{status})
@@ -99,7 +122,8 @@
 		update tb_task_info set
 		admin_id=#{admin.id},
 		course_id=#{course.id},
-		class_id=#{class.id},
+		class_id=#{classes.id},
+		content=#{info.content},
 		deadline_time=#{deadlineTime},
 		remark=#{remark},
 		status=#{status},
@@ -112,7 +136,8 @@
 			update tb_task_info set
 			admin_id=#{info.admin.id},
 			course_id=#{info.course.id},
-			class_id=#{info.class.id},
+			class_id=#{info.classes.id},
+			content=#{info.content},
 			deadline_time=#{info.deadlineTime},
 			remark=#{info.remark},
 			status=#{info.status},

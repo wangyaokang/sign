@@ -7,20 +7,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b6224a-4b28-4c44-aff1-7bb684ac1ce3" name="Default" comment="本地创建缓存 add by wyk 0727">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/app/sign.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/app/sign.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/EhcacheManagerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/AdministratorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/AdministratorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ElectiveServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ElectiveServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ClassesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-    </list>
+    <list default="true" id="d8b6224a-4b28-4c44-aff1-7bb684ac1ce3" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -72,15 +59,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassesServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ClassesServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CourseServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/CourseServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -104,7 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HttpTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HttpTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="44">
@@ -112,6 +90,15 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign.log" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/log/app/sign.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-572">
+              <caret line="148" column="122" selection-start-line="148" selection-start-column="122" selection-end-line="148" selection-end-column="122" />
             </state>
           </provider>
         </entry>
@@ -308,6 +295,17 @@
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
               <item name="sign" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sign" type="462c0819:PsiDirectoryNode" />
+              <item name="log" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sign" type="462c0819:PsiDirectoryNode" />
+              <item name="log" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
@@ -720,7 +718,7 @@
       <option name="presentableId" value="Default" />
       <updated>1531752112903</updated>
       <workItem from="1531752114229" duration="5515000" />
-      <workItem from="1532933172555" duration="7969000" />
+      <workItem from="1532933172555" duration="9011000" />
     </task>
     <task id="LOCAL-00001" summary="0717更新。">
       <created>1531843976980</created>
@@ -743,7 +741,14 @@
       <option name="project" value="LOCAL" />
       <updated>1532684858281</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="本地缓存测试 0730">
+      <created>1532943676552</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1532943676552</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -779,7 +784,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85201000" />
+    <option name="totallyTimeSpent" value="86243000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -802,10 +807,10 @@
       <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.17222223" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5777778" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23222223" />
       <window_info anchor="bottom" id="Spring" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20362474" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13752665" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -837,7 +842,8 @@
     <MESSAGE value="0717更新。" />
     <MESSAGE value="2018-7-25代码上传 add by wyk" />
     <MESSAGE value="本地创建缓存 add by wyk 0727" />
-    <option name="LAST_COMMIT_MESSAGE" value="本地创建缓存 add by wyk 0727" />
+    <MESSAGE value="本地缓存测试 0730" />
+    <option name="LAST_COMMIT_MESSAGE" value="本地缓存测试 0730" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -865,13 +871,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Course.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/annotation/Checked.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -1263,6 +1262,13 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/app/sign.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-572">
+          <caret line="148" column="122" selection-start-line="148" selection-start-column="122" selection-end-line="148" selection-end-column="122" />
         </state>
       </provider>
     </entry>

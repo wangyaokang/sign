@@ -39,12 +39,12 @@ public class HttpTest {
     public void register(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("wxId", "15017803067");
-        map.put("wxName", "AngryAnt");
+        map.put("wxId", "17717543071");
+        map.put("wxName", "Mrwang");
         map.put("wxAvatarUrl", "wwww.youku.com");
         map.put("userType", "3");
-        map.put("realName", "张三");
-        map.put("sno", "201106259");
+        map.put("realName", "王五");
+        map.put("sno", "201106214");
         map.put("classId", "1");
         paramMap.put("method" , "register");
         paramMap.put("params", map);
@@ -151,8 +151,8 @@ public class HttpTest {
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
         map.put("classId", "1");
-        map.put("teacherId", "1");
-        map.put("courseId", "2");
+        map.put("adminId", "1");
+        map.put("courseId", "1");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "insert");
         paramMap.put("params", map);
@@ -167,8 +167,8 @@ public class HttpTest {
     public void insertSignInfo(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("startDate", "2018-07-26 09:00");
-        map.put("stopDate", "2018-07-26 10:00");
+        map.put("startDate", "2018-07-26 09:00:00");
+        map.put("stopDate", "2018-07-26 10:00:00");
         map.put("address", "凌阳大厦");
         map.put("classId", "1");
         map.put("courseId", "2");
@@ -244,7 +244,7 @@ public class HttpTest {
             HttpInvoker invoker = HttpInvoker.getInstance();
             invoker.setHost("http://localhost:8080/sign/");
             Map<String, String> map = new HashMap<String, String>();
-            map.put("id", "1");
+            map.put("info", "1");
             map.put("name", testName);
             Map<String, Object> paramMap = new HashMap<>();
             paramMap.put("token" , "13764177152");
@@ -255,11 +255,178 @@ public class HttpTest {
         }
     }
 
-    public static void main(String[] args) {
-        new Thread(new TestInfoThread()).start();
-        //new Thread(new TestModifyThread("英语11103班")).start();
-        //new Thread(new TestInfoThread()).start();
+    //新增签到信息
+    @Test
+    public void addSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("infoId", "2");
+        map.put("signDate", "2018-07-26 10:30:00");
+        map.put("signAddress", "凌阳大厦");
+        paramMap.put("token" , "17717543071");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //新增签到信息
+    @Test
+    public void deleteSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        paramMap.put("token" , "13381503907");
+        paramMap.put("method" , "delete");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //申请补签
+    @Test
+    public void suppleSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("infoId", "2");
+        paramMap.put("token" , "17717543071");
+        paramMap.put("method" , "suppleSign");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //同意补签
+    @Test
+    public void acceptSign(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        map.put("isAccept", "1");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "acceptSign");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/sign", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    //新增签到信息
+    @Test
+    public void insertTaskInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("courseId", "2");
+        map.put("classId", "1");
+        map.put("deadlineTime", "2018-7-31");
+        map.put("remark", "take you notebook");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/taskInfo", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
 
 
+    @Test
+    public void taskInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "info");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/taskInfo", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    @Test
+    public void modifyTaskInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("courseId", "1");
+        map.put("classId", "1");
+        map.put("deadlineTime", "2018-7-31");
+        map.put("remark", "take you notebook");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/taskInfo", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    @Test
+    public void getMyTaskInfoList(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "getMyTaskInfoList");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/taskInfo", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    @Test
+    public void deleteTaskInfo(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "2");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "delete");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/taskInfo", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+
+    @Test
+    public void insertTask(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("infoId", "1");
+        map.put("upDate", "2018-07-30");
+        map.put("upFileUrl", "/attachment/task_info1/201106259_109933.doc");
+        map.put("desc", "English Task");
+        paramMap.put("token" , "17717543071");
+        paramMap.put("method" , "insert");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/task", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    @Test
+    public void modifyTask(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        map.put("upDate", "2018-07-28");
+        map.put("upFileUrl", "");
+        map.put("desc", "English Task");
+        paramMap.put("token" , "17717543071");
+        paramMap.put("method" , "modify");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/task", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
 }

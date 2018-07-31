@@ -4,10 +4,7 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.sign.model.Administrator;
-import com.wyk.sign.persistence.AdministratorMapper;
-import com.wyk.sign.persistence.StudentMapper;
 import com.wyk.sign.service.AdministratorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wyk.sign.model.User;
@@ -35,5 +32,4 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
         Administrator user = get(param);
         return user;
     }
-
 }

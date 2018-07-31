@@ -95,6 +95,21 @@
 		where id = #{id}
 	</update>
 
+    <update id="updateBatch" parameterType="List">
+        <foreach collection="list" separator=";" item="stu">
+            update tb_student set
+            wx_id=#{stu.wxId},
+            wx_name=#{stu.wxName},
+            wx_avatar_url=#{stu.wxAvatarUrl},
+            real_name=#{stu.realName},
+            class_id=#{stu.classes.id},
+            sno=#{stu.sno},
+            status=#{stu.status},
+            modify_time=#{stu.modifyTime}
+            where id = #{stu.id}
+        </foreach>
+    </update>
+
     <delete id="delete" parameterType="com.wyk.sign.model.Student">
         delete from tb_student
         <where>
@@ -103,21 +118,15 @@
             </if>
         </where>
     </delete>
-    <!-- End of Base Mapper -->
 
-    <update id="batchUpdate" parameterType="List">
-        <foreach collection="list" separator=";" item="stu">
-            update tb_student set
-                wx_id=#{stu.wxId},
-                wx_name=#{stu.wxName},
-                wx_avatar_url=#{stu.wxAvatarUrl},
-                real_name=#{stu.realName},
-                class_id=#{stu.classes.id},
-                sno=#{stu.sno},
-                status=#{stu.status},
-                modify_time=#{stu.modifyTime}
-            where id = #{stu.id}
-        </foreach>
-    </update>
+    <delete id="deleteByMap" parameterType="hashmap">
+        delete from tb_student
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
 
 </mapper>

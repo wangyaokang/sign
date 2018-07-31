@@ -77,7 +77,7 @@ public class SignInfoController extends AbstractController {
      * <pre>
      * token : wxid
      * method : insert
-     * params : {"startDate" : "2018-06-09 10:30", "stopDate" : "2018-06-09 12:30", "address" : "xxxx大楼", "classId" : "02", "courseId" : "2"}
+     * params : {"startDate" : "2018-06-09 10:30:00", "stopDate" : "2018-06-09 12:30:00", "address" : "xxxx大楼", "classId" : "02", "courseId" : "2"}
      * </pre>
      *
      * @param input
@@ -91,10 +91,10 @@ public class SignInfoController extends AbstractController {
         signInfo.setAdmin(admin);
         signInfo.setAddress(input.getString("address"));
         if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_MIN_FORMAT));
+            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_FORMAT));
         }
         if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_MIN_FORMAT));
+            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_FORMAT));
         }
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
@@ -104,6 +104,9 @@ public class SignInfoController extends AbstractController {
         signInfo.setCourse(course);
         if(admin.getUserType().equals(Constants.User.TEACHER)){
             input.getParams().put("adminId", admin.getId());
+            if(StringUtils.isNotEmpty(input.getString("courseId")) && StringUtils.isNotEmpty(input.getString("classId"))){
+                return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
+            }
             Elective elective = electiveService.get(input.getParams());
             if (null == elective) {
                 return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
@@ -136,10 +139,10 @@ public class SignInfoController extends AbstractController {
         }
         signInfo.setAddress(input.getString("address"));
         if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_MIN_FORMAT));
+            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_FORMAT));
         }
         if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_MIN_FORMAT));
+            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_FORMAT));
         }
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
@@ -197,8 +200,13 @@ public class SignInfoController extends AbstractController {
     public Output delete(Input input){
         Output result = new Output();
         SignInfo signingInfo = signInfoService.get(input.getLong("id"));
+        if(null == signingInfo){
+            return new Output(ERROR_NO_RECORD, "没有对应的签到信息！");
+        }
         // 删除签到信息下，所有的签到
-        signService.deleteByInfoId(input.getInteger("infoId"));
+        Map<String, Object> param = new HashMap<>();
+        param.put("infoId", input.getLong("id"));
+        signService.deleteByMap(param);
         signInfoService.delete(signingInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除签到信息成功！");

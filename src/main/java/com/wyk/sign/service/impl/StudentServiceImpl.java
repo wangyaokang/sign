@@ -22,9 +22,6 @@ import java.util.Map;
 @Service
 public class StudentServiceImpl extends BaseServiceImpl<Student> implements StudentService {
 
-    @Autowired
-    private StudentMapper studentMapper;
-
     @Override
     public Student getAnonymous() {
         return (Student) User.Anonymous;
@@ -36,11 +33,6 @@ public class StudentServiceImpl extends BaseServiceImpl<Student> implements Stud
         param.put("wxId", token);
         Student user = get(param);
         return user;
-    }
-
-    @Override
-    public int batchUpdate(List<Student> studentList) {
-        return studentMapper.batchUpdate(studentList);
     }
 
 }

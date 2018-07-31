@@ -50,14 +50,14 @@ public interface CacheManager {
 	void delete(String key);
 
 	/**
+	 * 删除所有的键值对
+	 */
+	void removeAll();
+
+	/**
 	 * 删除包含key的所有的键值对
 	 *
 	 * @param key
 	 */
 	void removeContainsKey(String key);
-
-	/**
-	 * 删除所有的键值对
-	 */
-	void removeAll();
 }

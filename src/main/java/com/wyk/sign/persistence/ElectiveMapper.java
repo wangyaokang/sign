@@ -18,10 +18,4 @@ import java.util.Map;
 @Repository
 public interface ElectiveMapper extends BaseMapper<Elective> {
 
-    /**
-     * 根据课程、教师、班级删除授课信息
-     * @param param
-     * @return
-     */
-    int deleteElectiveByMap(Map<String, Object> param);
 }

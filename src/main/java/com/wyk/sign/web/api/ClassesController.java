@@ -142,8 +142,8 @@ public class ClassesController extends AbstractController {
                 student.setClasses(null);
                 paramList.add(student);
             }
-            int rows = studentService.batchUpdate(paramList);
-            logger.debug("{}条数据更新成功！", rows);
+            studentService.updateBatch(paramList);
+            logger.debug("{}条数据更新成功！", studentList.size());
         }
         classesService.delete(classes);
         result.setMsg("删除班级成功");

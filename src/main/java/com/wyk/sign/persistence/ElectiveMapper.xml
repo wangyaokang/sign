@@ -100,6 +100,16 @@
 		where id = #{id}
 	</update>
 
+	<update id="updateBatch" parameterType="List">
+		<foreach collection="list" separator=";" item="elective">
+			update tb_classes_course_admin set
+			admin_id=#{elective.admin.id},
+			class_id=#{elective.classes.id},
+			course_id=#{elective.course.id},
+			where id = #{elective.id}
+		</foreach>
+	</update>
+
 	<delete id="delete" parameterType="com.wyk.sign.model.Elective">
 		delete from tb_classes_course_admin
 		<where>
@@ -108,9 +118,8 @@
 			</if>
 		</where>
 	</delete>
-	<!-- End of Base Mapper -->
 
-	<delete id="deleteElectiveByMap" parameterType="hashmap">
+	<delete id="deleteByMap" parameterType="hashmap">
 		delete from tb_classes_course_admin
 		<where>
 			<if test="id != null">
@@ -127,4 +136,7 @@
 			</if>
 		</where>
 	</delete>
+	<!-- End of Base Mapper -->
+
+
 </mapper>

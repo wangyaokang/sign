@@ -18,11 +18,4 @@ import java.util.Map;
 @Repository
 public interface StudentMapper extends BaseMapper<Student> {
 
-    /**
-     * 批量更新数据
-     *
-     * @param studentList
-     */
-   int batchUpdate(List<Student> studentList);
-
 }

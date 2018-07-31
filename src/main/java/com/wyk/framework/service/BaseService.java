@@ -11,7 +11,7 @@ import com.wyk.framework.page.Paginator;
 /**
  * Single Entity<T> CRUD Service
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public interface BaseService<T> {
@@ -72,6 +72,12 @@ public interface BaseService<T> {
 	 * @param entity
 	 */
 	void update(T entity);
+
+	/**
+	 *
+	 * @param entity
+	 */
+	void updateBatch(List<T> entity);
 	
 	/**
 	 * Only For AutoIdEntity
@@ -85,4 +91,10 @@ public interface BaseService<T> {
 	 * @param entity
 	 */
 	void delete(T entity);
+
+	/**
+	 *
+	 * @param map
+	 */
+	void deleteByMap(Map<String, Object> map);
 }

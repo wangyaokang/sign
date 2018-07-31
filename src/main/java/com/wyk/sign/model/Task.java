@@ -13,7 +13,7 @@ public class Task extends BaseModel{
     private static final long serialVersionUID = 8178932499847268791L;
 
     /** 作业信息 */
-    private TaskInfo taskInfo;
+    private TaskInfo info;
 
     /** 学生 */
     private Student student;
@@ -42,12 +42,12 @@ public class Task extends BaseModel{
         this.upDate = upDate;
     }
 
-    public TaskInfo getTaskInfo() {
-        return taskInfo;
+    public TaskInfo getInfo() {
+        return info;
     }
 
-    public void setTaskInfo(TaskInfo taskInfo) {
-        this.taskInfo = taskInfo;
+    public void setInfo(TaskInfo info) {
+        this.info = info;
     }
 
     public Student getStudent() {

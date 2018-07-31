@@ -54,7 +54,7 @@ public class UserController extends AbstractController {
     public Output info(Input input) {
         Output result = new Output();
         result.setStatus(SUCCESS);
-        result.setMsg("获得个人信息");
+        result.setMsg("获得个人信息成功！");
         result.setData(input.getCurrentUser());
         return result;
     }

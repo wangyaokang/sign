@@ -17,11 +17,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class SignServiceImpl extends BaseServiceImpl<Sign> implements SignService {
 
-    @Autowired
-    SignMapper mapper;
-
-    @Override
-    public void deleteByInfoId(Integer infoId) {
-        mapper.deleteByInfoId(infoId);
-    }
 }

@@ -358,3 +358,21 @@
 2018.07.31 at 20:59:18.667 CST [http-bio-8080-exec-3] INFO  com.wyk.framework.service.impl.BaseServiceImpl.update(BaseServiceImpl.java:180) - 删除缓存key:TaskServiceImpl_1 
 2018.07.31 at 20:59:18.668 CST [http-bio-8080-exec-3] INFO  com.wyk.framework.service.impl.BaseServiceImpl.update(BaseServiceImpl.java:185) - 删除包含缓存key:TaskServiceImpl_query的所有value！ 
 2018.07.31 at 20:59:18.668 CST [http-bio-8080-exec-3] INFO  com.wyk.sign.web.api.AbstractController.dispatch(AbstractController.java:83) - 执行了的接口, 返回数据: {"data":{},"msg":"评分成功！","status":"200"}
+2018.08.01 at 15:38:12.583 CST [http-bio-8080-exec-10] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: [object Object]
+2018.08.01 at 15:40:24.426 CST [http-bio-8080-exec-9] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: null
+2018.08.01 at 15:43:29.503 CST [http-bio-8080-exec-8] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: null
+2018.08.01 at 15:51:50.954 CST [http-bio-8080-exec-10] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: null
+2018.08.01 at 15:54:30.532 CST [http-bio-8080-exec-4] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: null
+2018.08.01 at 15:58:50.344 CST [http-bio-8080-exec-9] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: [object Object]
+2018.08.01 at 16:02:45.850 CST [http-bio-8080-exec-1] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: [object Object]
+2018.08.01 at 16:10:33.948 CST [http-bio-8080-exec-6] INFO  com.wyk.sign.web.api.AbstractController.getInput(AbstractController.java:168) - 接口请求数据: {"params":{"file":{}},"method":"uploadTaskFile","token":"17717543071","infoId":"1"}
+2018.08.01 at 16:10:38.975 CST [http-bio-8080-exec-6] INFO  com.wyk.framework.service.impl.BaseServiceImpl.get(BaseServiceImpl.java:72) - 设置缓存key:StudentServiceImpl_17717543071 value:com.wyk.sign.model.Student@21
+2018.08.01 at 16:10:38.979 CST [http-bio-8080-exec-6] INFO  com.wyk.sign.web.api.AbstractController.doService(AbstractController.java:137) - 验证的对象userType为：STU
+2018.08.01 at 16:11:36.707 CST [http-bio-8080-exec-6] INFO  com.wyk.sign.web.api.AbstractController.dispatch(AbstractController.java:82) - 执行了的接口, 返回数据: {"data":{},"msg":"找不到对应的方法","status":"400"}
+2018.08.01 at 21:42:05.318 CST [http-bio-8080-exec-3] INFO  com.wyk.framework.service.impl.BaseServiceImpl.get(BaseServiceImpl.java:72) - 设置缓存key:StudentServiceImpl_17717543071 value:com.wyk.sign.model.Student@22
+2018.08.01 at 21:44:12.770 CST [http-bio-8080-exec-7] INFO  com.wyk.framework.service.impl.BaseServiceImpl.get(BaseServiceImpl.java:66) - 获取缓存key:StudentServiceImpl_17717543071 
+2018.08.01 at 21:46:28.018 CST [http-bio-8080-exec-3] INFO  com.wyk.framework.service.impl.BaseServiceImpl.get(BaseServiceImpl.java:72) - 设置缓存key:StudentServiceImpl_17717543071 value:com.wyk.sign.model.Student@22
+2018.08.01 at 22:07:47.077 CST [http-bio-8080-exec-3] INFO  com.wyk.framework.service.impl.BaseServiceImpl.get(BaseServiceImpl.java:72) - 设置缓存key:StudentServiceImpl_17717543071 value:com.wyk.sign.model.Student@22
+2018.08.01 at 22:26:52.681 CST [http-bio-8080-exec-5] INFO  com.wyk.sign.web.api.TaskController.download(TaskController.java:216) - 文件attachment/file/taskInfo1/201106214_tREb2q.exe，下载失败！
+2018.08.01 at 22:27:37.427 CST [http-bio-8080-exec-10] INFO  com.wyk.sign.web.api.TaskController.download(TaskController.java:216) - 文件attachment/file/taskInfo1/201106214_tREb2q.exe，下载失败！
+2018.08.01 at 22:28:47.925 CST [http-bio-8080-exec-6] INFO  com.wyk.sign.web.api.TaskController.download(TaskController.java:219) - 文件attachment/file/taskInfo1/201106214_tREb2q.exe，下载成功！

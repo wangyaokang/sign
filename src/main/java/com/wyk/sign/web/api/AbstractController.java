@@ -72,8 +72,7 @@ public abstract class AbstractController implements WebxController {
      * @return
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public @ResponseBody
-    Output dispatch(HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody Output dispatch(HttpServletRequest request, HttpServletResponse response) {
         try {
             response.setCharacterEncoding("UTF-8");
             // 设置Content-Type字段值
@@ -154,7 +153,6 @@ public abstract class AbstractController implements WebxController {
      * @throws IOException
      */
     protected Input getInput(HttpServletRequest request) throws IOException {
-        // request.setCharacterEncoding("UTF-8"); // 设置处理请求参数的编码格式
         // 读取JSON字符串
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String line = null;
@@ -214,9 +212,15 @@ public abstract class AbstractController implements WebxController {
         return null;
     }
 
+    /**
+     * 文件下载
+     *
+     * @param filename 文件名
+     * @return
+     */
     public ResponseEntity<byte[]> downloadFile(String filename) {
-        String path = context.getRealPath("/") + "/" + uploadPath;
-        File file = new File(path + File.separator + filename);
+        String path = context.getRealPath("/") + File.separator + filename;
+        File file = new File(path);
         HttpHeaders headers = new HttpHeaders();
         try {
             String downloadFielName = new String(filename.getBytes("UTF-8"), "iso-8859-1");

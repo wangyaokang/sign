@@ -27,10 +27,21 @@ public class TaskInfo extends BaseModel{
     /** 上传截止时间 */
     private Date deadlineTime;
 
+    /** 作业内容 */
+    private String content;
+
     /** 备注 */
     private String remark;
 
     private List<Task> taskList;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Course getCourse() {
         return course;

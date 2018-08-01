@@ -38,6 +38,7 @@
 			ad.wx_avatar_url as admin_wx_avatar_url,
 			ad.real_name as admin_real_name,
 			ad.user_type as admin_user_type,
+			cl.id as class_id,
 			cl.name as class_name,
 			cl.status as class_status,
 			co.name as course_name,
@@ -68,8 +69,11 @@
 	<select id="queryByMap" parameterType="hashmap" resultMap="signInfoMap">
 		<include refid="selectSQL" />
 		<where>
+			<if test="class_id != null">
+				cl.id = #{classId}
+			</if>
 			<if test="class_name != null">
-				cl.name = #{className}
+				and cl.name = #{className}
 			</if>
 			<if test="courseName != null">
 				and co.name = #{courseName}

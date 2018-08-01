@@ -7,6 +7,7 @@
 	<resultMap type="com.wyk.sign.model.TaskInfo" id="taskInfoMap">
 		<id property="id" column="id" javaType="long" />
 		<result property="deadlineTime" column="deadline_time" />
+		<result property="content" column="content" />
 		<result property="remark" column="remark" />
 		<result property="status" column="status" />
 		<result property="createTime" column="create_time" />
@@ -103,6 +104,7 @@
 		admin_id,
 		course_id,
 		class_id,
+		content,
 		deadline_time,
 		remark,
 		status)
@@ -110,6 +112,7 @@
 		(#{admin.id},
 		#{course.id},
 		#{classes.id},
+		#{content},
 		#{deadlineTime},
 		#{remark},
 		#{status})
@@ -120,6 +123,7 @@
 		admin_id=#{admin.id},
 		course_id=#{course.id},
 		class_id=#{classes.id},
+		content=#{info.content},
 		deadline_time=#{deadlineTime},
 		remark=#{remark},
 		status=#{status},
@@ -133,6 +137,7 @@
 			admin_id=#{info.admin.id},
 			course_id=#{info.course.id},
 			class_id=#{info.classes.id},
+			content=#{info.content},
 			deadline_time=#{info.deadlineTime},
 			remark=#{info.remark},
 			status=#{info.status},

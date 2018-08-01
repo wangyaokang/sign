@@ -1,44 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% String path = request.getContextPath();
-   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>登 录</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-v2.1.1.min.js"></script>
 </head>
 <body>
-<form class="form-horizontal" role="form">
-    <div class="form-group">
-        <label for="firstname" class="col-sm-2 control-label">名字</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="firstname" placeholder="请输入名字">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="lastname" class="col-sm-2 control-label">姓</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="lastname" placeholder="请输入姓">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox">请记住我
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">登录</button>
-        </div>
-    </div>
-</form>
+<div>
+    <input type="file" name="FileUpload" id="FileUpload">
+    <button id="btn_upload">上传图片</button>
+</div>
 </body>
+<script type="text/javascript">
+        $("#btn_upload").click(function () {
+            var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
+            if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+                alert("请选择图片");
+                return;
+            }
+            var param = {"file": fileObj};
+            var data = {"params": param, "method": "uploadTaskFile", "token": "17717543071", "infoId": "1"};
+            $.ajax({
+                url: "http://localhost:8080/sign/api/task",
+                data: JSON.stringify(data),
+                type: "Post",
+                dataType: "json",
+                cache: false,//上传文件无需缓存
+                processData: false,//用于对data参数进行序列化处理 这里必须false
+                contentType: false, //必须
+                success: function (result) {
+                    alert("上传完成!");
+                },
+            })
+        });
+
+</script>
 </html>

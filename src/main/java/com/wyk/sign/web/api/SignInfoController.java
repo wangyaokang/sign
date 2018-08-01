@@ -104,7 +104,7 @@ public class SignInfoController extends AbstractController {
         signInfo.setCourse(course);
         if(admin.getUserType().equals(Constants.User.TEACHER)){
             input.getParams().put("adminId", admin.getId());
-            if(StringUtils.isNotEmpty(input.getString("courseId")) && StringUtils.isNotEmpty(input.getString("classId"))){
+            if(StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))){
                 return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
             }
             Elective elective = electiveService.get(input.getParams());
@@ -208,6 +208,39 @@ public class SignInfoController extends AbstractController {
         param.put("infoId", input.getLong("id"));
         signService.deleteByMap(param);
         signInfoService.delete(signingInfo);
+        result.setStatus(SUCCESS);
+        result.setMsg("删除签到信息成功！");
+        return result;
+    }
+
+    /**
+     * 获取选中日期对应的签到信息
+     *
+     * <p>传入参数</p>
+     * <pre>
+     *     method: getSignInfoBySelectedDate
+     *     token: wxId
+     *     params: {selectDate : "2018-07-31"}
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getSignInfoBySelectedDate(Input input){
+        Output result = new Output();
+        User user = input.getCurrentUser();
+        Map<String, Object> param = input.getParams();
+        if(user.getUserType().equals(Constants.User.STUDENT)){
+            param.put("classId", ((Student) user).getClasses().getId());
+        }else{
+            param.put("adminId", user.getId());
+        }
+        List<SignInfo> signInfoList = signInfoService.query(input.getParams());
+        if(null == signInfoList || signInfoList.size() != 0){
+            return new Output(ERROR_NO_RECORD, "当天无签到信息！");
+        }
+        result.setData(signInfoList);
         result.setStatus(SUCCESS);
         result.setMsg("删除签到信息成功！");
         return result;

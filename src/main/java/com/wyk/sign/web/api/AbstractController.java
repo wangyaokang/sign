@@ -3,10 +3,7 @@
  */
 package com.wyk.sign.web.api;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,13 +16,16 @@ import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.service.AdministratorService;
 import com.wyk.sign.util.Constants;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -72,8 +72,7 @@ public abstract class AbstractController implements WebxController {
      * @return
      */
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public @ResponseBody
-    Output dispatch(HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody Output dispatch(HttpServletRequest request, HttpServletResponse response) {
         try {
             response.setCharacterEncoding("UTF-8");
             // 设置Content-Type字段值
@@ -190,7 +189,7 @@ public abstract class AbstractController implements WebxController {
     /**
      * 上传文件
      *
-     * @param file 文件
+     * @param file   文件
      * @param fileId 文件唯一标识
      * @return
      */
@@ -210,6 +209,27 @@ public abstract class AbstractController implements WebxController {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        }
+        return null;
+    }
+
+    /**
+     * 文件下载
+     *
+     * @param filename
+     * @return
+     */
+    public ResponseEntity<byte[]> downloadFile(String filename) {
+        String path = context.getRealPath("/") + "/" + uploadPath;
+        File file = new File(path + File.separator + filename);
+        HttpHeaders headers = new HttpHeaders();
+        try {
+            String downloadFielName = new String(filename.getBytes("UTF-8"), "iso-8859-1");
+            headers.setContentDispositionFormData("attachment", downloadFielName);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

@@ -323,7 +323,7 @@ public class HttpTest {
     public void insertTaskInfo(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("courseId", "2");
+        map.put("courseId", "1");
         map.put("classId", "1");
         map.put("deadlineTime", "2018-7-31");
         map.put("remark", "take you notebook");
@@ -336,12 +336,11 @@ public class HttpTest {
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
 
-
     @Test
     public void taskInfo(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("id", "2");
+        map.put("id", "1");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "info");
         paramMap.put("params", map);
@@ -357,7 +356,7 @@ public class HttpTest {
         Map<String, String> map = new HashMap<String, String>();
         map.put("courseId", "1");
         map.put("classId", "1");
-        map.put("deadlineTime", "2018-7-31");
+        map.put("deadlineTime", "2018-7-20");
         map.put("remark", "take you notebook");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "insert");
@@ -395,7 +394,6 @@ public class HttpTest {
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
     }
 
-
     @Test
     public void insertTask(){
         long startTime = System.currentTimeMillis();
@@ -423,6 +421,21 @@ public class HttpTest {
         map.put("desc", "English Task");
         paramMap.put("token" , "17717543071");
         paramMap.put("method" , "modify");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/task", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    @Test
+    public void score(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("id", "1");
+        map.put("score", "100");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "score");
         paramMap.put("params", map);
         String content = invoker.post("/api/task", paramMap);
         System.out.println(content);

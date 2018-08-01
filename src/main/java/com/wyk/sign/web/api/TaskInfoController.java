@@ -96,7 +96,7 @@ public class TaskInfoController extends AbstractController {
             taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtils.DATE_FORMAT));
         }
         input.getParams().put("adminId", teacher.getId());
-        if(StringUtils.isNotEmpty(input.getString("adminId")) && StringUtils.isNotEmpty(input.getString("courseId")) && StringUtils.isNotEmpty(input.getString("classId"))){
+        if(StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))){
             return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
         }
         Elective elective = electiveService.get(input.getParams());

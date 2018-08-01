@@ -7,55 +7,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8b6224a-4b28-4c44-aff1-7bb684ac1ce3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="d8b6224a-4b28-4c44-aff1-7bb684ac1ce3" name="Default" comment="文件长传 add by wyk">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/app/sign.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/app/sign.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/CacheManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/CacheManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/cache/impl/LocalCacheManagerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/mybatis/BaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/mybatis/BaseMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/BaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/BaseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/util/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/util/DateUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Sign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Sign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/TaskInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/TaskInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/AdministratorMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/AdministratorMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ClassesMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ClassesMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/CourseMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/CourseMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/StudentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/StudentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/StudentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/StudentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/ElectiveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/ElectiveService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/SignService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/SignService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/AdministratorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/AdministratorServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ElectiveServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/ElectiveServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/SignServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/SignServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/util/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/util/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ClassesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ClassesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/SignInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/BaseMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/BaseMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wyk/framework/mybatis/plugin/OffsetLimitInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -101,7 +54,7 @@
       <file leaf-file-name="BaseServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/framework/service/impl/BaseServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
+            <state relative-caret-position="968">
               <caret line="59" column="43" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
             </state>
           </provider>
@@ -125,7 +78,7 @@
       <file leaf-file-name="TaskInfoMapper.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskInfoMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
+            <state relative-caret-position="770">
               <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
             </state>
           </provider>
@@ -134,7 +87,7 @@
       <file leaf-file-name="TaskMapper.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/TaskMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
+            <state relative-caret-position="1980">
               <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
             </state>
           </provider>
@@ -143,8 +96,8 @@
       <file leaf-file-name="TaskController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41">
-              <caret line="113" column="6" lean-forward="true" selection-start-line="113" selection-start-column="6" selection-end-line="113" selection-end-column="6" />
+            <state relative-caret-position="110">
+              <caret line="132" column="10" lean-forward="true" selection-start-line="132" selection-start-column="10" selection-end-line="132" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -155,7 +108,7 @@
       <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
+            <state relative-caret-position="352">
               <caret line="16" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
@@ -164,7 +117,7 @@
       <file leaf-file-name="Item.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/annotation/Item.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
+            <state relative-caret-position="594">
               <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
             </state>
           </provider>
@@ -173,7 +126,7 @@
       <file leaf-file-name="AbstractController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
+            <state relative-caret-position="1430">
               <caret line="102" column="4" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -185,7 +138,7 @@
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
+            <state relative-caret-position="1958">
               <caret line="107" column="40" selection-start-line="107" selection-start-column="26" selection-end-line="107" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -197,12 +150,10 @@
       <file leaf-file-name="HttpTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/wyk/sign/HttpTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="413" column="5" lean-forward="true" selection-start-line="413" selection-start-column="5" selection-end-line="413" selection-end-column="5" />
+            <state relative-caret-position="8910">
+              <caret line="413" column="5" selection-start-line="413" selection-start-column="5" selection-end-line="413" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#14556#14572#0" expanded="true" />
-                <element signature="e#15138#15154#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -373,100 +324,6 @@
           <expand>
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="persistence" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wyk" type="462c0819:PsiDirectoryNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="sign" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -752,7 +609,21 @@
       <option name="project" value="LOCAL" />
       <updated>1532684858281</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="文件长传 add by wyk">
+      <created>1533031147695</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1533031147695</updated>
+    </task>
+    <task id="LOCAL-00005" summary="文件长传 add by wyk">
+      <created>1533031247661</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1533031247661</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -788,69 +659,44 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103012000" />
+    <option name="totallyTimeSpent" value="103204000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" weight="0.23222223" />
-      <window_info anchor="right" id="Maven Projects" order="5" weight="0.32995737" />
-      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="6" weight="0.3315565" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.35555556" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="8" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info id="Image Layers" order="7" />
-      <window_info anchor="bottom" id="Java Enterprise" order="14" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.4989339" weight="0.13222222" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.37555555" />
-      <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20255864" />
-      <window_info id="Web" order="6" side_tool="true" />
-      <window_info anchor="right" id="Theme Preview" order="7" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5777778" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50053304" side_tool="true" weight="0.32777777" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20362474" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Java Enterprise" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32995737" />
-      <window_info id="Web" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info id="Image Layers" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.17222223" />
+      <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Application Servers" order="8" sideWeight="0.49946696" weight="0.42777777" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Database Console" weight="0.11444444" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info id="UI Designer" order="2" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4588889" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50053304" side_tool="true" weight="0.32777777" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32995737" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49946696" weight="0.17222223" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.5777778" />
+      <window_info anchor="bottom" id="Spring" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20575693" />
+      <window_info id="Web" order="2" side_tool="true" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4588889" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Database Console" order="9" weight="0.11444444" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="8" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Application Servers" order="8" sideWeight="0.49946696" weight="0.42777777" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -872,7 +718,8 @@
     <MESSAGE value="0717更新。" />
     <MESSAGE value="2018-7-25代码上传 add by wyk" />
     <MESSAGE value="本地创建缓存 add by wyk 0727" />
-    <option name="LAST_COMMIT_MESSAGE" value="本地创建缓存 add by wyk 0727" />
+    <MESSAGE value="文件长传 add by wyk" />
+    <option name="LAST_COMMIT_MESSAGE" value="文件长传 add by wyk" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1035,7 +882,7 @@
           <settings layout="Hierarchic Group" zoom="0.6791044776119403" x="417.58241758241763" y="534.8351648351648" />
           <SelectedNodes />
           <Categories>
-            <Category>Key columns</Category>
+            <Category />
             <Category>Columns</Category>
           </Categories>
         </state>
@@ -1308,8 +1155,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="113" column="6" lean-forward="true" selection-start-line="113" selection-start-column="6" selection-end-line="113" selection-end-column="6" />
+        <state relative-caret-position="371">
+          <caret line="128" column="5" lean-forward="true" selection-start-line="128" selection-start-column="5" selection-end-line="128" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -190,10 +190,10 @@ public abstract class AbstractController implements WebxController {
      * 上传文件
      *
      * @param file   文件
+     * @param fileId   文件标识
      * @return
      */
-    @RequestMapping(value = "/upload")
-    protected String uploadFile(@RequestParam(value = "file", required = false) MultipartFile file) {
+    protected String uploadFile(MultipartFile file, String fileId) {
         String savePath = context.getRealPath("/") + "/" + uploadPath;
         if (file != null && StringUtils.isNotEmpty(file.getOriginalFilename())) {
             try {
@@ -203,7 +203,7 @@ public abstract class AbstractController implements WebxController {
                 }
                 String suffix = uploadFileName.substring(uploadFileName.lastIndexOf('.'));
                 String random = RandomUtils.getString(6);
-                String fileName = random + suffix;
+                String fileName = fileId + "_" + random + suffix;
                 FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
                 return (uploadPath + fileName);
             } catch (IOException ex) {
@@ -216,12 +216,12 @@ public abstract class AbstractController implements WebxController {
     /**
      * 文件下载
      *
-     * @param filename
+     * @param filename 文件名
      * @return
      */
     public ResponseEntity<byte[]> downloadFile(String filename) {
-        String path = context.getRealPath("/") + "/" + uploadPath;
-        File file = new File(path + File.separator + filename);
+        String path = context.getRealPath("/") + filename;
+        File file = new File(path);
         HttpHeaders headers = new HttpHeaders();
         try {
             String downloadFielName = new String(filename.getBytes("UTF-8"), "iso-8859-1");

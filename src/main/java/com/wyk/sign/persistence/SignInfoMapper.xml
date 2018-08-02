@@ -48,6 +48,10 @@
 		 		left join tb_course co on s.course_id = co.id
 	</sql>
 
+	<sql id="select">
+
+	</sql>
+
 	<!-- Base Mapper -->
 	<select id="get" parameterType="hashmap" resultMap="signInfoMap">
 		<include refid="selectSQL" />

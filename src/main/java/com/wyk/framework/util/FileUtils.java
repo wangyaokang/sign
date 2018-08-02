@@ -86,6 +86,17 @@ public class FileUtils {
         return filesname;
     }
 
+    /**
+     * 删除文件
+     *
+     * @param filePath 文件的绝对路径
+     */
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 
 }
 

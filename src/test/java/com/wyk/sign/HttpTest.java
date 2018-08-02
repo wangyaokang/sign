@@ -105,7 +105,7 @@ public class HttpTest {
     public void insertCourse(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("name", "数值分析");
+        map.put("name", "日语");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "insert");
         paramMap.put("params", map);
@@ -167,11 +167,11 @@ public class HttpTest {
     public void insertSignInfo(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("startDate", "2018-07-26 09:00:00");
-        map.put("stopDate", "2018-07-26 10:00:00");
-        map.put("address", "凌阳大厦");
+        map.put("startDate", "2018-08-01 12:00:00");
+        map.put("stopDate", "2018-08-01 13:00:00");
+        map.put("address", "五角大楼");
         map.put("classId", "1");
-        map.put("courseId", "2");
+        map.put("courseId", "1");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "insert");
         paramMap.put("params", map);
@@ -187,11 +187,11 @@ public class HttpTest {
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
         map.put("id", "1");
-        map.put("startDate", "2018-07-26 09:00");
-        map.put("stopDate", "2018-07-26 10:00");
-        map.put("address", "凌阳大厦");
+        map.put("startDate", "2018-08-01 09:00");
+        map.put("stopDate", "2018-08-01 10:00");
+        map.put("address", "五角大楼");
         map.put("classId", "1");
-        map.put("courseId", "1");
+        map.put("courseId", "2");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "modify");
         paramMap.put("params", map);
@@ -323,9 +323,9 @@ public class HttpTest {
     public void insertTaskInfo(){
         long startTime = System.currentTimeMillis();
         Map<String, String> map = new HashMap<String, String>();
-        map.put("courseId", "1");
+        map.put("courseId", "2");
         map.put("classId", "1");
-        map.put("deadlineTime", "2018-7-31");
+        map.put("deadlineTime", "2018-08-01");
         map.put("remark", "take you notebook");
         paramMap.put("token" , "15000496839");
         paramMap.put("method" , "insert");
@@ -438,6 +438,20 @@ public class HttpTest {
         paramMap.put("method" , "score");
         paramMap.put("params", map);
         String content = invoker.post("/api/task", paramMap);
+        System.out.println(content);
+        System.out.println("获取:" + (System.currentTimeMillis() - startTime));
+        System.out.println(" total time: " + (System.currentTimeMillis() - startTime));
+    }
+
+    @Test
+    public void keyword(){
+        long startTime = System.currentTimeMillis();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("keyWord", "汪");
+        paramMap.put("token" , "15000496839");
+        paramMap.put("method" , "searchKeyWord");
+        paramMap.put("params", map);
+        String content = invoker.post("/api/taskInfo", paramMap);
         System.out.println(content);
         System.out.println("获取:" + (System.currentTimeMillis() - startTime));
         System.out.println(" total time: " + (System.currentTimeMillis() - startTime));

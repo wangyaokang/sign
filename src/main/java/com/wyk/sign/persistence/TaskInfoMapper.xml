@@ -95,7 +95,11 @@
 			<if test="courseName != null">
 				and co.name = #{courseName}
 			</if>
+			<if test="keyWord != null">
+				MATCH (t.content, ad.real_name, cl.name, co.name) AGAINST(concat('+',${keyWord},'*') in boolean MODE)
+			</if>
 		</where>
+			order by create_time desc
 	</select>
 
 	<insert id="insert" parameterType="com.wyk.sign.model.TaskInfo"

@@ -3,6 +3,7 @@
  */
 package com.wyk.sign.web.api;
 
+import com.sun.net.httpserver.Authenticator;
 import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
@@ -211,6 +212,31 @@ public class TaskInfoController extends AbstractController {
         taskInfoService.delete(taskInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除作业信息成功！");
+        return result;
+    }
+
+    /**
+     * 根据关键字搜索对应的作业信息
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     keyWord : 黄老师
+     * </pre>
+     * @param input
+     * @return
+     */
+    public Output searchKeyWord(Input input){
+        Output result = new Output();
+        if(StringUtils.isEmpty(input.getString("keyWord"))){
+           return new Output(ERROR_UNKNOWN, "没有输入对应的关键词！");
+        }
+
+        // 防止输入除keyword之外过多的参数，新建一个map
+        Map<String, Object> keyMap = new HashMap<>();
+        keyMap.put("keyWord", input.getString("keyWord"));
+        List<TaskInfo> taskInfoList = taskInfoService.query(input.getParams());
+        result.setMsg(SUCCESS);
+        result.setData(taskInfoList);
         return result;
     }
 }

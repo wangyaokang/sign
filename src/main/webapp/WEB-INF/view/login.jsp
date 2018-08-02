@@ -11,8 +11,15 @@
 </head>
 <body>
 <div>
-    <input type="file" name="FileUpload" id="FileUpload">
-    <button id="btn_upload">上传图片</button>
+    <input type="file" name="FileUpload" id="FileUpload"/><br />
+    <input type="text" id="url" value=""/><br />
+    <button id="btn_upload">上传图片</button><br/>
+    <a href="api/task/downloadTaskFile?filename=attachment/file/taskInfo1/201106214_tREb2q.exe">
+        我的文件
+    </a>
+    <a href="api/task/deleteTaskFile?filename=attachment/file/taskInfo1/201106214_tREb2q.exe">
+        删除
+    </a>
 </div>
 </body>
 <script type="text/javascript">
@@ -22,17 +29,21 @@
                 alert("请选择图片");
                 return;
             }
-            var param = {"file": fileObj};
-            var data = {"params": param, "method": "uploadTaskFile", "token": "17717543071", "infoId": "1"};
+            var formData = new FormData();
+            formData.append("file", fileObj);
+            formData.append("wxId", "17717543071");
+            formData.append("infoId", "1");
+            var data = formData;
             $.ajax({
-                url: "http://localhost:8080/sign/api/task",
-                data: JSON.stringify(data),
+                url: "http://localhost:8080/sign/api/task/uploadTaskFile",
+                data: data,
                 type: "Post",
                 dataType: "json",
                 cache: false,//上传文件无需缓存
                 processData: false,//用于对data参数进行序列化处理 这里必须false
                 contentType: false, //必须
                 success: function (result) {
+                    $("#url").val(result.data);
                     alert("上传完成!");
                 },
             })

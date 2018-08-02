@@ -4,6 +4,7 @@
 package com.wyk.sign.web.api;
 
 import com.wyk.framework.util.DateUtils;
+import com.wyk.framework.util.FileUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
@@ -11,15 +12,16 @@ import com.wyk.sign.service.TaskInfoService;
 import com.wyk.sign.service.TaskService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 作业相关接口
@@ -190,31 +192,57 @@ public class TaskController extends AbstractController {
      *     params : {info : 1, file ；MultipartFile(object)}
      * </pre>
      *
-     * @param input
+     * @param file
      * @return
      */
-    @Checked(Item.STU)
-    public Output uploadTaskFile(Input input) {
+    @RequestMapping(value = "uploadTaskFile", method = RequestMethod.POST)
+    public @ResponseBody Output uploadTaskFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         Output result = new Output();
-        MultipartFile file = (MultipartFile) input.getParams().get("file");
-        if (file.isEmpty()) {
-            return new Output(ERROR_NO_RECORD, "未能选中文件！");
-        }
-        Student student = (Student) input.getCurrentUser();
-        TaskInfo taskInfo = taskInfoService.get(input.getLong("infoId"));
-        if (null == taskInfo) {
-            return new Output(ERROR_NO_RECORD, "请选择对应的作业信息！");
-        }
-        String fileId = String.format("task_info%s/%s", taskInfo.getId(), student.getSno());
-        String uploadFilePath = uploadFile(file, fileId);
-        if (uploadFilePath == null) {
-            return new Output(ERROR_NO_RECORD, "文件上传失败！");
-        }
-        Map<String, Object> data = new HashMap<>();
-        data.put("fileUrl", uploadFilePath);
+        String infoId = request.getParameter("infoId");
+        String token = request.getParameter("wxId");
+        Student student = (Student) getCurrentUserByToken(token);
+        String fileId = String.format("taskInfo%s/%s", infoId, student.getSno());
+        String uploadUrl = uploadFile(file, fileId);
         result.setMsg("文件上传成功！");
-        result.setData(data);
+        result.setData(uploadUrl);
         result.setStatus(SUCCESS);
+        return result;
+    }
+
+    /**
+     * 作业下载
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     filename : attachment/file/taskInfo1/201106214_tREb2q.exe
+     * </pre>
+     * @param filename
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "downloadTaskFile")
+    public ResponseEntity<byte[]> download(@RequestParam("filename") String filename) {
+        return downloadFile(filename);
+    }
+
+    /**
+     * 作业删除
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     filename : attachment/file/taskInfo1/201106214_tREb2q.exe
+     * </pre>
+     *
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "deleteTaskFile")
+    public @ResponseBody Output deleteFileUrl(@RequestParam("filename") String filename){
+        Output result = new Output();
+        String path = context.getRealPath("/") + filename;
+        FileUtils.deleteFile(path);
+        result.setStatus(SUCCESS);
+        result.setMsg("文件删除成功！");
         return result;
     }
 

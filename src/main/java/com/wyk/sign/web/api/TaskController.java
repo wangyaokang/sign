@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -195,7 +194,7 @@ public class TaskController extends AbstractController {
      * @param file
      * @return
      */
-    @RequestMapping(value = "/uploadTaskFile", method = RequestMethod.POST)
+    @RequestMapping(value = "uploadTaskFile", method = RequestMethod.POST)
     public @ResponseBody Output uploadTaskFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         Output result = new Output();
         String infoId = request.getParameter("infoId");

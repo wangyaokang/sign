@@ -28,6 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -153,7 +154,6 @@ public abstract class AbstractController implements WebxController {
      * @throws IOException
      */
     protected Input getInput(HttpServletRequest request) throws IOException {
-        // request.setCharacterEncoding("UTF-8"); // 设置处理请求参数的编码格式
         // 读取JSON字符串
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String line = null;
@@ -190,10 +190,10 @@ public abstract class AbstractController implements WebxController {
      * 上传文件
      *
      * @param file   文件
-     * @param fileId 文件唯一标识
      * @return
      */
-    protected String uploadFile(MultipartFile file, String fileId) {
+    @RequestMapping(value = "/upload")
+    protected String uploadFile(@RequestParam(value = "file", required = false) MultipartFile file) {
         String savePath = context.getRealPath("/") + "/" + uploadPath;
         if (file != null && StringUtils.isNotEmpty(file.getOriginalFilename())) {
             try {
@@ -203,7 +203,7 @@ public abstract class AbstractController implements WebxController {
                 }
                 String suffix = uploadFileName.substring(uploadFileName.lastIndexOf('.'));
                 String random = RandomUtils.getString(6);
-                String fileName = fileId + "_" + random + suffix;
+                String fileName = random + suffix;
                 FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
                 return (uploadPath + fileName);
             } catch (IOException ex) {

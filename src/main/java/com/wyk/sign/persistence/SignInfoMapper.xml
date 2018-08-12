@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.wyk.sign.persistence.SignInfoMapper">
 
-	<resultMap type="com.wyk.sign.model.SignInfo" id="signInfoMap">
-		<id property="id" column="id" javaType="long" />
-		<result property="startDate" column="start_date" />
-		<result property="stopDate" column="stop_date" />
-		<result property="address" column="address" />
-		<result property="status" column="status" />
-		<association property="admin" javaType="com.wyk.sign.model.Administrator">
-			<id property="id" column="admin_id"/>
-			<result property="wxId" column="admin_wx_id" />
-			<result property="wxName" column="admin_wx_name" />
-			<result property="wxAvatarUrl" column="admin_wx_avatar_url" />
-			<result property="realName" column="admin_real_name" />
-			<result property="userType" column="admin_user_type" />
-			<result property="status" column="admin_status" />
-		</association>
-		<association property="classes" javaType="com.wyk.sign.model.Classes">
-			<id property="id" column="class_id"/>
-			<result property="name" column="class_name" />
-			<result property="status" column="class_status" />
-		</association>
-		<association property="course" javaType="com.wyk.sign.model.Course">
-			<id property="id" column="course_id"/>
-			<result property="name" column="course_name" />
-			<result property="status" column="course_status" />
-		</association>
-	</resultMap>
+    <resultMap type="com.wyk.sign.model.SignInfo" id="signInfoMap">
+        <id property="id" column="id" javaType="long"/>
+        <result property="startDate" column="start_date"/>
+        <result property="stopDate" column="stop_date"/>
+        <result property="address" column="address"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <association property="admin" javaType="com.wyk.sign.model.Administrator">
+            <id property="id" column="admin_id"/>
+            <result property="wxId" column="admin_wx_id"/>
+            <result property="wxName" column="admin_wx_name"/>
+            <result property="wxAvatarUrl" column="admin_wx_avatar_url"/>
+            <result property="realName" column="admin_real_name"/>
+            <result property="userType" column="admin_user_type"/>
+            <result property="status" column="admin_status"/>
+        </association>
+        <association property="classes" javaType="com.wyk.sign.model.Classes">
+            <id property="id" column="class_id"/>
+            <result property="name" column="class_name"/>
+            <result property="status" column="class_status"/>
+        </association>
+        <association property="course" javaType="com.wyk.sign.model.Course">
+            <id property="id" column="course_id"/>
+            <result property="name" column="course_name"/>
+            <result property="status" column="course_status"/>
+        </association>
+    </resultMap>
 
-	<sql id="selectSQL">
+    <sql id="selectSQL">
 		select s.*,
 			ad.wx_id as admin_wx_id,
 			ad.wx_name as admin_wx_name,
@@ -48,54 +49,54 @@
 		 		left join tb_course co on s.course_id = co.id
 	</sql>
 
-	<!-- Base Mapper -->
-	<select id="get" parameterType="hashmap" resultMap="signInfoMap">
-		<include refid="selectSQL" />
-		<where>
-			<if test="id != null">
-				s.id = #{id}
-			</if>
-			<if test="id != null">
-				and admin.wx_id = #{id}
-			</if>
-		</where>
-		limit 0,1
-	</select>
+    <!-- Base Mapper -->
+    <select id="get" parameterType="hashmap" resultMap="signInfoMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="id != null">
+                s.id = #{id}
+            </if>
+            <if test="id != null">
+                and admin.wx_id = #{id}
+            </if>
+        </where>
+        limit 0,1
+    </select>
 
-	<select id="query" resultMap="signInfoMap">
-		<include refid="selectSQL" />
-	</select>
+    <select id="query" resultMap="signInfoMap">
+        <include refid="selectSQL"/>
+    </select>
 
-	<select id="queryByMap" parameterType="hashmap" resultMap="signInfoMap">
-		<include refid="selectSQL" />
-		<where>
-			<if test="class_id != null">
-				cl.id = #{classId}
-			</if>
-			<if test="class_name != null">
-				and cl.name = #{className}
-			</if>
-			<if test="courseName != null">
-				and co.name = #{courseName}
-			</if>
-			<if test="wxId != null">
-				and ad.wx_id = #{wxId}
-			</if>
-			<if test="wxName != null">
-				and ad.wx_name = #{wxName}
-			</if>
-			<if test="realName != null">
-				and ad.real_name = #{realName}
-			</if>
-			<if test="selectDate != null">
-				and DATEDIFF(s.start_date, selectDate) = 0
-			</if>
-		</where>
-		order by start_date desc
-	</select>
+    <select id="queryByMap" parameterType="hashmap" resultMap="signInfoMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="classId != null">
+                cl.id = #{classId}
+            </if>
+            <if test="class_name != null">
+                and cl.name = #{className}
+            </if>
+            <if test="courseName != null">
+                and co.name = #{courseName}
+            </if>
+            <if test="wxId != null">
+                and ad.wx_id = #{wxId}
+            </if>
+            <if test="wxName != null">
+                and ad.wx_name = #{wxName}
+            </if>
+            <if test="realName != null">
+                and ad.real_name = #{realName}
+            </if>
+            <if test="selectDate != null">
+                and DATEDIFF(s.start_date, #{selectDate}) = 0
+            </if>
+        </where>
+        order by start_date desc
+    </select>
 
-	<insert id="insert" parameterType="com.wyk.sign.model.SignInfo"
-		useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.wyk.sign.model.SignInfo"
+            useGeneratedKeys="true" keyProperty="id">
 		insert into tb_sign_info (
 			admin_id,
 			class_id,
@@ -114,7 +115,7 @@
 			#{status})
 	</insert>
 
-	<update id="update" parameterType="com.wyk.sign.model.SignInfo">
+    <update id="update" parameterType="com.wyk.sign.model.SignInfo">
 		update tb_sign_info set
 		admin_id=#{admin.id},
 		class_id=#{classes.id},
@@ -127,38 +128,59 @@
 		where id = #{id}
 	</update>
 
-	<update id="updateBatch" parameterType="List">
-		<foreach collection="list" separator=";" item="info">
-			update tb_sign_info set
-			admin_id=#{info.admin.id},
-			class_id=#{info.classes.id},
-			course_id=#{info.course.id},
-			start_date=#{info.startDate},
-			stop_date=#{info.stopDate},
-			address=#{info.address},
-			status=#{info.status},
-			modify_time=#{info.modifyTime}
-			where id = #{info.id}
-		</foreach>
-	</update>
+    <update id="updateBatch" parameterType="List">
+        <foreach collection="list" separator=";" item="info">
+            update tb_sign_info set
+            admin_id=#{info.admin.id},
+            class_id=#{info.classes.id},
+            course_id=#{info.course.id},
+            start_date=#{info.startDate},
+            stop_date=#{info.stopDate},
+            address=#{info.address},
+            status=#{info.status},
+            modify_time=#{info.modifyTime}
+            where id = #{info.id}
+        </foreach>
+    </update>
 
-	<delete id="delete" parameterType="com.wyk.sign.model.SignInfo">
-		delete from tb_sign_info
-		<where>
-			<if test="id != null">
-				id = #{id}
-			</if>
-		</where>
-	</delete>
+    <delete id="delete" parameterType="com.wyk.sign.model.SignInfo">
+        delete from tb_sign_info
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
 
-	<delete id="deleteByMap" parameterType="hashmap">
-		delete from tb_sign_info
-		<where>
-			<if test="id != null">
-				id = #{id}
-			</if>
-		</where>
-	</delete>
-	<!-- End of Base Mapper -->
+    <delete id="deleteByMap" parameterType="hashmap">
+        delete from tb_sign_info
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
+    
+    <sql id="selectSignDate">
+        SELECT 
+          DISTINCT(DATE_FORMAT(start_date, '%Y-%m-%d')) as start_date 
+        FROM tb_sign_info
+	</sql>
+    
+    <select id="getSignDatesByCurMonth" parameterType="hashmap" resultType="String">
+        <include refid="selectSignDate"/>
+        <where>
+            <if test="adminId != null">
+                admin_id = #{adminId}
+            </if>
+            <if test="classId != null">
+                and class_id = #{classId}
+            </if>
+            <if test="curMonth != null">
+                and DATE_FORMAT(start_date, '%Y-%m') = #{curMonth}
+            </if>
+        </where>
+    </select>
 
 </mapper>

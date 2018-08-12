@@ -6,51 +6,53 @@
 
 	<resultMap type="com.wyk.sign.model.TaskInfo" id="taskInfoMap">
 		<id property="id" column="id" javaType="long" />
-		<result property="deadlineTime" column="deadline_time" />
 		<result property="content" column="content" />
 		<result property="remark" column="remark" />
 		<result property="status" column="status" />
+		<result property="deadlineTime" column="deadline_time" />
 		<result property="createTime" column="create_time" />
 		<result property="modifyTime" column="modify_time" />
 		<association property="admin" javaType="com.wyk.sign.model.Administrator">
-			<id property="id" column="admin_id"/>
-			<result property="wxId" column="admin_wx_id" />
-			<result property="wxName" column="admin_wx_name" />
-			<result property="wxAvatarUrl" column="admin_wx_avatar_url" />
-			<result property="realName" column="admin_real_name" />
-			<result property="userType" column="admin_user_type" />
-			<result property="status" column="admin_status" />
+			<id property="id" column="ad_id"/>
+			<result property="wxId" column="ad_wx_id" />
+			<result property="wxName" column="ad_wx_name" />
+			<result property="wxAvatarUrl" column="ad_wx_avatar_url" />
+			<result property="realName" column="ad_real_name" />
+			<result property="userType" column="ad_user_type" />
+			<result property="status" column="ad_status" />
 		</association>
 		<association property="classes" javaType="com.wyk.sign.model.Classes">
-			<id property="id" column="class_id"/>
-			<result property="name" column="class_name" />
-			<result property="status" column="class_status" />
+			<id property="id" column="cl_id"/>
+			<result property="name" column="cl_name" />
+			<result property="status" column="cl_status" />
 		</association>
 		<association property="course" javaType="com.wyk.sign.model.Course">
-			<id property="id" column="course_id"/>
-			<result property="name" column="course_name" />
-			<result property="status" column="course_status" />
+			<id property="id" column="co_id"/>
+			<result property="name" column="co_name" />
+			<result property="status" column="co_status" />
 		</association>
 	</resultMap>
 
 	<sql id="selectSQL">
-		select t.*,
-			ad.id as admin_id,
-			ad.wx_id as admin_wx_id,
-			ad.wx_name as admin_wx_name,
-			ad.wx_avatar_url as admin_wx_avatar_url,
-			ad.real_name as admin_real_name,
-			ad.user_type as admin_user_type,
-			cl.id as class_id,
-			cl.name as class_name,
-			cl.status as class_status,
-			co.id as course_id,
-			co.name as course_name,
-			co.status as course_status
-		 from tb_task_info t
-		 		inner join tb_classes cl on t.class_id = cl.id
-		 		inner join tb_course co on t.course_id = co.id
-		 		inner join tb_admin ad on t.admin_id = ad.id
+		SELECT
+			t.*,
+			ad.id AS ad_id,
+			ad.wx_id AS ad_wx_id,
+			ad.wx_name AS ad_wx_name,
+			ad.wx_avatar_url AS ad_wx_avatar_url,
+			ad.real_name AS ad_real_name,
+			ad.user_type AS ad_user_type,
+			cl.id AS cl_id,
+			cl. NAME AS cl_name,
+			cl. STATUS AS cl_status,
+			co.id AS co_id,
+			co. NAME AS co_name,
+			co. STATUS AS co_status
+		FROM
+			tb_task_info t
+		INNER JOIN tb_classes cl ON t.class_id = cl.id
+		INNER JOIN tb_course co ON t.course_id = co.id
+		INNER JOIN tb_admin ad ON t.admin_id = ad.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -87,7 +89,7 @@
 				and cl.id = #{classId}
 			</if>
 			<if test="className != null">
-				and cl.class_name = #{className}
+				and cl.cl_name = #{className}
 			</if>
 			<if test="courseId != null">
 				and co.id = #{courseId}
@@ -96,6 +98,7 @@
 				and co.name = #{courseName}
 			</if>
 		</where>
+			order by create_time desc
 	</select>
 
 	<insert id="insert" parameterType="com.wyk.sign.model.TaskInfo"

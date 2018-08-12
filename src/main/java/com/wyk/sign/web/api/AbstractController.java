@@ -7,13 +7,16 @@ import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wyk.framework.util.DateUtils;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
+import com.wyk.sign.model.SignInfo;
 import com.wyk.sign.service.AdministratorService;
 import com.wyk.sign.util.Constants;
 import org.apache.commons.io.FileUtils;
@@ -189,7 +192,7 @@ public abstract class AbstractController implements WebxController {
      * 上传文件
      *
      * @param file   文件
-     * @param fileId 文件唯一标识
+     * @param fileId   文件标识
      * @return
      */
     protected String uploadFile(MultipartFile file, String fileId) {
@@ -219,7 +222,7 @@ public abstract class AbstractController implements WebxController {
      * @return
      */
     public ResponseEntity<byte[]> downloadFile(String filename) {
-        String path = context.getRealPath("/") + File.separator + filename;
+        String path = context.getRealPath("/") + filename;
         File file = new File(path);
         HttpHeaders headers = new HttpHeaders();
         try {
@@ -231,5 +234,63 @@ public abstract class AbstractController implements WebxController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 泛型列表
+     *
+     * @param list
+     * @return
+     */
+    protected <T> List<Map<String, Object>> toArray(Collection<T> list) {
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        try {
+            // 反射执行 toMap 方法，获得数据
+            Class<T> typeClass = (Class<T>) list.iterator().next().getClass();
+            Method method = null;
+            try {
+                method = this.getClass().getDeclaredMethod("toMap", typeClass);
+            } catch (NoSuchMethodException ex) {
+                method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass);
+            }
+            if (method != null) {
+                method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
+                for (T entity : list) {
+                    result.add((Map<String, Object>) method.invoke(this, entity));
+                }
+            }
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 签到信息
+     *
+     * @param signInfo
+     * @return
+     */
+    protected Map<String, Object> toMap(SignInfo signInfo) {
+        if (signInfo == null) {
+            return null;
+        }
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("id", signInfo.getId());
+        result.put("signDate", DateUtils.format(signInfo.getStopDate(), DateUtils.DATE_FORMAT));
+        result.put("stopDate", DateUtils.format(signInfo.getStopDate(), DateUtils.DATETIME_FORMAT_HHMM));
+        result.put("startDate", DateUtils.format(signInfo.getStartDate(), DateUtils.DATETIME_FORMAT_HHMM));
+        result.put("address", signInfo.getAddress());
+        result.put("status", signInfo.getStatus());
+        result.put("admin", signInfo.getAdmin());
+        result.put("classes", signInfo.getClasses());
+        result.put("course", signInfo.getCourse());
+        return result;
     }
 }

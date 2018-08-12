@@ -119,7 +119,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             return query();
         }
 
-        String tokenKey = String.format("%s_query_map_%s", this.getClass().getSimpleName(), map.keySet().toString());
+        String tokenKey = String.format("%s_query_map_%s", this.getClass().getSimpleName(), map.toString());
         if (null != cacheMap.getContainsKeyOfValue(tokenKey)) {
             logger.info("获取缓存key:{} ", tokenKey);
             return (List<T>) cacheMap.getContainsKeyOfValue(tokenKey);
@@ -140,7 +140,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
             return query(page);
         }
 
-        String tokenKey = String.format("%s_query_map_%s_pageNumber%s_pageSize%s", this.getClass().getSimpleName(), map.keySet().toString(), page.getPageNumber(), page.getPageSize());
+        String tokenKey = String.format("%s_query_map_%s_pageNumber%s_pageSize%s", this.getClass().getSimpleName(), map.toString(), page.getPageNumber(), page.getPageSize());
         if (null != cacheMap.getContainsKeyOfValue(tokenKey)) {
             logger.info("获取缓存key:{} ", tokenKey);
             return (List<T>) cacheMap.getContainsKeyOfValue(tokenKey);

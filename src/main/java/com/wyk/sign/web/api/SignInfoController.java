@@ -236,13 +236,45 @@ public class SignInfoController extends AbstractController {
         }else{
             param.put("adminId", user.getId());
         }
-        List<SignInfo> signInfoList = signInfoService.query(input.getParams());
-        if(null == signInfoList || signInfoList.size() != 0){
+        param.put("selectDate", input.getString("selectDate"));
+        List<SignInfo> signInfoList = signInfoService.query(param);
+        if(null == signInfoList || signInfoList.size() == 0) {
             return new Output(ERROR_NO_RECORD, "当天无签到信息！");
         }
+
+        result.setData(toArray(signInfoList));
+        result.setStatus(SUCCESS);
+        result.setMsg("获取签到信息成功！");
+        return result;
+    }
+
+    /**
+     * 获取当前月份的签到日期
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token : 13381503907
+     *     method : getSignInfoByCurMonth
+     *     params : {selectMonth : "2018-08"}
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getSignDatesByCurMonth(Input input){
+        Output result = new Output();
+        User user = input.getCurrentUser();
+        Map<String, Object> param = input.getParams();
+        if(user.getUserType().equals(Constants.User.STUDENT)){
+            param.put("classId", ((Student) user).getClasses().getId());
+        }else{
+            param.put("adminId", user.getId());
+        }
+        param.put("curMonth", input.getString("curMonth"));
+        List<String> signInfoList = signInfoService.getSignDatesByCurMonth(param);
         result.setData(signInfoList);
         result.setStatus(SUCCESS);
-        result.setMsg("删除签到信息成功！");
+        result.setMsg("获取当月签到日期成功！");
         return result;
     }
 }

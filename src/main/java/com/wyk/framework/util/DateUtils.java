@@ -36,6 +36,11 @@ public final class DateUtils {
 	 * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
 	 */
 	public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	/**
+	 * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
+	 */
+	public static final String DATETIME_FORMAT_HHMM = "HH:mm";
 		
 	/**
 	 * 日期格式 yyyy-MM-dd 转换类

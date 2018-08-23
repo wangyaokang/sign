@@ -13,7 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wyk.framework.util.DateUtils;
+import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.SignInfo;
@@ -39,7 +39,7 @@ import com.wyk.sign.model.User;
 import com.wyk.sign.service.StudentService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
-import com.wyk.framework.util.RandomUtils;
+import com.wyk.framework.utils.RandomUtil;
 import com.wyk.framework.web.WebxController;
 import com.alibaba.fastjson.JSONObject;
 
@@ -204,7 +204,7 @@ public abstract class AbstractController implements WebxController {
                     return null;
                 }
                 String suffix = uploadFileName.substring(uploadFileName.lastIndexOf('.'));
-                String random = RandomUtils.getString(6);
+                String random = RandomUtil.getString(6);
                 String fileName = fileId + "_" + random + suffix;
                 FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
                 return (uploadPath + fileName);
@@ -283,9 +283,9 @@ public abstract class AbstractController implements WebxController {
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("id", signInfo.getId());
-        result.put("signDate", DateUtils.format(signInfo.getStopDate(), DateUtils.DATE_FORMAT));
-        result.put("stopDate", DateUtils.format(signInfo.getStopDate(), DateUtils.DATETIME_FORMAT_HHMM));
-        result.put("startDate", DateUtils.format(signInfo.getStartDate(), DateUtils.DATETIME_FORMAT_HHMM));
+        result.put("signDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATE_FORMAT));
+        result.put("stopDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATETIME_FORMAT_HHMM));
+        result.put("startDate", DateUtil.format(signInfo.getStartDate(), DateUtil.DATETIME_FORMAT_HHMM));
         result.put("address", signInfo.getAddress());
         result.put("status", signInfo.getStatus());
         result.put("admin", signInfo.getAdmin());

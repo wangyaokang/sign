@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.wyk.framework.util;
+package com.wyk.framework.utils;
 
 import java.util.Random;
 
-public class RandomUtils {
+public class RandomUtil {
 	
 	private static String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
 

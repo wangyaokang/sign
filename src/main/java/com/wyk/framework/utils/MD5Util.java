@@ -1,4 +1,4 @@
-package com.wyk.framework.util;
+package com.wyk.framework.utils;
 
 import java.security.MessageDigest;
 

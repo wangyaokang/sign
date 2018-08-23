@@ -3,8 +3,7 @@
  */
 package com.wyk.sign.web.api;
 
-import com.sun.net.httpserver.Authenticator;
-import com.wyk.framework.util.DateUtils;
+import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
@@ -94,7 +93,7 @@ public class TaskInfoController extends AbstractController {
         taskInfo.setAdmin(teacher);
         taskInfo.setRemark(input.getString("remark"));
         if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
-            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtils.DATE_FORMAT));
+            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
         }
         input.getParams().put("adminId", teacher.getId());
         if(StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))){
@@ -145,7 +144,7 @@ public class TaskInfoController extends AbstractController {
         }
         taskInfo.setRemark(input.getString("remark"));
         if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
-            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtils.DATE_FORMAT));
+            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
         }
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
@@ -157,6 +156,67 @@ public class TaskInfoController extends AbstractController {
         result.setStatus(SUCCESS);
         result.setMsg("修改作业信息成功！");
         result.setData(classes);
+        return result;
+    }
+
+    /**
+     * 获取我的作业信息
+     *
+     * <p>传入参数</p>
+     * <pre>
+     *     method: getTaskInfoList
+     *     token: wxId
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getTaskInfoList(Input input){
+        Output result = new Output();
+        User user = input.getCurrentUser();
+        Map<String, Object> param = new HashMap<>();
+        if(Constants.User.TEACHER.equals(user.getUserType())){
+            param.put("adminId", user.getId());
+        }else{
+            param.put("classId", ((Student) user).getClasses().getId());
+        }
+
+        List<TaskInfo> signingInfoList = taskInfoService.query(param);
+        result.setStatus(SUCCESS);
+        result.setMsg("获取作业信息成功！");
+        result.setData(signingInfoList);
+        return result;
+    }
+
+    /**
+     * 获取我的作业信息
+     *
+     * <p>传入参数</p>
+     * <pre>
+     *     method: getTaskInfoListByCourse
+     *     token: wxId
+     *     params: {'courseId': 1}
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getTaskInfoListByCourse(Input input){
+        Output result = new Output();
+        User user = input.getCurrentUser();
+        Map<String, Object> param = new HashMap<>();
+        if(Constants.User.TEACHER.equals(user.getUserType())){
+            param.put("adminId", user.getId());
+        }else{
+            param.put("classId", ((Student) user).getClasses().getId());
+        }
+        param.put("courseId", input.getString("courseId"));
+        List<TaskInfo> signingInfoList = taskInfoService.query(param);
+        result.setStatus(SUCCESS);
+        result.setMsg("获取作业信息成功！");
+        result.setData(signingInfoList);
         return result;
     }
 
@@ -237,6 +297,35 @@ public class TaskInfoController extends AbstractController {
         List<TaskInfo> taskInfoList = taskInfoService.query(input.getParams());
         result.setMsg(SUCCESS);
         result.setData(taskInfoList);
+        return result;
+    }
+
+    /**
+     * 获取我的作业信息
+     *
+     * <p>传入参数</p>
+     * <pre>
+     *     method: getMySignInfoList
+     *     token: wxId
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getTaskInfoListByWxId(Input input){
+        Output result = new Output();
+        User user = input.getCurrentUser();
+        Map<String, Object> param = new HashMap<>();
+        if(Constants.User.STUDENT.equals(user.getUserType())){
+            param.put("classId", ((Student) user).getClasses().getId());
+        }else {
+            param.put("adminId", user.getId());
+        }
+        List<TaskInfo> signingInfoList = taskInfoService.query(param);
+        result.setStatus(SUCCESS);
+        result.setMsg("获取作业信息成功！");
+        result.setData(signingInfoList);
         return result;
     }
 }

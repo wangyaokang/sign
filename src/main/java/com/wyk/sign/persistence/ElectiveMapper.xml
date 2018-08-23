@@ -67,8 +67,14 @@
 	<select id="queryByMap" parameterType="hashmap" resultMap="electiveMap">
 		<include refid="selectSQL" />
 		<where>
+			<if test="wxId != null">
+				ad.wx_id = #{wxId}
+			</if>
+			<if test="adminId != null">
+				and ad.id = #{adminId}
+			</if>
 			<if test="classId != null">
-				cl.id = #{classId}
+				and cl.id = #{classId}
 			</if>
 			<if test="courseId != null">
 				and co.id = #{courseId}

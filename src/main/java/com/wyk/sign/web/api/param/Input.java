@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.wyk.sign.model.User;
-import com.wyk.framework.util.DateUtils;
+import com.wyk.framework.utils.DateUtil;
 
 /**
  * 输入参数封装类
@@ -117,15 +117,15 @@ public class Input implements Serializable {
 			return null;
 		}
 		String strDate = params.get(key).toString();
-		Date date = DateUtils.parse(strDate, "yyyy-MM-dd HH:mm:ss");
+		Date date = DateUtil.parse(strDate, "yyyy-MM-dd HH:mm:ss");
 		if (date == null) {
-			date = DateUtils.parse(strDate, "yyyy-MM-dd HH:mm");
+			date = DateUtil.parse(strDate, "yyyy-MM-dd HH:mm");
 		}
 		if (date == null) {
-			date = DateUtils.parse(strDate, "yyyy-MM-dd HH");
+			date = DateUtil.parse(strDate, "yyyy-MM-dd HH");
 		}
 		if (date == null) {
-			date = DateUtils.parse(strDate, "yyyy-MM-dd");
+			date = DateUtil.parse(strDate, "yyyy-MM-dd");
 		}
 		return date;
 	}

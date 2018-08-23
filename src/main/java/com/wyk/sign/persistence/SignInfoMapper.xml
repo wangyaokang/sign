@@ -180,6 +180,7 @@
             <if test="curMonth != null">
                 and DATE_FORMAT(start_date, '%Y-%m') = #{curMonth}
             </if>
+            order by start_date desc
         </where>
     </select>
 

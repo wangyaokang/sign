@@ -3,8 +3,8 @@
  */
 package com.wyk.sign.web.api;
 
-import com.wyk.framework.util.DateUtils;
-import com.wyk.framework.util.FileUtils;
+import com.wyk.framework.utils.DateUtil;
+import com.wyk.framework.utils.FileUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * 作业相关接口
@@ -92,7 +90,7 @@ public class TaskController extends AbstractController {
         task.setInfo(taskInfo);
         Student student = (Student) input.getCurrentUser();
         task.setStudent(student);
-        task.setUpDate(input.getDate("upDate", DateUtils.DATE_FORMAT));
+        task.setUpDate(input.getDate("upDate", DateUtil.DATE_FORMAT));
         if (task.getUpDate().after(taskInfo.getDeadlineTime())) {
             return new Output(ERROR_NO_RECORD, "已超过上交截止日期！");
         }
@@ -122,7 +120,7 @@ public class TaskController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         Task task = taskService.get(input.getLong("id"));
-        task.setUpDate(input.getDate("upDate", DateUtils.DATE_FORMAT));
+        task.setUpDate(input.getDate("upDate", DateUtil.DATE_FORMAT));
         task.setUpFileUrl(input.getString("upFileUrl"));
         task.setDesc(input.getString("desc"));
         taskService.update(task);
@@ -241,7 +239,7 @@ public class TaskController extends AbstractController {
     public @ResponseBody Output deleteFileUrl(@RequestParam("filename") String filename){
         Output result = new Output();
         String path = context.getRealPath("/") + filename;
-        FileUtils.deleteFile(path);
+        FileUtil.deleteFile(path);
         result.setStatus(SUCCESS);
         result.setMsg("文件删除成功！");
         return result;

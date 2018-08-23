@@ -3,7 +3,7 @@
  */
 package com.wyk.sign.web.api;
 
-import com.wyk.framework.util.DateUtils;
+import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
@@ -97,11 +97,11 @@ public class SignController extends AbstractController {
         }
 
         if (StringUtils.isNotEmpty(input.getString("signDate"))) {
-            sign.setSignDate(input.getDate("signDate", DateUtils.DATETIME_FORMAT));
+            sign.setSignDate(input.getDate("signDate", DateUtil.DATETIME_FORMAT));
         }
 
         if (sign.getSignDate().before(signInfo.getStartDate())) {
-            return new Output(ERROR_UNKNOWN, String.format("请在%s至%s的时间段内签到！", DateUtils.format(signInfo.getStartDate(), DateUtils.DATETIME_FORMAT), DateUtils.format(signInfo.getStopDate(), DateUtils.DATETIME_FORMAT)));
+            return new Output(ERROR_UNKNOWN, String.format("请在%s至%s的时间段内签到！", DateUtil.format(signInfo.getStartDate(), DateUtil.DATETIME_FORMAT), DateUtil.format(signInfo.getStopDate(), DateUtil.DATETIME_FORMAT)));
         }
 
         if (sign.getSignDate().after(signInfo.getStopDate())) {

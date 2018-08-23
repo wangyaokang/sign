@@ -3,7 +3,7 @@
  */
 package com.wyk.sign.web.api;
 
-import com.wyk.framework.util.DateUtils;
+import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
@@ -91,10 +91,10 @@ public class SignInfoController extends AbstractController {
         signInfo.setAdmin(admin);
         signInfo.setAddress(input.getString("address"));
         if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_FORMAT));
+            signInfo.setStartDate(input.getDate("startDate", DateUtil.DATETIME_FORMAT));
         }
         if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_FORMAT));
+            signInfo.setStopDate(input.getDate("stopDate", DateUtil.DATETIME_FORMAT));
         }
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
@@ -139,10 +139,10 @@ public class SignInfoController extends AbstractController {
         }
         signInfo.setAddress(input.getString("address"));
         if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtils.DATETIME_FORMAT));
+            signInfo.setStartDate(input.getDate("startDate", DateUtil.DATETIME_FORMAT));
         }
         if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtils.DATETIME_FORMAT));
+            signInfo.setStopDate(input.getDate("stopDate", DateUtil.DATETIME_FORMAT));
         }
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));

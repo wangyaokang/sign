@@ -1,4 +1,4 @@
-package com.wyk.framework.util;
+package com.wyk.framework.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,13 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public class FileUtil {
 
-public class FileUtils {
-
-    private FileUtils() {
+    private FileUtil() {
     }
 
     /**

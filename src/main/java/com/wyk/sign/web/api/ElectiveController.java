@@ -16,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 授课相关接口
  *
@@ -47,7 +51,7 @@ public class ElectiveController extends AbstractController {
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output insert(Input input){
+    public Output insert(Input input) {
         Output result = new Output();
         Elective elective = new Elective();
         Classes classes = new Classes();
@@ -81,7 +85,7 @@ public class ElectiveController extends AbstractController {
     public Output info(Input input) {
         Output result = new Output();
         Elective elective = electiveService.get(input.getLong("id"));
-        if(null == elective){
+        if (null == elective) {
             return new Output(ERROR_NO_RECORD, "没有此条授课信息");
         }
 
@@ -107,24 +111,24 @@ public class ElectiveController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         Elective elective = electiveService.get(input.getLong("id"));
-        if(StringUtils.isNotEmpty(input.getString("classId"))){
+        if (StringUtils.isNotEmpty(input.getString("classId"))) {
             Classes classes = classesService.get(input.getLong("classId"));
             elective.setClasses(classes);
-        }else{
+        } else {
             return new Output(ERROR_NO_RECORD, "没有对应的班级！");
         }
 
-        if(StringUtils.isNotEmpty(input.getString("courseId"))){
+        if (StringUtils.isNotEmpty(input.getString("courseId"))) {
             Course course = courseService.get(input.getLong("courseId"));
             elective.setCourse(course);
-        }else{
+        } else {
             return new Output(ERROR_NO_RECORD, "没有对应的课程！");
         }
 
-        if(StringUtils.isNotEmpty(input.getString("adminId"))){
+        if (StringUtils.isNotEmpty(input.getString("adminId"))) {
             Administrator teacher = administratorService.get(input.getLong("adminId"));
             elective.setAdmin(teacher);
-        }else{
+        } else {
             return new Output(ERROR_NO_RECORD, "没有对应的教师！");
         }
         electiveService.update(elective);
@@ -150,7 +154,7 @@ public class ElectiveController extends AbstractController {
     public Output delete(Input input) {
         Output result = new Output();
         Elective elective = electiveService.get(input.getLong("id"));
-        if(null == elective){
+        if (null == elective) {
             return new Output(ERROR_NO_RECORD, "没有此条授课信息！");
         }
         electiveService.delete(elective);
@@ -158,4 +162,32 @@ public class ElectiveController extends AbstractController {
         result.setMsg("删除授课信息成功！");
         return result;
     }
+
+    /**
+     * 获取授课信息
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token: wxId,
+     *     method: getElectivesByAdmin
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output getElectivesByWxId(Input input){
+        Output result = new Output();
+        String token = input.getToken();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("wxId", token);
+        List<Elective> electiveList = electiveService.query(map);
+        if (electiveList.size() == 0) {
+            return new Output(ERROR_NO_RECORD, "没有授课信息！");
+        }
+        result.setData(electiveList);
+        result.setStatus(SUCCESS);
+        result.setMsg("获取授课信息成功！");
+        return result;
+    }
+
 }

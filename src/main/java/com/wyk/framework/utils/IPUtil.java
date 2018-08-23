@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.wyk.framework.util;
+package com.wyk.framework.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
  * @author bocar
  *
  */
-public class IPUtils {
+public class IPUtil {
 
 	/**
 	 * 获取客户端IP

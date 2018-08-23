@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.wyk.framework.util;
+package com.wyk.framework.utils;
 
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.HOUR;
@@ -25,7 +25,7 @@ import java.util.Date;
  * @author wyk
  *
  */
-public final class DateUtils {
+public final class DateUtil {
 
 	/**
 	 * 日期格式yyyy-MM-dd字符串常量
@@ -57,7 +57,7 @@ public final class DateUtils {
 	 */
 	public static final long MONTH_LONG = 2651224907l;
 	
-	private DateUtils() {}
+	private DateUtil() {}
 	
 	/**
 	 * 将Calendar类型的日期格式转换成字符串型

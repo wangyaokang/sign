@@ -153,7 +153,7 @@ public class OffsetLimitInterceptor implements Interceptor {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.apache.ibatis.plugin.Interceptor#setProperties(java.util.Properties)
+	 * @see org.apache.ibatis.plugin.Interceptor#setProperties(java.utils.Properties)
 	 */
 	@Override
 	public void setProperties(Properties properties) {

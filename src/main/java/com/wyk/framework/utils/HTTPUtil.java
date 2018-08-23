@@ -1,4 +1,4 @@
-package com.wyk.framework.util;
+package com.wyk.framework.utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * @author wyk
  */
-public class HTTPUtils {
+public class HTTPUtil {
 
     public static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -216,6 +216,6 @@ public class HTTPUtils {
         return tempUrl;
     }
 
-    private HTTPUtils() {
+    private HTTPUtil() {
     }
 }

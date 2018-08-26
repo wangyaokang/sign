@@ -44,8 +44,8 @@
 			info.address as info_address,
 			info.status as info_status
 		  from tb_sign s
-		  	inner join tb_student stu on  s.stu_id = stu.id
 		  	inner join tb_sign_info info on s.info_id = info.id
+		  	inner join tb_student stu on  s.stu_id = stu.id
 	</sql>
 
 	<!-- Base Mapper -->
@@ -58,6 +58,9 @@
             <if test="wxId != null and infoId != null">
                 and stu.wx_id = #{wxId} and info.id = #{infoId}
             </if>
+			<if test="stuId != null and infoId != null">
+				and stu.id = #{stuId} and info.id = #{infoId}
+			</if>
 		</where>
 		limit 0,1
 	</select>
@@ -139,4 +142,33 @@
 		</where>
 	</delete>
 	<!-- End of Base Mapper -->
+
+	<select id="querySignListOfClassByInfoId" parameterType="hashmap" resultMap="signMap">
+		SELECT
+			sign.*,
+			stu.id AS stu_id,
+			stu.wx_id AS stu_wx_id,
+			stu.wx_name AS stu_wx_name,
+			stu.wx_avatar_url AS stu_wx_avatar_url,
+			stu.real_name AS stu_real_name,
+			stu.user_type AS stu_user_type,
+			stu.sno AS stu_sno,
+			stu. STATUS AS stu_status,
+			info.id AS info_id,
+			info.start_date AS info_start_date,
+			info.stop_date AS info_stop_date,
+			info.address AS info_address,
+			info. STATUS AS info_status
+		FROM
+			tb_sign_info info
+		INNER JOIN tb_classes cl ON cl.id = info.class_id
+		INNER JOIN tb_student stu ON stu.class_id = cl.id
+		left JOIN tb_sign sign  ON sign.stu_id = stu.id and sign.info_id = info.id
+		<where>
+			<if test="infoId != null">
+				info.id = #{infoId}
+			</if>
+		</where>
+	</select>
+
 </mapper>

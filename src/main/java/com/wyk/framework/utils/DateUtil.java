@@ -33,14 +33,29 @@ public final class DateUtil {
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
 
 	/**
-	 * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
+	 * 日期格式yyyy年MM月dd日字符串常量
 	 */
-	public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	public static final String DATE_CN_FORMAT = "yyyy年MM月dd日";
+
+	/**
+	 * 日期格式MM月dd日字符串常量
+	 */
+	public static final String DATE_CN_FORMAT_MD = "MM月dd日";
 
 	/**
 	 * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
 	 */
-	public static final String DATETIME_FORMAT_HHMM = "HH:mm";
+	public static final String DATETIME_FORMAT_YMDHMS = "yyyy-MM-dd HH:mm:ss";
+
+	/**
+	 * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
+	 */
+	public static final String DATETIME_FORMAT_YMDHM = "yyyy-MM-dd HH:mm";
+
+	/**
+	 * 日期格式HH:mm字符串常量
+	 */
+	public static final String DATETIME_FORMAT_HM = "HH:mm";
 		
 	/**
 	 * 日期格式 yyyy-MM-dd 转换类
@@ -50,12 +65,17 @@ public final class DateUtil {
 	/**
 	 * 日期格式 yyyy-MM-dd HH:mm:ss 转换类
 	 */
-	public static final DateFormat datetimeSecFormat = new SimpleDateFormat(DATETIME_FORMAT);
+	public static final DateFormat datetimeSecFormat = new SimpleDateFormat(DATETIME_FORMAT_YMDHMS);
 	
 	/** 
 	 * 一个月时间大约的long型数字 
 	 */
 	public static final long MONTH_LONG = 2651224907l;
+
+	/**
+	 * 空格
+	 */
+	public static final String BLANK = " ";
 	
 	private DateUtil() {}
 	
@@ -446,5 +466,68 @@ public final class DateUtil {
 		calendar.setTime(date);
 		return calendar;
 	}
-	
+
+	/**
+	 * 根据日期获取对应的星期
+	 * @param date
+	 * @return
+	 */
+	public static String getWeek(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		String week = "";
+		int cweek = calendar.get(Calendar.DAY_OF_WEEK);
+		switch (cweek) {
+			case 1:
+				week = "日";
+				break;
+			case 2:
+				week = "一";
+				break;
+			case 3:
+				week = "二";
+				break;
+			case 4:
+				week = "三";
+				break;
+			case 5:
+				week = "四";
+				break;
+			case 6:
+				week = "五";
+				break;
+			case 7:
+				week = "六";
+				break;
+		}
+		return week;
+
+	}
+
+	/**
+	 * 获取展示日期
+	 * <pre>
+	 *     eg：后天，明天，今天，昨天 ，前天 ， 周五 ， 08月12日
+	 * </pre>
+	 * @param date
+	 * @return
+	 */
+	public static String showDateMD(Date date){
+		String time = format(date, DATETIME_FORMAT_HM);
+		Date nowDate = new Date();
+		int diff = offset(date, nowDate);
+		if(diff == 0){
+			return "今天";
+		}else if(diff == -1){
+			return "昨天";
+		}else if(diff == -2){
+			return "前天";
+		}else if(diff == 1){
+			return "明天";
+		}else if(diff == 2){
+			return "后天";
+		}
+		return format(date, DATE_CN_FORMAT_MD);
+	}
+
 }

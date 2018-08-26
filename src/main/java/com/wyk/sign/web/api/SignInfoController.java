@@ -77,7 +77,13 @@ public class SignInfoController extends AbstractController {
      * <pre>
      * token : wxid
      * method : insert
-     * params : {"startDate" : "2018-06-09 10:30:00", "stopDate" : "2018-06-09 12:30:00", "address" : "xxxx大楼", "classId" : "02", "courseId" : "2"}
+     * params : {"startDate" : "2018-06-09 10:30:00",
+     *          "stopDate" : "2018-06-09 12:30:00",
+     *          "address" : "xxxx大楼",
+     *          "longitude" : "32.2323232",
+     *          "latitude" : "135.2252525",
+     *          "classId" : "02",
+     *          "courseId" : "2"}
      * </pre>
      *
      * @param input
@@ -90,12 +96,15 @@ public class SignInfoController extends AbstractController {
         SignInfo signInfo = new SignInfo();
         signInfo.setAdmin(admin);
         signInfo.setAddress(input.getString("address"));
+        signInfo.setLatitude(input.getString("latitude"));
+        signInfo.setLongitude(input.getString("longitude"));
         if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtil.DATETIME_FORMAT));
+            signInfo.setStartDate(input.getDate("startDate", DateUtil.DATETIME_FORMAT_YMDHM));
         }
         if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtil.DATETIME_FORMAT));
+            signInfo.setStopDate(input.getDate("stopDate", DateUtil.DATETIME_FORMAT_YMDHM));
         }
+        signInfo.setRemark(input.getString("remark"));
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
         signInfo.setClasses(classes);
@@ -105,7 +114,7 @@ public class SignInfoController extends AbstractController {
         if(admin.getUserType().equals(Constants.User.TEACHER)){
             input.getParams().put("adminId", admin.getId());
             if(StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))){
-                return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
+                return new Output(ERROR_NO_RECORD, "请选择对应的课程和班级！");
             }
             Elective elective = electiveService.get(input.getParams());
             if (null == elective) {
@@ -123,7 +132,7 @@ public class SignInfoController extends AbstractController {
      * <p>传入参数：</p>
      * <pre>
      *      method:modify
-     *      token: wxopenid, 微信wxid
+     *      token: wxid
      *      params: 全部信息，例如：{id: "25", "startDate" : "2018-06-09 10:30", "stopDate" : "2018-06-09 12:30", "address" : "xxxx大楼", "classId" : "2", "courseId" : "2"}
      * </pre>
      *
@@ -138,11 +147,12 @@ public class SignInfoController extends AbstractController {
             return new Output(ERROR_NO_RECORD, "未获取到对应的签到信息！");
         }
         signInfo.setAddress(input.getString("address"));
+        signInfo.setRemark(input.getString("remark"));
         if (StringUtils.isNotEmpty(input.getString("startDate"))) {
-            signInfo.setStartDate(input.getDate("startDate", DateUtil.DATETIME_FORMAT));
+            signInfo.setStartDate(input.getDate("startDate", DateUtil.DATETIME_FORMAT_YMDHMS));
         }
         if (StringUtils.isNotEmpty(input.getString("stopDate"))) {
-            signInfo.setStopDate(input.getDate("stopDate", DateUtil.DATETIME_FORMAT));
+            signInfo.setStopDate(input.getDate("stopDate", DateUtil.DATETIME_FORMAT_YMDHMS));
         }
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
@@ -239,10 +249,10 @@ public class SignInfoController extends AbstractController {
         param.put("selectDate", input.getString("selectDate"));
         List<SignInfo> signInfoList = signInfoService.query(param);
         if(null == signInfoList || signInfoList.size() == 0) {
-            return new Output(ERROR_NO_RECORD, "当天无签到信息！");
+            return new Output(SUCCESS, "当天无签到信息！");
         }
 
-        result.setData(toArray(signInfoList));
+        result.setData(toArray(signInfoList, user));
         result.setStatus(SUCCESS);
         result.setMsg("获取签到信息成功！");
         return result;
@@ -275,6 +285,40 @@ public class SignInfoController extends AbstractController {
         result.setData(signInfoList);
         result.setStatus(SUCCESS);
         result.setMsg("获取当月签到日期成功！");
+        return result;
+    }
+
+    /**
+     * 用于展示
+     *
+     * @param signInfo
+     * @return
+     */
+    public Map<String, Object> toMap(SignInfo signInfo, User user) {
+        if (signInfo == null) {
+            return null;
+        }
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("id", signInfo.getId());
+        result.put("signDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATE_FORMAT));
+        result.put("stopDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATETIME_FORMAT_HM));
+        result.put("startDate", DateUtil.format(signInfo.getStartDate(), DateUtil.DATETIME_FORMAT_HM));
+        result.put("address", signInfo.getAddress());
+        result.put("status", signInfo.getStatus());
+        result.put("admin", signInfo.getAdmin());
+        result.put("classes", signInfo.getClasses());
+        result.put("course", signInfo.getCourse());
+        result.put("remark", signInfo.getRemark());
+        if(Constants.User.STUDENT.equals(user.getUserType())) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("infoId", signInfo.getId());
+            param.put("wxId", user.getWxId());
+            Sign sign = signService.get(param);
+            result.put("sign", sign);
+        }else{
+            // 管理者无需签到，不显示状态
+            result.put("sign", "1001");
+        }
         return result;
     }
 }

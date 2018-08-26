@@ -27,4 +27,11 @@ public interface AdministratorService extends BaseService<Administrator> {
      */
     Administrator getUserByToken(String token);
 
+    /**
+     * 判断缓存中是否存在Administrator对象
+     *
+     * @param token
+     * @return
+     */
+    boolean hasCacheAdministrator(String token);
 }

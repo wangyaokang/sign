@@ -7,7 +7,7 @@
 	<resultMap type="com.wyk.sign.model.TaskInfo" id="taskInfoMap">
 		<id property="id" column="id" javaType="long" />
 		<result property="content" column="content" />
-		<result property="remark" column="remark" />
+		<result property="title" column="title" />
 		<result property="status" column="status" />
 		<result property="deadlineTime" column="deadline_time" />
 		<result property="createTime" column="create_time" />
@@ -97,8 +97,11 @@
 			<if test="courseName != null">
 				and co.name = #{courseName}
 			</if>
+            <if test="keyWord != null">
+                and (locate(#{keyWord}, t.title) + locate(#{keyWord}, t.content) + locate(#{keyWord}, co.name) + locate(#{keyWord}, cl.name)) > 0
+            </if>
 		</where>
-			order by create_time desc
+			order by deadline_time desc
 	</select>
 
 	<insert id="insert" parameterType="com.wyk.sign.model.TaskInfo"
@@ -109,7 +112,7 @@
 		class_id,
 		content,
 		deadline_time,
-		remark,
+		title,
 		status)
 		values
 		(#{admin.id},
@@ -117,7 +120,7 @@
 		#{classes.id},
 		#{content},
 		#{deadlineTime},
-		#{remark},
+		#{title},
 		#{status})
 	</insert>
 
@@ -128,7 +131,7 @@
 		class_id=#{classes.id},
 		content=#{info.content},
 		deadline_time=#{deadlineTime},
-		remark=#{remark},
+		title=#{title},
 		status=#{status},
 		modify_time=#{modifyTime}
 		where id = #{id}
@@ -142,7 +145,7 @@
 			class_id=#{info.classes.id},
 			content=#{info.content},
 			deadline_time=#{info.deadlineTime},
-			remark=#{info.remark},
+			title=#{info.title},
 			status=#{info.status},
 			modify_time=#{info.modifyTime}
 			where id = #{info.id}

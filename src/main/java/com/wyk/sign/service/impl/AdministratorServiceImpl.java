@@ -32,4 +32,10 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
         Administrator user = get(param);
         return user;
     }
+
+    @Override
+    public boolean hasCacheAdministrator(String token) {
+        String tokenKey = String.format("AdministratorServiceImpl_%s", token);
+        return cacheMap.get(tokenKey) != null;
+    }
 }

@@ -35,4 +35,10 @@ public class StudentServiceImpl extends BaseServiceImpl<Student> implements Stud
         return user;
     }
 
+    @Override
+    public boolean hasCacheStudent(String token) {
+        String tokenKey = String.format("StudentServiceImpl_%s", token);
+        return cacheMap.get(tokenKey) != null;
+    }
+
 }

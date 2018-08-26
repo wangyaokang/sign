@@ -181,6 +181,16 @@ public abstract class AbstractController implements WebxController {
      * @return
      */
     protected User getCurrentUserByToken(String token) {
+        // 当缓存中存在对象时直接取缓存中的数据
+        if(administratorService.hasCacheAdministrator(token)){
+            return administratorService.getUserByToken(token);
+        }
+
+        if(studentService.hasCacheStudent(token)){
+            return studentService.getUserByToken(token);
+        }
+
+        // 当缓存中无值时，查询数据库
         User user = administratorService.getUserByToken(token);
         if (null == user) {
             user = studentService.getUserByToken(token);
@@ -243,6 +253,16 @@ public abstract class AbstractController implements WebxController {
      * @return
      */
     protected <T> List<Map<String, Object>> toArray(Collection<T> list) {
+        return toArray(list, null);
+    }
+
+    /**
+     * 泛型列表
+     *
+     * @param list
+     * @return
+     */
+    protected <T> List<Map<String, Object>> toArray(Collection<T> list, User user) {
         if (list == null || list.isEmpty()) {
             return null;
         }
@@ -252,15 +272,29 @@ public abstract class AbstractController implements WebxController {
             // 反射执行 toMap 方法，获得数据
             Class<T> typeClass = (Class<T>) list.iterator().next().getClass();
             Method method = null;
-            try {
-                method = this.getClass().getDeclaredMethod("toMap", typeClass);
-            } catch (NoSuchMethodException ex) {
-                method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass);
-            }
-            if (method != null) {
-                method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
-                for (T entity : list) {
-                    result.add((Map<String, Object>) method.invoke(this, entity));
+            if(user == null) {
+                try {
+                    method = this.getClass().getDeclaredMethod("toMap", typeClass);
+                } catch (NoSuchMethodException ex) {
+                    method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass);
+                }
+                if (method != null) {
+                    method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
+                    for (T entity : list) {
+                        result.add((Map<String, Object>) method.invoke(this, entity));
+                    }
+                }
+            }else{
+                try {
+                    method = this.getClass().getDeclaredMethod("toMap", typeClass, User.class);
+                } catch (NoSuchMethodException ex) {
+                    method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass, User.class);
+                }
+                if (method != null) {
+                    method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
+                    for (T entity : list) {
+                        result.add((Map<String, Object>) method.invoke(this, entity, user));
+                    }
                 }
             }
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -270,27 +304,4 @@ public abstract class AbstractController implements WebxController {
         return result;
     }
 
-    /**
-     * 签到信息
-     *
-     * @param signInfo
-     * @return
-     */
-    protected Map<String, Object> toMap(SignInfo signInfo) {
-        if (signInfo == null) {
-            return null;
-        }
-
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("id", signInfo.getId());
-        result.put("signDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATE_FORMAT));
-        result.put("stopDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATETIME_FORMAT_HHMM));
-        result.put("startDate", DateUtil.format(signInfo.getStartDate(), DateUtil.DATETIME_FORMAT_HHMM));
-        result.put("address", signInfo.getAddress());
-        result.put("status", signInfo.getStatus());
-        result.put("admin", signInfo.getAdmin());
-        result.put("classes", signInfo.getClasses());
-        result.put("course", signInfo.getCourse());
-        return result;
-    }
 }

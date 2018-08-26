@@ -76,7 +76,7 @@ public class TaskInfoController extends AbstractController {
      * <pre>
      * token : wxid
      * method : insert
-     * params : {"courseId" : "2", "classId" : "1", "deadlineTime" : "2018-12-12", "remark" : "带笔记本"}
+     * params : {"courseId" : "2", "classId" : "1", "deadlineTime" : "2018-12-12", title: "第一课：有丝分裂", "content" : "带笔记本"}
      * </pre>
      *
      * @param input
@@ -91,7 +91,8 @@ public class TaskInfoController extends AbstractController {
         }
         TaskInfo taskInfo = new TaskInfo();
         taskInfo.setAdmin(teacher);
-        taskInfo.setRemark(input.getString("remark"));
+        taskInfo.setTitle(input.getString("title"));
+        taskInfo.setContent(input.getString("content"));
         if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
             taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
         }
@@ -142,7 +143,7 @@ public class TaskInfoController extends AbstractController {
         if (null == elective) {
             return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
         }
-        taskInfo.setRemark(input.getString("remark"));
+        taskInfo.setTitle(input.getString("remark"));
         if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
             taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
         }
@@ -156,36 +157,6 @@ public class TaskInfoController extends AbstractController {
         result.setStatus(SUCCESS);
         result.setMsg("修改作业信息成功！");
         result.setData(classes);
-        return result;
-    }
-
-    /**
-     * 获取我的作业信息
-     *
-     * <p>传入参数</p>
-     * <pre>
-     *     method: getTaskInfoList
-     *     token: wxId
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.TYPE)
-    public Output getTaskInfoList(Input input){
-        Output result = new Output();
-        User user = input.getCurrentUser();
-        Map<String, Object> param = new HashMap<>();
-        if(Constants.User.TEACHER.equals(user.getUserType())){
-            param.put("adminId", user.getId());
-        }else{
-            param.put("classId", ((Student) user).getClasses().getId());
-        }
-
-        List<TaskInfo> signingInfoList = taskInfoService.query(param);
-        result.setStatus(SUCCESS);
-        result.setMsg("获取作业信息成功！");
-        result.setData(signingInfoList);
         return result;
     }
 
@@ -213,10 +184,10 @@ public class TaskInfoController extends AbstractController {
             param.put("classId", ((Student) user).getClasses().getId());
         }
         param.put("courseId", input.getString("courseId"));
-        List<TaskInfo> signingInfoList = taskInfoService.query(param);
+        List<TaskInfo> taskInfoList = taskInfoService.query(param);
+        result.setData(toArray(taskInfoList));
         result.setStatus(SUCCESS);
         result.setMsg("获取作业信息成功！");
-        result.setData(signingInfoList);
         return result;
     }
 
@@ -323,9 +294,31 @@ public class TaskInfoController extends AbstractController {
             param.put("adminId", user.getId());
         }
         List<TaskInfo> signingInfoList = taskInfoService.query(param);
+        result.setData(toArray(signingInfoList));
         result.setStatus(SUCCESS);
         result.setMsg("获取作业信息成功！");
-        result.setData(signingInfoList);
+        return result;
+    }
+
+    /**
+     * 用于展示
+     *
+     * @param taskInfo
+     * @return
+     */
+    public Map<String, Object> toMap(TaskInfo taskInfo) {
+        if (taskInfo == null) {
+            return null;
+        }
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("id", taskInfo.getId());
+        result.put("title", taskInfo.getTitle());
+        result.put("content", taskInfo.getContent());
+        result.put("deadlineTime", DateUtil.format(taskInfo.getDeadlineTime(), DateUtil.DATETIME_FORMAT_YMDHM));
+        result.put("upTime", DateUtil.showDateMD(taskInfo.getDeadlineTime()));
+        result.put("admin", taskInfo.getAdmin());
+        result.put("classes", taskInfo.getClasses());
+        result.put("course", taskInfo.getCourse());
         return result;
     }
 }

@@ -28,4 +28,12 @@ public interface StudentService extends BaseService<Student> {
      */
     Student getUserByToken(String token);
 
+    /**
+     * 判断缓存中是否存在Student对象
+     *
+     * @param token
+     * @return
+     */
+    boolean hasCacheStudent(String token);
+
 }

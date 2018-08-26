@@ -25,11 +25,20 @@ public class SignInfo extends BaseModel{
     /** 签到地址 */
     private String address;
 
+    /** 经度 */
+    private String longitude;
+
+    /** 纬度 */
+    private String latitude;
+
     /** 对应班级 */
     private Classes classes;
 
     /** 对应课程 */
     private Course course;
+
+    /** 备注 */
+    private String remark;
 
     /** 对应签到情况 */
     private List<Sign> signList;
@@ -62,6 +71,22 @@ public class SignInfo extends BaseModel{
         return address;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -80,6 +105,14 @@ public class SignInfo extends BaseModel{
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public List<Sign> getSignList() {

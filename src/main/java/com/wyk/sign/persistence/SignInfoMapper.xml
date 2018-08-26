@@ -9,6 +9,9 @@
         <result property="startDate" column="start_date"/>
         <result property="stopDate" column="stop_date"/>
         <result property="address" column="address"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="remark" column="remark"/>
         <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
         <association property="admin" javaType="com.wyk.sign.model.Administrator">
@@ -56,9 +59,6 @@
             <if test="id != null">
                 s.id = #{id}
             </if>
-            <if test="id != null">
-                and admin.wx_id = #{id}
-            </if>
         </where>
         limit 0,1
     </select>
@@ -104,6 +104,9 @@
 			start_date,
 			stop_date,
 			address,
+			latitude,
+			longitude,
+			remark,
 			status)
 		values
 			(#{admin.id},
@@ -112,6 +115,9 @@
 			#{startDate},
 			#{stopDate},
 			#{address},
+			#{latitude},
+			#{longitude},
+			#{remark},
 			#{status})
 	</insert>
 
@@ -123,6 +129,9 @@
 		start_date=#{startDate},
 		stop_date=#{stopDate},
 		address=#{address},
+		latitude=#{latitude},
+		longitude=#{longitude},
+		remark=#{remark},
 		status=#{status},
 		modify_time=#{modifyTime}
 		where id = #{id}
@@ -137,6 +146,9 @@
             start_date=#{info.startDate},
             stop_date=#{info.stopDate},
             address=#{info.address},
+            latitude=#{latitude},
+            longitude=#{longitude},
+            remark=#{remark},
             status=#{info.status},
             modify_time=#{info.modifyTime}
             where id = #{info.id}

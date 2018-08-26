@@ -25,8 +25,10 @@ public abstract class Constants {
 		public static final Integer NOT_SIGNED = 1;
 		/** 签到 */
 		public static final Integer SIGNED = 2;
+		/** 迟到 */
+		public static final Integer LATE = 3;
 		/** 申请补签 */
-		public static final Integer SUPPLE_SIGN = 3;
+		public static final Integer SUPPLE_SIGN = 4;
 	}
 }
 

@@ -30,8 +30,8 @@ public class TaskInfo extends BaseModel{
     /** 作业内容 */
     private String content;
 
-    /** 备注 */
-    private String remark;
+    /** 题目 */
+    private String title;
 
     private List<Task> taskList;
 
@@ -75,12 +75,12 @@ public class TaskInfo extends BaseModel{
         this.deadlineTime = deadlineTime;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getTitle() {
+        return title;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<Task> getTaskList() {

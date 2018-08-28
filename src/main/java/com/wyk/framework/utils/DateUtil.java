@@ -530,4 +530,30 @@ public final class DateUtil {
 		return format(date, DATE_CN_FORMAT_MD);
 	}
 
+	/**
+	 * 获取展示日期
+	 * <pre>
+	 *     eg：后天，明天，今天，昨天 ，前天 ， 周五 ， 08月12日
+	 * </pre>
+	 * @param date
+	 * @return
+	 */
+	public static String showDateMDHM(Date date){
+		String time = format(date, DATETIME_FORMAT_HM);
+		Date nowDate = new Date();
+		int diff = offset(date, nowDate);
+		if(diff == 0){
+			return "今天" + BLANK + time;
+		}else if(diff == -1){
+			return "昨天" + BLANK + time;
+		}else if(diff == -2){
+			return "前天" + BLANK + time;
+		}else if(diff == 1){
+			return "明天" + BLANK + time;
+		}else if(diff == 2){
+			return "后天" + BLANK + time;
+		}
+		return format(date, DATE_CN_FORMAT_MD) + BLANK + time;
+	}
+
 }

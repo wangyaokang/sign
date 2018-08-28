@@ -12,6 +12,7 @@ import com.wyk.sign.service.TaskInfoService;
 import com.wyk.sign.service.TaskService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 作业相关接口
@@ -90,10 +95,11 @@ public class TaskController extends AbstractController {
         task.setInfo(taskInfo);
         Student student = (Student) input.getCurrentUser();
         task.setStudent(student);
-        task.setUpDate(input.getDate("upDate", DateUtil.DATE_FORMAT));
-        if (task.getUpDate().after(taskInfo.getDeadlineTime())) {
+        if (new Date().after(taskInfo.getDeadlineTime())) {
             return new Output(ERROR_NO_RECORD, "已超过上交截止日期！");
         }
+        String upFileUrl = input.getString("upFileUrl");
+        logger.info("upFileUrl为：", upFileUrl);
         task.setUpFileUrl(input.getString("upFileUrl"));
         task.setDesc(input.getString("desc"));
         taskService.insert(task);
@@ -198,13 +204,20 @@ public class TaskController extends AbstractController {
     public @ResponseBody Output uploadTaskFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         Output result = new Output();
         String infoId = request.getParameter("infoId");
-        String token = request.getParameter("wxId");
+        String token = request.getParameter("token");
         Student student = (Student) getCurrentUserByToken(token);
         String fileId = String.format("taskInfo%s/%s", infoId, student.getSno());
-        String uploadUrl = uploadFile(file, fileId);
-        result.setMsg("文件上传成功！");
-        result.setData(uploadUrl);
-        result.setStatus(SUCCESS);
+        try {
+            String uploadUrl = uploadFile(file, fileId);
+            Map<String, Object> data = new HashMap<>();
+            data.put("name", uploadUrl.substring(uploadUrl.lastIndexOf("/") + 1));
+            data.put("url", uploadUrl);
+            result.setMsg("文件上传成功！");
+            result.setData(data);
+            result.setStatus(SUCCESS);
+        } catch (Exception e) {
+            return new Output(ERROR_UNKNOWN, "文件上传失败！");
+        }
         return result;
     }
 
@@ -245,4 +258,61 @@ public class TaskController extends AbstractController {
         return result;
     }
 
+    /**
+     * 查看作业情况
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token : wxId,
+     *     method : queryTaskListByInfoId
+     *     params : {"infoId" : "2"}
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output getTaskListByInfoId(Input input) {
+        Output result = new Output();
+        TaskInfo taskInfo = taskInfoService.get(input.getLong("infoId"));
+        if (null == taskInfo) {
+            return new Output(ERROR_UNKNOWN, "没有对应的作业信息，请重试！");
+        }
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("infoId", taskInfo.getId());
+        List<Task> taskList = taskService.query(param);
+        result.setData(toArray(taskList));
+        result.setMsg("获取作业情况成功！");
+        return result;
+    }
+
+    /**
+     * 用于展示任务
+     *
+     * @param task
+     * @return
+     */
+    public Map<String, Object> toMap(Task task) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> info = new HashMap<String, Object>();
+        TaskInfo taskInfo = task.getInfo();
+        info.put("id", taskInfo.getId());
+        info.put("course", taskInfo.getCourse());
+        info.put("classes", taskInfo.getClasses());
+        info.put("deadlineTime", DateUtil.format(taskInfo.getDeadlineTime(), DateUtil.DATE_FORMAT));
+        info.put("content", taskInfo.getContent());
+        info.put("title", taskInfo.getTitle());
+        result.put("info", info);
+        result.put("upDate", DateUtil.showDateMDHM(task.getUpDate()));
+        result.put("student", task.getStudent());
+
+        if(StringUtils.isNotEmpty(task.getUpFileUrl())){
+            String[] urls = task.getUpFileUrl().split("|");
+        }
+        result.put("upFileUrl", task.getUpFileUrl());
+        result.put("desc", task.getDesc());
+        result.put("score", task.getScore());
+        return result;
+    }
 }

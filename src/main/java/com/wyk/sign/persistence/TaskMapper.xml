@@ -24,7 +24,8 @@
 		<association property="info" javaType="com.wyk.sign.model.TaskInfo">
 			<id property="id" column="info_id"/>
 			<result property="deadlineTime" column="info_deadline_time" />
-			<result property="remark" column="info_remark" />
+			<result property="title" column="info_title" />
+			<result property="content" column="info_content" />
 			<result property="status" column="info_status" />
 		</association>
 	</resultMap>
@@ -41,7 +42,8 @@
 			stu.status as stu_status,
 			info.id as info_id,
 			info.deadline_time as info_deadline_time,
-			info.remark as info_address,
+			info.title as info_title,
+			info.content as info_content,
 			info.status as info_status
 		  from tb_task t
 		  	inner join tb_student stu on t.stu_id = stu.id

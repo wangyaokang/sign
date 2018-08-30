@@ -314,7 +314,7 @@ public class TaskInfoController extends AbstractController {
         result.put("id", taskInfo.getId());
         result.put("title", taskInfo.getTitle());
         result.put("content", taskInfo.getContent());
-        result.put("deadlineTime", DateUtil.format(taskInfo.getDeadlineTime(), DateUtil.DATETIME_FORMAT_YMDHM));
+        result.put("deadlineTime", DateUtil.format(taskInfo.getDeadlineTime(), DateUtil.DATE_FORMAT));
         result.put("upTime", DateUtil.showDateMD(taskInfo.getDeadlineTime()));
         result.put("admin", taskInfo.getAdmin());
         result.put("classes", taskInfo.getClasses());

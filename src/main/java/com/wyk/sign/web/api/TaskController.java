@@ -126,7 +126,6 @@ public class TaskController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         Task task = taskService.get(input.getLong("id"));
-        task.setUpDate(input.getDate("upDate", DateUtil.DATE_FORMAT));
         task.setUpFileUrl(input.getString("upFileUrl"));
         task.setDesc(input.getString("desc"));
         taskService.update(task);
@@ -205,8 +204,14 @@ public class TaskController extends AbstractController {
         Output result = new Output();
         String infoId = request.getParameter("infoId");
         String token = request.getParameter("token");
-        Student student = (Student) getCurrentUserByToken(token);
-        String fileId = String.format("taskInfo%s/%s", infoId, student.getSno());
+        String filename = request.getParameter("filename");
+        String fileId = "";
+        if(StringUtils.isNotEmpty(filename)){
+            fileId = String.format("taskInfo%s/%s", infoId, filename);
+        }else{
+            Student student = (Student) getCurrentUserByToken(token);
+            fileId = String.format("taskInfo%s/%s", infoId, student.getSno());
+        }
         try {
             String uploadUrl = uploadFile(file, fileId);
             Map<String, Object> data = new HashMap<>();
@@ -304,7 +309,7 @@ public class TaskController extends AbstractController {
         info.put("content", taskInfo.getContent());
         info.put("title", taskInfo.getTitle());
         result.put("info", info);
-        result.put("upDate", DateUtil.showDateMDHM(task.getUpDate()));
+        result.put("upDate", DateUtil.showDateMDHM(task.getCreateTime()));
         result.put("student", task.getStudent());
 
         if(StringUtils.isNotEmpty(task.getUpFileUrl())){

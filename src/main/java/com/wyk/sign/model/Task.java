@@ -18,9 +18,6 @@ public class Task extends BaseModel{
     /** 学生 */
     private Student student;
 
-    /** 作业上传时间 */
-    private Date upDate;
-
     /**
      * 作业文件url
      *
@@ -33,14 +30,6 @@ public class Task extends BaseModel{
 
     /** 评分 */
     private Integer score;
-
-    public Date getUpDate() {
-        return upDate;
-    }
-
-    public void setUpDate(Date upDate) {
-        this.upDate = upDate;
-    }
 
     public TaskInfo getInfo() {
         return info;

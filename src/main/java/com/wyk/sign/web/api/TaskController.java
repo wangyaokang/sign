@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -313,7 +314,14 @@ public class TaskController extends AbstractController {
         result.put("student", task.getStudent());
 
         if(StringUtils.isNotEmpty(task.getUpFileUrl())){
-            String[] urls = task.getUpFileUrl().split("|");
+            try {
+                List<Map<String, String>> fileUrlList = objectMapper.readValue(task.getUpFileUrl(), List.class);
+                result.put("upFileUrl", fileUrlList);
+            } catch (IOException e) {
+                logger.error("获取文件url失败！{}", e.getMessage());
+            }
+        }else{
+            result.put("upFileUrl", task.getUpFileUrl());
         }
         result.put("upFileUrl", task.getUpFileUrl());
         result.put("desc", task.getDesc());

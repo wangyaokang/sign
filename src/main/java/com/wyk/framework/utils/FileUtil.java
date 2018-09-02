@@ -1,5 +1,7 @@
 package com.wyk.framework.utils;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +12,14 @@ import java.util.List;
 
 public class FileUtil {
 
+    /** 文件大小单位：MB */
+    private static final long FILE_SIZE_MB = 1024 * 1024;
+
+    /** 文件大小单位：KB */
+    private static final long FILE_SIZE_KB = 1024;
+
     private FileUtil() {
+
     }
 
     /**
@@ -94,5 +103,46 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 获取文件名（重名时，+1 处理）
+     * @param baseFilePath
+     * @param fileName
+     * @param suffix
+     * @return
+     */
+    public static String createOrRenameFile(String baseFilePath, String fileName, String suffix) {
+        File originFile = new File(baseFilePath + fileName + suffix);
+        if (!originFile.exists()) {
+            return fileName + suffix;
+        }
+
+        for (int i = 1; i < Integer.MAX_VALUE; i++) {
+            String newFileName = String.format("%s(%d)%s", fileName, i, suffix);
+            File newFile = new File(baseFilePath + newFileName);
+            if(!newFile.exists()){
+                return newFileName;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * 获取文件的大小
+     * @param file
+     * @return
+     */
+    public static String getFileSize(MultipartFile file){
+        String fileSize = "";
+        long size = file.getSize();
+        if(size >= FILE_SIZE_MB){
+            fileSize = size / FILE_SIZE_MB + "M";
+        }else if(size >= FILE_SIZE_KB && size < FILE_SIZE_MB){
+            fileSize = size / FILE_SIZE_KB + "K";
+        }else{
+            fileSize = size + "B";
+        }
+        return fileSize;
+    }
 }
 

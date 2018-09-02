@@ -214,8 +214,32 @@ public abstract class AbstractController implements WebxController {
                     return null;
                 }
                 String suffix = uploadFileName.substring(uploadFileName.lastIndexOf('.'));
-                String random = RandomUtil.getString(6);
-                String fileName = fileId + "_" + random + suffix;
+                String fileName = fileId + suffix;
+                FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
+                return (uploadPath + fileName);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param file   文件
+     * @return
+     */
+    @RequestMapping(value = "file", method = RequestMethod.POST)
+    protected String uploadFile(MultipartFile file) {
+        String savePath = context.getRealPath("/") + "/" + uploadPath;
+        if (file != null && StringUtils.isNotEmpty(file.getOriginalFilename())) {
+            try {
+                String uploadFileName = file.getOriginalFilename();
+                if (uploadFileName.lastIndexOf('.') < 0) {
+                    return null;
+                }
+                String fileName = uploadFileName;
                 FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
                 return (uploadPath + fileName);
             } catch (IOException ex) {

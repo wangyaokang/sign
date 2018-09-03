@@ -3,9 +3,14 @@
  */
 package com.wyk.sign.web.api;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.wyk.sign.model.*;
+import com.wyk.sign.service.ClassesService;
+import com.wyk.sign.util.Constants;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,6 +25,9 @@ import com.wyk.sign.web.api.param.Output;
 @Controller("apiLogin")
 @RequestMapping("/api/login")
 public class LoginController extends AbstractController {
+
+    @Autowired
+    ClassesService classesService;
 
     /**
      * 登录
@@ -36,18 +44,12 @@ public class LoginController extends AbstractController {
         Output result = new Output();
         String token = input.getParams().get("wxId").toString();
         User user = getCurrentUserByToken(token);
-        // 当用户未完善个人信息时，已匿名方式登录。
         if (null == user) {
-            user = User.Anonymous;
+            return new Output(ERROR_UNKNOWN, "没有此用户！");
         }
-        UserToken userToken = new UserToken();
-        userToken.setUser(user);
-        userToken.setToken(token);
-        userToken.setLastTime(new Date());
-
         result.setStatus(SUCCESS);
         result.setMsg("登录成功");
-        result.setData(userToken);
+        result.setData(toMap(user));
         return result;
     }
 
@@ -72,8 +74,8 @@ public class LoginController extends AbstractController {
      */
     public Output register(Input input) {
         Output result = new Output();
-        UserToken userToken = new UserToken();
         Integer userType = input.getInteger("userType");
+
         if (userType == 1 || userType == 2) {
             Administrator admin = new Administrator();
             admin.setWxId(input.getString("wxId"));
@@ -82,7 +84,7 @@ public class LoginController extends AbstractController {
             admin.setRealName(input.getString("realName"));
             admin.setUserType(userType);
             administratorService.save(admin);
-            userToken.setUser(admin);
+            result.setData(toMap(admin));
         } else if (userType == 3) {
             Student student = new Student();
             student.setWxId(input.getString("wxId"));
@@ -97,17 +99,51 @@ public class LoginController extends AbstractController {
                 student.setClasses(classes);
             }
             studentService.save(student);
-            userToken.setUser(student);
+            result.setData(toMap(student));
         } else {
             result.setMsg("未设置【用户类型】，请重新设置！");
             result.setStatus(SUCCESS);
             return result;
         }
 
-        userToken.setToken(input.getString("wxId"));
         result.setMsg("保存信息成功！");
-        result.setData(userToken);
         result.setStatus(SUCCESS);
+        return result;
+    }
+
+    /**
+     * 用于展示
+     * @param user
+     * @return
+     */
+    public Map<String, Object> toMap(User user){
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", user.getId());
+        result.put("wxId", user.getWxId());
+        result.put("wxName", user.getWxName());
+        result.put("wxAvatarUrl", user.getWxAvatarUrl());
+        result.put("realName", user.getRealName());
+        Integer userType = user.getUserType();
+        result.put("userType", userType);
+        if(Constants.User.STUDENT.equals(userType)){
+            result.put("userTypeName", "学生");
+            Student student = (Student) user;
+            result.put("sno", student.getSno());
+            if(StringUtils.isEmpty(student.getClasses().getName())) {
+                Classes classes = classesService.get(student.getClasses().getId());
+                if (classes != null) {
+                    result.put("classes", classes);
+                } else {
+                    result.put("classes", null);
+                }
+            }else{
+                result.put("classes", student.getClasses());
+            }
+        }else if(Constants.User.TEACHER.equals(userType)){
+            result.put("userTypeName", "教师");
+        }else if(Constants.User.COUNSELLOR.equals(userType)){
+            result.put("userTypeName", "辅导员");
+        }
         return result;
     }
 

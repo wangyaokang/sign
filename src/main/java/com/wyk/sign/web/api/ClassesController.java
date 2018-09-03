@@ -16,6 +16,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
@@ -114,6 +116,24 @@ public class ClassesController extends AbstractController {
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
         result.setData(classes);
+        return result;
+    }
+
+    /**
+     * 查询全部班级
+     *
+     * @return
+     */
+    @RequestMapping(value = "queryClasses", method = {RequestMethod.GET})
+    public @ResponseBody Output queryClasses() {
+        Output result = new Output();
+        List<Classes> classesList = classesService.query();
+        if(classesList.size() == 0){
+            return new Output(ERROR_NO_RECORD, "无班级记录");
+        }
+        result.setStatus(SUCCESS);
+        result.setMsg("修改班级信息成功！");
+        result.setData(classesList);
         return result;
     }
 

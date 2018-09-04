@@ -42,7 +42,7 @@ public class LoginController extends AbstractController {
      */
     public Output login(Input input) {
         Output result = new Output();
-        String token = input.getParams().get("wxId").toString();
+        String token = input.getString("wxId");
         User user = getCurrentUserByToken(token);
         if (null == user) {
             return new Output(ERROR_UNKNOWN, "没有此用户！");

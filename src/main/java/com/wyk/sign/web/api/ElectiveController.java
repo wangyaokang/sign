@@ -53,12 +53,11 @@ public class ElectiveController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output insert(Input input) {
         Output result = new Output();
+        Administrator administrator = (Administrator) input.getCurrentUser();
         Elective elective = new Elective();
         Classes classes = new Classes();
         classes.setId(input.getLong("classId"));
         elective.setClasses(classes);
-        Administrator administrator = new Administrator();
-        administrator.setId(input.getLong("adminId"));
         elective.setAdmin(administrator);
         Course course = new Course();
         course.setId(input.getLong("courseId"));
@@ -189,5 +188,7 @@ public class ElectiveController extends AbstractController {
         result.setMsg("获取授课信息成功！");
         return result;
     }
+
+
 
 }

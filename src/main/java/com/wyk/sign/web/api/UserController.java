@@ -140,4 +140,27 @@ public class UserController extends AbstractController {
         result.setData(classesList);
         return result;
     }
+
+    /**
+     * 获取管理者
+     * <p>传入参数</p>
+     * <pre>
+     *     token: wxId
+     *     method: getAdminList
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output getAdminList(Input input){
+        Output result = new Output();
+        List<Administrator> administratorList = administratorService.query();
+        if(administratorList.size() == 0){
+            return new Output(ERROR_NO_RECORD, "无对应的管理者");
+        }
+        result.setStatus(SUCCESS);
+        result.setData(administratorList);
+        result.setMsg("获取管理者成功！");
+        return result;
+    }
 }

@@ -52,17 +52,19 @@
 			<if test="name != null">
 				cl.name = #{name}
 			</if>
+			<if test="adminId != null">
+				and ad.id = #{adminId}
+			</if>
 			<if test="wxId != null">
 				and ad.wx_Id = #{wxId}
 			</if>
 			<if test="wxName != null">
 				and ad.wx_name = #{wxName}
 			</if>
-			<if test="admin.realName != null">
+			<if test="realName != null">
 				and ad.real_name = #{realName}
 			</if>
 		</where>
-		order by seq
 	</select>
 
 	<insert id="insert" parameterType="com.wyk.sign.model.Classes"

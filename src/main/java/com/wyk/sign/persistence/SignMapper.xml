@@ -81,6 +81,9 @@
 			<if test="infoId != null">
 				and info.id = #{infoId}
 			</if>
+			<if test="status != null">
+				and s.status = #{status}
+			</if>
 		</where>
 	</select>
 

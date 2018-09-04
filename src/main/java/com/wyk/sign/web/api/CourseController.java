@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -102,6 +103,30 @@ public class CourseController extends AbstractController {
         courseService.delete(course);
         result.setMsg("删除课程成功");
         result.setStatus(SUCCESS);
+        return result;
+    }
+
+    /**
+     * 获取全部课程
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token : wxid;
+     *     method : queryCourses
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output queryCourses(Input input){
+        Output result = new Output();
+        List<Course> courseList = courseService.query();
+        if(courseList.size() == 0){
+            return new Output(ERROR_NO_RECORD, "没有创建任何课程！");
+        }
+        result.setMsg("获取课程成功！");
+        result.setStatus(SUCCESS);
+        result.setData(courseList);
         return result;
     }
 }

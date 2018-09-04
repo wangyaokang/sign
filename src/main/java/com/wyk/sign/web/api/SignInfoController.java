@@ -60,7 +60,7 @@ public class SignInfoController extends AbstractController {
     public Output info(Input input) {
         Output result = new Output();
         SignInfo signInfo = signInfoService.get(input.getLong("id"));
-        if(null == signInfo){
+        if (null == signInfo) {
             return new Output(ERROR_NO_RECORD, "没有获取对应的签到信息！");
         }
         result.setData(signInfo);
@@ -111,9 +111,9 @@ public class SignInfoController extends AbstractController {
         Course course = new Course();
         course.setId(input.getLong("courseId"));
         signInfo.setCourse(course);
-        if(admin.getUserType().equals(Constants.User.TEACHER)){
+        if (admin.getUserType().equals(Constants.User.TEACHER)) {
             input.getParams().put("adminId", admin.getId());
-            if(StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))){
+            if (StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))) {
                 return new Output(ERROR_NO_RECORD, "请选择对应的课程和班级！");
             }
             Elective elective = electiveService.get(input.getParams());
@@ -143,7 +143,7 @@ public class SignInfoController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         SignInfo signInfo = signInfoService.get(input.getLong("id"));
-        if(null == signInfo){
+        if (null == signInfo) {
             return new Output(ERROR_NO_RECORD, "未获取到对应的签到信息！");
         }
         signInfo.setAddress(input.getString("address"));
@@ -180,16 +180,20 @@ public class SignInfoController extends AbstractController {
      * @param input
      * @return
      */
-    @Checked(Item.ADMIN)
-    public Output getMySignInfoList(Input input){
+    @Checked(Item.TYPE)
+    public Output getMySignInfoList(Input input) {
         Output result = new Output();
-        User admin = input.getCurrentUser();
+        User user = input.getCurrentUser();
         Map<String, Object> param = new HashMap<>();
-        param.put("adminId", admin.getId());
+        if (Constants.User.STUDENT.equals(user.getUserType())) {
+            param.put("classId", ((Student) user).getClasses().getId());
+        } else {
+            param.put("adminId", user.getId());
+        }
         List<SignInfo> signingInfoList = signInfoService.query(param);
+        result.setData(toArray(signingInfoList, user));
         result.setStatus(SUCCESS);
         result.setMsg("获取签到信息成功！");
-        result.setData(signingInfoList);
         return result;
     }
 
@@ -207,10 +211,10 @@ public class SignInfoController extends AbstractController {
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output delete(Input input){
+    public Output delete(Input input) {
         Output result = new Output();
         SignInfo signingInfo = signInfoService.get(input.getLong("id"));
-        if(null == signingInfo){
+        if (null == signingInfo) {
             return new Output(ERROR_NO_RECORD, "没有对应的签到信息！");
         }
         // 删除签到信息下，所有的签到
@@ -237,18 +241,18 @@ public class SignInfoController extends AbstractController {
      * @return
      */
     @Checked(Item.TYPE)
-    public Output getSignInfoBySelectedDate(Input input){
+    public Output getSignInfoBySelectedDate(Input input) {
         Output result = new Output();
         User user = input.getCurrentUser();
         Map<String, Object> param = input.getParams();
-        if(user.getUserType().equals(Constants.User.STUDENT)){
+        if (user.getUserType().equals(Constants.User.STUDENT)) {
             param.put("classId", ((Student) user).getClasses().getId());
-        }else{
+        } else {
             param.put("adminId", user.getId());
         }
         param.put("selectDate", input.getString("selectDate"));
         List<SignInfo> signInfoList = signInfoService.query(param);
-        if(null == signInfoList || signInfoList.size() == 0) {
+        if (null == signInfoList || signInfoList.size() == 0) {
             return new Output(SUCCESS, "当天无签到信息！");
         }
 
@@ -267,17 +271,18 @@ public class SignInfoController extends AbstractController {
      *     method : getSignInfoByCurMonth
      *     params : {selectMonth : "2018-08"}
      * </pre>
+     *
      * @param input
      * @return
      */
     @Checked(Item.TYPE)
-    public Output getSignDatesByCurMonth(Input input){
+    public Output getSignDatesByCurMonth(Input input) {
         Output result = new Output();
         User user = input.getCurrentUser();
         Map<String, Object> param = input.getParams();
-        if(user.getUserType().equals(Constants.User.STUDENT)){
+        if (user.getUserType().equals(Constants.User.STUDENT)) {
             param.put("classId", ((Student) user).getClasses().getId());
-        }else{
+        } else {
             param.put("adminId", user.getId());
         }
         param.put("curMonth", input.getString("curMonth"));
@@ -300,24 +305,45 @@ public class SignInfoController extends AbstractController {
         }
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("id", signInfo.getId());
-        result.put("signDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATE_FORMAT));
+        result.put("signDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATETIME_FORMAT_YMDHM));
         result.put("stopDate", DateUtil.format(signInfo.getStopDate(), DateUtil.DATETIME_FORMAT_HM));
         result.put("startDate", DateUtil.format(signInfo.getStartDate(), DateUtil.DATETIME_FORMAT_HM));
         result.put("address", signInfo.getAddress());
         result.put("status", signInfo.getStatus());
         result.put("admin", signInfo.getAdmin());
-        result.put("classes", signInfo.getClasses());
         result.put("course", signInfo.getCourse());
         result.put("remark", signInfo.getRemark());
-        if(Constants.User.STUDENT.equals(user.getUserType())) {
-            Map<String, Object> param = new HashMap<>();
+        // 班级信息
+        Map<String, Object> classesMap = new HashMap<>();
+        Map<String, Object> param = new HashMap<>();
+        param.put("classId", signInfo.getClasses().getId());
+        Map<String, Object> studentMap = new HashMap<>();
+        List<Student> studentList = studentService.query(param);
+        studentMap.put(LIST, studentList);
+        studentMap.put(TOTAL, studentList.size());
+        classesMap.put("studentList", studentMap);
+        classesMap.put("id", signInfo.getClasses().getId());
+        classesMap.put("name", signInfo.getClasses().getName());
+        result.put("classes", classesMap);
+        // 已签到信息
+        param = new HashMap<>();
+        Map<String, Object> signDetailMap = new HashMap<>();
+        param.put("infoId", signInfo.getId());
+        param.put("status", Constants.Sign.SIGNED);
+        List<Sign> signList = signService.query(param);
+        signDetailMap.put(LIST, signList);
+        signDetailMap.put(TOTAL, signList.size());
+        result.put("signedList", signDetailMap);
+        // 个人签到信息
+        if (Constants.User.STUDENT.equals(user.getUserType())) {
+            param = new HashMap<>();
             param.put("infoId", signInfo.getId());
             param.put("wxId", user.getWxId());
             Sign sign = signService.get(param);
             result.put("sign", sign);
-        }else{
+        } else {
             // 管理者无需签到，不显示状态
-            result.put("sign", "1001");
+            result.put("sign", null);
         }
         return result;
     }

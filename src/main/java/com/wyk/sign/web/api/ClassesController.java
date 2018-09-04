@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
@@ -49,11 +50,11 @@ public class ClassesController extends AbstractController {
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output insert(Input input){
+    public Output insert(Input input) {
         Output result = new Output();
         Classes classes = new Classes();
         classes.setName(input.getString("name"));
-        if(StringUtils.isNotEmpty(input.getString("adminId"))){
+        if (StringUtils.isNotEmpty(input.getString("adminId"))) {
             Administrator admin = new Administrator();
             admin.setId(input.getLong("adminId"));
             classes.setAdmin(admin);
@@ -80,7 +81,7 @@ public class ClassesController extends AbstractController {
     public Output info(Input input) {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
-        if(null == classes){
+        if (null == classes) {
             return new Output(ERROR_NO_RECORD, "没有对应的班级！");
         }
         result.setStatus(SUCCESS);
@@ -105,7 +106,7 @@ public class ClassesController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
-        if(null == classes){
+        if (null == classes) {
             return new Output(ERROR_NO_RECORD, "没有对应的班级！");
         }
         classes.setName(input.getString("name"));
@@ -124,16 +125,15 @@ public class ClassesController extends AbstractController {
      *
      * @return
      */
-    @RequestMapping(value = "queryClasses", method = {RequestMethod.GET})
-    public @ResponseBody Output queryClasses() {
+    public Output queryClasses(Input input) {
         Output result = new Output();
         List<Classes> classesList = classesService.query();
         if(classesList.size() == 0){
             return new Output(ERROR_NO_RECORD, "无班级记录");
         }
+        result.setData(toArray(classesList));
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
-        result.setData(classesList);
         return result;
     }
 
@@ -146,19 +146,20 @@ public class ClassesController extends AbstractController {
      *     method: delete
      *     params: {id : 2}
      * </pre>
+     *
      * @param input
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output delete(Input input){
+    public Output delete(Input input) {
         Output result = new Output();
         Classes classes = classesService.get(input.getLong("id"));
         Map<String, Object> param = new HashMap<>();
         param.put("classId", classes.getId());
         List<Student> studentList = studentService.query(param);
-        if(studentList.size() != 0){
+        if (studentList.size() != 0) {
             List<Student> paramList = new ArrayList<>();
-            for(Student student : studentList){
+            for (Student student : studentList) {
                 student.setClasses(null);
                 paramList.add(student);
             }
@@ -218,4 +219,83 @@ public class ClassesController extends AbstractController {
         result.setMsg("修改班级信息成功！");
         return result;
     }
+
+    /**
+     * 获取班级成员信息
+     * <p>传入参数</p>
+     * <pre>
+     *     method: getClassesListByAdmin
+     *     token: wxopenid, 微信wxid
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output getClassesListByAdmin(Input input) {
+        Output result = new Output();
+        Map<String, Object> params = new HashMap<>();
+        params.put("adminId", ((Administrator) input.getCurrentUser()).getId());
+        List<Classes> classesList = classesService.query(params);
+        if(classesList.size() == 0){
+            return new Output(ERROR_NO_RECORD, "没有管理的班级！");
+        }
+        result.setData(toArray(classesList));
+        result.setStatus(SUCCESS);
+        result.setMsg("修改班级信息成功！");
+        return result;
+    }
+
+    /**
+     * 获取授课信息
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token: wxId,
+     *     method: getElectivesByAdmin
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.ADMIN)
+    public Output getClassesListFormElective(Input input){
+        Output result = new Output();
+        String token = input.getToken();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("wxId", token);
+        List<Classes> classesList = electiveService.getClassesList(map);
+        if (classesList.size() == 0) {
+            return new Output(ERROR_NO_RECORD, "没有授课班级！");
+        }
+        result.setData(toArray(classesList));
+        result.setStatus(SUCCESS);
+        result.setMsg("获取授课班级信息成功！");
+        return result;
+    }
+
+    /**
+     * 用于展示
+     * @param classes
+     * @return
+     */
+    public Map<String, Object> toMap(Classes classes){
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", classes.getId());
+        result.put("name", classes.getName());
+        result.put("admin", classes.getAdmin());
+        Map<String, Object> param = new HashMap<>();
+        param.put("classId", classes.getId());
+        Map<String, Object> studentMap = new HashMap<>();
+        List<Student> studentList = studentService.query(param);
+        studentMap.put(LIST, studentList);
+        studentMap.put(TOTAL, studentList.size());
+        result.put("studentList", studentMap);
+        Map<String, Object> teacherMap = new HashMap<>();
+        List<Administrator> teacherList = administratorService.query(param);
+        teacherMap.put(LIST, teacherList);
+        teacherMap.put(TOTAL, teacherList.size());
+        param.put("teacherList", teacherList);
+        return result;
+    }
+
 }

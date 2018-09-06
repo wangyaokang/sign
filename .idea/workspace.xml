@@ -8,70 +8,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8b6224a-4b28-4c44-aff1-7bb684ac1ce3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/operator/ClassDynamicLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Grade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/GradeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/GradeMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/MessageMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/MessageMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/GradeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/MessageService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/GradeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/service/impl/MessageServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/GradeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/MessageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/resource/img/loading-sm.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/resource/img/loading.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/resource/js/jweixin-1.3.2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(1).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(10).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(11).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(12).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(13).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(14).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(15).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(16).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(17).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(18).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(19).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(2).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(20).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(21).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(22).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(23).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(3).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(4).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(5).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(6).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(7).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(8).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(9).docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(1).txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(2).txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(3).txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(4).txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(5).txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/app/sign.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/app/sign.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Resources/spring/spring-mvc-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Resources/spring/spring-mvc-servlet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/jdbc/dialect/OracleDialect.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/jdbc/dialect/SQLServer2005Dialect.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/jdbc/nameparam/NamedParameterBaseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/jdbc/nameparam/NamedParameterBaseDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/page/Paginator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/page/Paginator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/utils/FileUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/utils/FileUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/utils/IPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/utils/IPUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/framework/web/WebxController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/framework/web/WebxController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Elective.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Elective.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/model/UserToken.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/ElectiveMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/persistence/SignMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/AbstractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/ElectiveController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wyk/sign/web/api/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/upload_file.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/upload_file.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/undefined.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(1).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(10).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(11).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(12).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(13).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(14).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(15).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(16).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(17).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(18).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(19).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(2).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(20).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(21).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(22).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(23).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(3).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(4).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(5).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(6).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(7).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(8).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书(9).docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/上海授权书.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(1).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(2).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(3).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(4).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本(5).txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/taskInfo1/记事本.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/attachment/记事本.txt" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -141,8 +110,8 @@
       <file leaf-file-name="upload_file.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/upload_file.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3168">
-              <caret line="144" column="7" lean-forward="true" selection-start-line="144" selection-start-column="7" selection-end-line="144" selection-end-column="7" />
+            <state relative-caret-position="220">
+              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -449,14 +418,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sign" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sign" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="attachment" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sign" type="b2602c69:ProjectViewProjectNode" />
@@ -798,7 +759,7 @@
       <workItem from="1535972326008" duration="8534000" />
       <workItem from="1536058345083" duration="16692000" />
       <workItem from="1536145944057" duration="10179000" />
-      <workItem from="1536235733550" duration="14418000" />
+      <workItem from="1536235733550" duration="14467000" />
     </task>
     <task id="LOCAL-00001" summary="0717更新。">
       <created>1531843976980</created>
@@ -891,7 +852,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536087507084</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="文件上传">
+      <created>1536251722209</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1536251722210</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -927,7 +895,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="323204000" />
+    <option name="totallyTimeSpent" value="323253000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -940,6 +908,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32925472" />
@@ -1041,7 +1010,8 @@
     <MESSAGE value="新增文件上传功能 add by wyk" />
     <MESSAGE value="文件上传新增 add by wyk" />
     <MESSAGE value="完善程序" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善程序" />
+    <MESSAGE value="文件上传" />
+    <option name="LAST_COMMIT_MESSAGE" value="文件上传" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1476,8 +1446,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/upload_file.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3168">
-          <caret line="144" column="7" lean-forward="true" selection-start-line="144" selection-start-column="7" selection-end-line="144" selection-end-column="7" />
+        <state relative-caret-position="220">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>

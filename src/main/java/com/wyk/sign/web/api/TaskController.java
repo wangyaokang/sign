@@ -181,7 +181,7 @@ public class TaskController extends AbstractController {
         if (null == task) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业！");
         }
-        task.setScore(input.getInteger("score"));
+        task.setScore(input.getDouble("score"));
         taskService.update(task);
         result.setMsg("评分成功！");
         result.setStatus(SUCCESS);
@@ -203,6 +203,7 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "uploadTaskFile", method = RequestMethod.POST)
     public @ResponseBody Output uploadTaskFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         Output result = new Output();
+        String fileno = request.getParameter("fileno");
         String infoId = request.getParameter("infoId");
         String token = request.getParameter("token");
         String filename = request.getParameter("filename");
@@ -216,6 +217,8 @@ public class TaskController extends AbstractController {
         try {
             String uploadUrl = uploadFile(file, fileId);
             Map<String, Object> data = new HashMap<>();
+            data.put("size", FileUtil.getFileSize(file));
+            data.put("no", fileno);
             data.put("name", uploadUrl.substring(uploadUrl.lastIndexOf("/") + 1));
             data.put("url", uploadUrl);
             result.setMsg("文件上传成功！");
@@ -241,27 +244,6 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "downloadTaskFile")
     public ResponseEntity<byte[]> download(@RequestParam("filename") String filename) {
         return downloadFile(filename);
-    }
-
-    /**
-     * 作业删除
-     * <p>传入参数</p>
-     *
-     * <pre>
-     *     filename : attachment/file/taskInfo1/201106214_tREb2q.exe
-     * </pre>
-     *
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "deleteTaskFile")
-    public @ResponseBody Output deleteFileUrl(@RequestParam("filename") String filename){
-        Output result = new Output();
-        String path = context.getRealPath("/") + filename;
-        FileUtil.deleteFile(path);
-        result.setStatus(SUCCESS);
-        result.setMsg("文件删除成功！");
-        return result;
     }
 
     /**

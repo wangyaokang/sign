@@ -91,6 +91,10 @@
             <if test="selectDate != null">
                 and DATEDIFF(s.start_date, #{selectDate}) = 0
             </if>
+            <if test="termStartDate != null and termStopDate != null">
+                and (DATE_FORM(s.startDate, '%Y-%m-%d')
+                between DATE_FORM(#{termStartDate}, '%Y-%m-%d') and DATE_FORM(#{termStopDate}, '%Y-%m-%d'))
+            </if>
         </where>
         order by start_date desc
     </select>

@@ -13,10 +13,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wyk.framework.utils.DateUtil;
+import com.wyk.framework.utils.FileUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
-import com.wyk.sign.model.SignInfo;
 import com.wyk.sign.service.AdministratorService;
 import com.wyk.sign.util.Constants;
 import org.apache.commons.io.FileUtils;
@@ -31,6 +30,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +39,6 @@ import com.wyk.sign.model.User;
 import com.wyk.sign.service.StudentService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
-import com.wyk.framework.utils.RandomUtil;
 import com.wyk.framework.web.WebxController;
 import com.alibaba.fastjson.JSONObject;
 
@@ -214,7 +213,7 @@ public abstract class AbstractController implements WebxController {
                     return null;
                 }
                 String suffix = uploadFileName.substring(uploadFileName.lastIndexOf('.'));
-                String fileName = fileId + suffix;
+                String fileName = FileUtil.createOrRenameFile(savePath, fileId, suffix);
                 FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
                 return (uploadPath + fileName);
             } catch (IOException ex) {
@@ -225,29 +224,26 @@ public abstract class AbstractController implements WebxController {
     }
 
     /**
-     * 上传文件
+     * 作业删除
+     * <p>传入参数</p>
      *
-     * @param file   文件
+     * <pre>
+     *     filename : attachment/file/taskInfo1/201106214_tREb2q.exe
+     * </pre>
+     *
      * @return
+     * @throws Exception
      */
-    @RequestMapping(value = "file", method = RequestMethod.POST)
-    protected String uploadFile(MultipartFile file) {
-        String savePath = context.getRealPath("/") + "/" + uploadPath;
-        if (file != null && StringUtils.isNotEmpty(file.getOriginalFilename())) {
-            try {
-                String uploadFileName = file.getOriginalFilename();
-                if (uploadFileName.lastIndexOf('.') < 0) {
-                    return null;
-                }
-                String fileName = uploadFileName;
-                FileUtils.writeByteArrayToFile(new File(savePath + fileName), file.getBytes());
-                return (uploadPath + fileName);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return null;
+    @RequestMapping(value = "deleteUploadFile")
+    public @ResponseBody Output deleteFileUrl(@RequestParam("filename") String filename){
+        Output result = new Output();
+        String path = context.getRealPath("/") + filename;
+        FileUtil.deleteFile(path);
+        result.setStatus(SUCCESS);
+        result.setMsg("文件删除成功！");
+        return result;
     }
+
 
     /**
      * 文件下载

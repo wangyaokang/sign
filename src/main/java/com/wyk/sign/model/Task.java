@@ -29,7 +29,7 @@ public class Task extends BaseModel{
     private String desc;
 
     /** 评分 */
-    private Integer score;
+    private Double score;
 
     public TaskInfo getInfo() {
         return info;
@@ -63,11 +63,11 @@ public class Task extends BaseModel{
         this.desc = desc;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 }

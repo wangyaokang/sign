@@ -29,7 +29,7 @@ import com.wyk.framework.page.Paginator;
  * 基于NamedParameter的Dao基类。
  * 可以和Entity很好的结合，推荐使用
  * 
- * @author bocar
+ * @author wyk
  *
  */
 public abstract class NamedParameterBaseDao<T> {

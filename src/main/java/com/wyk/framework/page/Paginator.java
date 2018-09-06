@@ -18,8 +18,8 @@ public class Paginator implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8585754871607331224L;
-	
+	private static final long serialVersionUID = -226986643568448350L;
+
 	//-- 公共变量 --//
 	public static final String ASC = "asc";
 	public static final String DESC = "desc";

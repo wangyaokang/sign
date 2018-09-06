@@ -11,7 +11,6 @@ import com.wyk.sign.service.CourseService;
 import com.wyk.sign.service.ElectiveService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,12 +94,12 @@ public class ElectiveController extends AbstractController {
     }
 
     /**
-     * 修改授课信息
+     * 修改授课信息评分方式
      * <p>传入参数：</p>
      * <pre>
-     *      method:modify
-     *      token: wxopenid, 微信wxid
-     *      params: {teacherId: "1", classId："2"，courseId:"2"}
+     *      method: modify
+     *      token: 微信wxid
+     *      params: {id: 1, courseScore: "50", testScore："50"}
      * </pre>
      *
      * @param input
@@ -110,29 +109,16 @@ public class ElectiveController extends AbstractController {
     public Output modify(Input input) {
         Output result = new Output();
         Elective elective = electiveService.get(input.getLong("id"));
-        if (StringUtils.isNotEmpty(input.getString("classId"))) {
-            Classes classes = classesService.get(input.getLong("classId"));
-            elective.setClasses(classes);
-        } else {
-            return new Output(ERROR_NO_RECORD, "没有对应的班级！");
+        Integer courseScoreRatio = input.getInteger("courseScoreRatio");
+        Integer testScoreRatio = input.getInteger("testScoreRatio");
+        if (courseScoreRatio + testScoreRatio != 100) {
+            return new Output(ERROR_UNKNOWN, "平时分占比+考试分占比不等于100！");
         }
-
-        if (StringUtils.isNotEmpty(input.getString("courseId"))) {
-            Course course = courseService.get(input.getLong("courseId"));
-            elective.setCourse(course);
-        } else {
-            return new Output(ERROR_NO_RECORD, "没有对应的课程！");
-        }
-
-        if (StringUtils.isNotEmpty(input.getString("adminId"))) {
-            Administrator teacher = administratorService.get(input.getLong("adminId"));
-            elective.setAdmin(teacher);
-        } else {
-            return new Output(ERROR_NO_RECORD, "没有对应的教师！");
-        }
+        elective.setCourseScoreRatio(courseScoreRatio);
+        elective.setTestScoreRatio(testScoreRatio);
         electiveService.update(elective);
         result.setStatus(SUCCESS);
-        result.setMsg("修改授课信息成功！");
+        result.setMsg("设置评分方式成功！");
         result.setData(elective);
         return result;
     }
@@ -170,11 +156,12 @@ public class ElectiveController extends AbstractController {
      *     token: wxId,
      *     method: getElectivesByAdmin
      * </pre>
+     *
      * @param input
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output getElectivesByWxId(Input input){
+    public Output getElectivesByWxId(Input input) {
         Output result = new Output();
         String token = input.getToken();
         Map<String, Object> map = new HashMap<String, Object>();
@@ -188,7 +175,6 @@ public class ElectiveController extends AbstractController {
         result.setMsg("获取授课信息成功！");
         return result;
     }
-
 
 
 }

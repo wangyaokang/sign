@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public interface WebxController {
 
-	public static ObjectMapper objectMapper = new ObjectMapper();
+	ObjectMapper objectMapper = new ObjectMapper();
 	
 	/**
 	 * JSON返回参数
@@ -20,32 +20,32 @@ public interface WebxController {
 	 * <li>非0: 表示出错信息
 	 * </ul>
 	 */
-	public static final String RETURN_CODE = "returnCode";
+	String RETURN_CODE = "returnCode";
 	
 	/** JSON返回信息 */
-	public static final String MSG = "msg";
+	String MSG = "msg";
 	
 	/** JSON数据的Key - data */
-	public static final String DATA = "data";
+	String DATA = "data";
 	
 	/** JSON数据的Key - list */
-	public static final String LIST = "list";
+	String LIST = "list";
 	
 	/** JSON数据的Key - page */
-	public static final String PAGE = "page";
+	String PAGE = "page";
 	
 	/** JSON数据的Key - rows */
-	public static final String ROWS = "rows";
+	String ROWS = "rows";
 	
 	/** JSON数据的Key - total */
-	public static final String TOTAL = "total";
+	String TOTAL = "total";
 	
 	/** 正确返回 */
-	public static final String SUCCESS = "200";
+	String SUCCESS = "200";
 	
 	/** 错误返回: 没有指定数据 */
-	public static final String ERROR_NO_RECORD = "400";
+	String ERROR_NO_RECORD = "400";
 	
 	/** 未知错误 */
-	public static final String ERROR_UNKNOWN = "500";
+	String ERROR_UNKNOWN = "500";
 }

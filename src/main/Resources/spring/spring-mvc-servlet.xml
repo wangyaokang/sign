@@ -19,6 +19,7 @@
     <mvc:resources mapping="/fonts/**" location="/WEB-INF/resource/fonts/"/>
     <mvc:resources mapping="/js/**" location="/WEB-INF/resource/js/"/>
     <mvc:resources mapping="/css/**" location="/WEB-INF/resource/css/"/>
+    <mvc:resources mapping="/img/**" location="/WEB-INF/resource/img/"/>
 
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="exception"/>

@@ -46,7 +46,6 @@ public class IPUtil {
 				return ipAddress;
 			}
 		}
-
 		ipAddress = request.getHeader("HTTP_X_FORWARDED_FOR");
 
 		if (ipAddress != null) {

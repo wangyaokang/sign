@@ -84,6 +84,10 @@
 			<if test="status != null">
 				and s.status = #{status}
 			</if>
+			<if test="termStartDate != null and termStopDate != null">
+				and (DATE_FORM(s.signDate, '%Y-%m-%d')
+				between DATE_FORM(#{termStartDate}, '%Y-%m-%d') and DATE_FORM(#{termStopDate}, '%Y-%m-%d'))
+			</if>
 		</where>
 	</select>
 

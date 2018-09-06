@@ -12,14 +12,11 @@ import java.util.List;
 
 public class FileUtil {
 
-    /** 文件大小单位：MB */
-    private static final long FILE_SIZE_MB = 1024 * 1024;
-
-    /** 文件大小单位：KB */
     private static final long FILE_SIZE_KB = 1024;
 
-    private FileUtil() {
+    private static final long FILE_SIZE_MB = 1024 * 1024;
 
+    private FileUtil() {
     }
 
     /**
@@ -103,6 +100,7 @@ public class FileUtil {
         }
     }
 
+
     /**
      * 获取文件名（重名时，+1 处理）
      * @param baseFilePath
@@ -135,14 +133,15 @@ public class FileUtil {
     public static String getFileSize(MultipartFile file){
         String fileSize = "";
         long size = file.getSize();
-        if(size >= FILE_SIZE_MB){
-            fileSize = size / FILE_SIZE_MB + "M";
-        }else if(size >= FILE_SIZE_KB && size < FILE_SIZE_MB){
-            fileSize = size / FILE_SIZE_KB + "K";
+        if(size > FILE_SIZE_MB){
+            fileSize = (size / FILE_SIZE_MB) + "M";
+        }else if(size > FILE_SIZE_KB && size < FILE_SIZE_MB){
+            fileSize = (size / FILE_SIZE_KB) + "K";
         }else{
             fileSize = size + "B";
         }
         return fileSize;
     }
+
 }
 

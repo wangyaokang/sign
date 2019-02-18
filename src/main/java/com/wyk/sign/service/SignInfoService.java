@@ -4,9 +4,8 @@
 package com.wyk.sign.service;
 
 import com.wyk.framework.service.BaseService;
-import com.wyk.sign.model.SignInfo;
+import com.wyk.sign.model.TbSignInfo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,7 @@ import java.util.Map;
  * @author wyk
  *
  */
-public interface SignInfoService extends BaseService<SignInfo> {
+public interface SignInfoService extends BaseService<TbSignInfo> {
 
     /**
      * 获取当前月份的签到日期
@@ -23,4 +22,10 @@ public interface SignInfoService extends BaseService<SignInfo> {
      * @return
      */
     List<String> getSignDatesByCurMonth(Map<String, Object> map);
+
+    /**
+     * 批量插入
+     * @param tbSignInfoList
+     */
+    void batchSave(List<TbSignInfo> tbSignInfoList);
 }

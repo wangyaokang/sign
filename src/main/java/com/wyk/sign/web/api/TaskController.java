@@ -10,23 +10,20 @@ import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
 import com.wyk.sign.service.TaskInfoService;
 import com.wyk.sign.service.TaskService;
+import com.wyk.sign.util.Constants;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 作业相关接口
@@ -46,40 +43,12 @@ public class TaskController extends AbstractController {
     TaskService taskService;
 
     /**
-     * 创建任务
-     * <p>
-     * 传入参数
-     * </p>
+     * 创建作业（上交作业）
+     * <p>传入参数</p>
      * <pre>
-     * token : wxid
-     * params : {"id" : "2018-06-09 10:30"}
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.STU)
-    public Output info(Input input) {
-        Output result = new Output();
-        Task task = taskService.get(input.getLong("id"));
-        if (null == task) {
-            return new Output(ERROR_NO_RECORD, "未能获取作业信息！");
-        }
-        result.setData(task);
-        result.setMsg("获取作业成功！");
-        result.setStatus(SUCCESS);
-        return result;
-    }
-
-    /**
-     * 创建作业
-     * <p>
-     * 传入参数
-     * </p>
-     * <pre>
-     * token : wxid
+     * token : openid
      * method : insert
-     * params : {"infoId" : "2", "upFileUrl" : "/attachment/task_info1/201106259_109933.doc", "desc" : "英语2班王小二"}
+     * params : {"infoId" : "2", upFileUrl"[{no: 1, name: '', url: '', fileUrlPath: ''}]", "desc" : "英语2班王小二"}
      * </pre>
      *
      * @param input
@@ -88,24 +57,37 @@ public class TaskController extends AbstractController {
     @Checked(Item.STU)
     public Output insert(Input input) {
         Output result = new Output();
-        TaskInfo taskInfo = taskInfoService.get(input.getLong("infoId"));
-        if (null == taskInfo) {
-            return new Output(ERROR_NO_RECORD, "没有对应作业信息！");
+        try{
+            TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("infoId"));
+            if (null == tbTaskInfo) {
+                return new Output(ERROR_NO_RECORD, "没有对应作业信息！");
+            }
+            TbStudent tbStudent = (TbStudent) input.getCurrentTbUser();
+            Map<String, Object> param = new HashMap<>();
+            param.put("infoId", tbTaskInfo.getId());
+            param.put("stuId", tbStudent.getId());
+            TbTask tbTask = taskService.get(param);
+            if (null == tbTask) {
+                tbTask = new TbTask();
+            }
+            tbTask.setTbStudent(tbStudent);
+            tbTask.setInfo(tbTaskInfo);
+
+            if (DateUtil.parse(DateUtil.format(new Date())).after(tbTaskInfo.getDeadlineTime())) {
+                return new Output(ERROR_NO_RECORD, "超过截止日期！");
+            }
+            String upFileUrl = input.getString("upFileUrl");
+            logger.info("upFileUrl为：", upFileUrl);
+            tbTask.setUpFileUrl(input.getString("upFileUrl"));
+            tbTask.setDesc(input.getString("desc"));
+            tbTask.setStatus(Constants.Task.UPLOAD_STATUS_YJ);
+            tbTask.setScore(Constants.Task.DEFAULT_SCORE);
+            taskService.save(tbTask);
+            result.setMsg("作业上交成功！");
+            result.setStatus(SUCCESS);
+        }catch (Exception e){
+            logger.error(e, e);
         }
-        Task task = new Task();
-        task.setInfo(taskInfo);
-        Student student = (Student) input.getCurrentUser();
-        task.setStudent(student);
-        if (new Date().after(taskInfo.getDeadlineTime())) {
-            return new Output(ERROR_NO_RECORD, "已超过上交截止日期！");
-        }
-        String upFileUrl = input.getString("upFileUrl");
-        logger.info("upFileUrl为：", upFileUrl);
-        task.setUpFileUrl(input.getString("upFileUrl"));
-        task.setDesc(input.getString("desc"));
-        taskService.insert(task);
-        result.setMsg("作业上交成功！");
-        result.setStatus(SUCCESS);
         return result;
     }
 
@@ -116,8 +98,8 @@ public class TaskController extends AbstractController {
      * </p>
      * <pre>
      *     method : modify
-     *     token : wxId
-     *     params : 全部信息 {"id": "1", "upFileUrl" : "/api/1099_张三.doc", "desc" : "英语2班王小二"}
+     *     token : openid
+     *     params : {id: 1, 需要修改的信息}
      * </pre>
      *
      * @param input
@@ -126,37 +108,45 @@ public class TaskController extends AbstractController {
     @Checked(Item.STU)
     public Output modify(Input input) {
         Output result = new Output();
-        Task task = taskService.get(input.getLong("id"));
-        task.setUpFileUrl(input.getString("upFileUrl"));
-        task.setDesc(input.getString("desc"));
-        taskService.update(task);
-        result.setMsg("修改作业内容成功！");
+        TbTask tbTask = taskService.get(input.getLong("id"));
+        if (tbTask == null) {
+            return new Output(ERROR_NO_RECORD, "没有上交作业！");
+        }
+        if (StringUtils.isNotEmpty(input.getString("upFileUrl"))) {
+            tbTask.setUpFileUrl(input.getString("upFileUrl"));
+        }
+        if (StringUtils.isNotEmpty(input.getString("desc"))) {
+            tbTask.setDesc(input.getString("desc"));
+        }
+        tbTask.setCreateTime(new Date());
+        taskService.update(tbTask);
+        result.setMsg("修改作业成功！");
         result.setStatus(SUCCESS);
         return result;
     }
 
     /**
-     * 作业内容修改
+     * 删除作业
      * <p>
      * 传入参数
      * </p>
      * <pre>
      *     method : delete
-     *     token : wxId
+     *     token : openid
      *     params : 全部信息 {"id": "1"}
      * </pre>
      *
      * @param input
      * @return
      */
-    @Checked(Item.STU)
+    @Checked(Item.TYPE)
     public Output delete(Input input) {
         Output result = new Output();
-        Task task = taskService.get(input.getLong("id"));
-        if (null == task) {
+        TbTask tbTask = taskService.get(input.getLong("id"));
+        if (null == tbTask) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业！");
         }
-        taskService.delete(task);
+        taskService.delete(tbTask);
         result.setMsg("删除作业成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -167,7 +157,7 @@ public class TaskController extends AbstractController {
      * <p>传入参数</p>
      * <pre>
      *     method : score
-     *     token : wxId
+     *     token : openid
      *     params : {id : 1, score ；90}
      * </pre>
      *
@@ -177,12 +167,12 @@ public class TaskController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output score(Input input) {
         Output result = new Output();
-        Task task = taskService.get(input.getLong("id"));
-        if (null == task) {
+        TbTask tbTask = taskService.get(input.getLong("id"));
+        if (null == tbTask) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业！");
         }
-        task.setScore(input.getDouble("score"));
-        taskService.update(task);
+        tbTask.setScore(input.getInteger("score"));
+        taskService.update(tbTask);
         result.setMsg("评分成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -201,18 +191,19 @@ public class TaskController extends AbstractController {
      * @return
      */
     @RequestMapping(value = "uploadTaskFile", method = RequestMethod.POST)
-    public @ResponseBody Output uploadTaskFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
+    public @ResponseBody
+    Output uploadTaskFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         Output result = new Output();
-        String fileno = request.getParameter("fileno");
-        String infoId = request.getParameter("infoId");
-        String token = request.getParameter("token");
+        String fileno = request.getParameter("fileno");// 文件编号
+        String infoId = request.getParameter("infoId");// 作业编号
+        String token = request.getParameter("token"); //
         String filename = request.getParameter("filename");
         String fileId = "";
-        if(StringUtils.isNotEmpty(filename)){
-            fileId = String.format("taskInfo%s/%s", infoId, filename);
-        }else{
-            Student student = (Student) getCurrentUserByToken(token);
-            fileId = String.format("taskInfo%s/%s", infoId, student.getSno());
+        if (StringUtils.isNotEmpty(filename)) {
+            fileId = String.format("tbTaskInfo%s/%s", infoId, filename);
+        } else {
+            TbStudent tbStudent = (TbStudent) getCurrentUserByToken(token);
+            fileId = String.format("tbTaskInfo%s/%s", infoId, tbStudent.getSno());
         }
         try {
             String uploadUrl = uploadFile(file, fileId);
@@ -221,6 +212,7 @@ public class TaskController extends AbstractController {
             data.put("no", fileno);
             data.put("name", uploadUrl.substring(uploadUrl.lastIndexOf("/") + 1));
             data.put("url", uploadUrl);
+            data.put("fileUrlPath", getFileUrlPath(uploadUrl));
             result.setMsg("文件上传成功！");
             result.setData(data);
             result.setStatus(SUCCESS);
@@ -231,46 +223,41 @@ public class TaskController extends AbstractController {
     }
 
     /**
-     * 作业下载
-     * <p>传入参数</p>
-     *
-     * <pre>
-     *     filename : attachment/file/taskInfo1/201106214_tREb2q.exe
-     * </pre>
-     * @param filename
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "downloadTaskFile")
-    public ResponseEntity<byte[]> download(@RequestParam("filename") String filename) {
-        return downloadFile(filename);
-    }
-
-    /**
-     * 查看作业情况
+     * 查看作业情况（排序）
      * <p>传入参数</p>
      *
      * <pre>
      *     token : wxId,
      *     method : queryTaskListByInfoId
-     *     params : {"infoId" : "2"}
+     *     params : {"infoId" : "2", "orderBy": "asc"}
      * </pre>
      *
      * @param input
      * @return
      */
-    @Checked(Item.ADMIN)
+    @Checked(Item.TYPE)
     public Output getTaskListByInfoId(Input input) {
         Output result = new Output();
-        TaskInfo taskInfo = taskInfoService.get(input.getLong("infoId"));
-        if (null == taskInfo) {
+        TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("infoId"));
+        if (null == tbTaskInfo) {
             return new Output(ERROR_UNKNOWN, "没有对应的作业信息，请重试！");
         }
 
         Map<String, Object> param = new HashMap<>();
-        param.put("infoId", taskInfo.getId());
-        List<Task> taskList = taskService.query(param);
-        result.setData(toArray(taskList));
+        param.put("classId", tbTaskInfo.getTbClass().getId());
+        List<TbStudent> tbStudentList = studentService.query(param);
+        List<Map<String, Object>> taskList = new ArrayList<>();
+        for (TbStudent tbStudent : tbStudentList) {
+            taskList.add(toMap(tbStudent, tbTaskInfo));
+        }
+        if (StringUtils.isNotEmpty(input.getString("orderBy"))) {
+            if (Constants.ASC.equalsIgnoreCase(input.getString("orderBy"))) {
+                scoreAsc(taskList);
+            } else {
+                scoreDesc(taskList);
+            }
+        }
+        result.setData(taskList);
         result.setMsg("获取作业情况成功！");
         return result;
     }
@@ -278,36 +265,88 @@ public class TaskController extends AbstractController {
     /**
      * 用于展示任务
      *
-     * @param task
+     * @param tbStudent
+     * @param tbTaskInfo
      * @return
      */
-    public Map<String, Object> toMap(Task task) {
+    public Map<String, Object> toMap(TbStudent tbStudent, TbTaskInfo tbTaskInfo) {
         Map<String, Object> result = new HashMap<String, Object>();
+        // 作业信息
         Map<String, Object> info = new HashMap<String, Object>();
-        TaskInfo taskInfo = task.getInfo();
-        info.put("id", taskInfo.getId());
-        info.put("course", taskInfo.getCourse());
-        info.put("classes", taskInfo.getClasses());
-        info.put("deadlineTime", DateUtil.format(taskInfo.getDeadlineTime(), DateUtil.DATE_FORMAT));
-        info.put("content", taskInfo.getContent());
-        info.put("title", taskInfo.getTitle());
+        info.put("id", tbTaskInfo.getId());
+        info.put("course", tbTaskInfo.getTbCourse());
+        info.put("classes", tbTaskInfo.getTbClass());
+        info.put("deadlineTime", DateUtil.format(tbTaskInfo.getDeadlineTime(), DateUtil.DATE_FORMAT));
+        info.put("content", tbTaskInfo.getContent());
+        info.put("title", tbTaskInfo.getTitle());
         result.put("info", info);
-        result.put("upDate", DateUtil.showDateMDHM(task.getCreateTime()));
-        result.put("student", task.getStudent());
 
-        if(StringUtils.isNotEmpty(task.getUpFileUrl())){
-            try {
-                List<Map<String, String>> fileUrlList = objectMapper.readValue(task.getUpFileUrl(), List.class);
-                result.put("upFileUrl", fileUrlList);
-            } catch (IOException e) {
-                logger.error("获取文件url失败！{}", e.getMessage());
-            }
-        }else{
-            result.put("upFileUrl", task.getUpFileUrl());
+        // 作业
+        Map<String, Object> param = new HashMap<>();
+        param.put("infoId", tbTaskInfo.getId());
+        param.put("stuId", tbStudent.getId());
+        TbTask tbTask = taskService.get(param);
+        if (tbTask == null) {
+            result.put("upFileUrl", null);
+            result.put("desc", null);
+            result.put("score", Constants.Task.DEFAULT_MIN_SCORE);
+            result.put("createTime", null);
+            result.put("status", Constants.Task.UPLOAD_STATUS_WJ);
+        } else {
+            result.put("id", tbTask.getId());
+            result.put("upFileUrl", tbTask.getUpFileUrl());
+            result.put("desc", tbTask.getDesc());
+            result.put("score", tbTask.getScore());
+            result.put("upTime", DateUtil.showDateMD(tbTask.getCreateTime()));
+            result.put("createTime", tbTask.getCreateTime());
+            result.put("status", Constants.Task.UPLOAD_STATUS_YJ);
         }
-        result.put("upFileUrl", task.getUpFileUrl());
-        result.put("desc", task.getDesc());
-        result.put("score", task.getScore());
+        result.put("student", tbStudent);
         return result;
+    }
+
+    /**
+     * 倒序（按创建时间）
+     *
+     * @param list
+     */
+    public void scoreDesc(List<Map<String, Object>> list) {
+        this.scoreAsc(list);
+        Collections.reverse(list);
+    }
+
+    /**
+     * 正序（按创建时间）
+     *
+     * @param list
+     */
+    public void scoreAsc(List<Map<String, Object>> list) {
+        Collections.sort(list, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                Integer in1 = (Integer) o1.get("score");
+                Integer in2 = (Integer) o2.get("score");
+                if (in1 != null && in1 != null) {
+                    if (in1 > in2) {
+                        return 1;
+                    } else if (in1 < in2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+
+                if (in1 == null && in2 == null) {
+                    return 0;
+                }
+                if (in1 == null) {
+                    return -1;
+                }
+                if (in2 == null) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
     }
 }

@@ -4,11 +4,11 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Classes;
-import com.wyk.sign.model.Course;
-import com.wyk.sign.model.Elective;
-import com.wyk.sign.persistence.ElectiveMapper;
+import com.wyk.sign.model.TbAdmin;
+import com.wyk.sign.model.TbClass;
+import com.wyk.sign.model.TbCourse;
+import com.wyk.sign.model.TbElective;
+import com.wyk.sign.mapper.TbElectiveMapper;
 import com.wyk.sign.service.ElectiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,49 +21,50 @@ import java.util.Map;
  * @author wyk
  */
 @Service
-public class ElectiveServiceImpl extends BaseServiceImpl<Elective> implements ElectiveService {
+public class ElectiveServiceImpl extends BaseServiceImpl<TbElective> implements ElectiveService {
 
     @Autowired
-    ElectiveMapper mapper;
+    TbElectiveMapper mapper;
 
     @Override
-    public List<Course> getCourseList(Map<String, Object> param) {
-        List<Course> courseList = new ArrayList<>();
-        List<Elective> electiveList = query(param);
+    public List<TbCourse> getCourseList(Map<String, Object> param) {
+        List<TbCourse> tbCourseList = new ArrayList<>();
+        List<TbElective> tbElectiveList = query(param);
 
-        if(electiveList.size() != 0){
-            for(Elective elective : electiveList){
-                Course course = elective.getCourse();
-                courseList.add(course);
+        if(tbElectiveList.size() != 0){
+            for(TbElective tbElective : tbElectiveList){
+                TbCourse tbCourse = tbElective.getTbCourse();
+                tbCourseList.add(tbCourse);
             }
         }
 
-        return courseList;
+        return tbCourseList;
     }
 
     @Override
-    public List<Classes> getClassesList(Map<String, Object> param) {
-        List<Classes> classesList = new ArrayList<>();
-        List<Elective> electiveList = query(param);
+    public List<TbClass> getClassesList(Map<String, Object> param) {
+        List<TbClass> TbClassList = new ArrayList<>();
+        List<TbElective> tbElectiveList = query(param);
 
-        if(electiveList.size() != 0){
-            for(Elective elective : electiveList){
-                Classes classes = elective.getClasses();
-                classesList.add(classes);
+        if(tbElectiveList.size() != 0){
+            for(TbElective tbElective : tbElectiveList){
+                // 查询的信息不全，重新获取
+                TbClass TbClass = tbElective.getTbClass();
+                TbClassList.add(TbClass);
             }
         }
 
-        return classesList;
+        return TbClassList;
     }
 
     @Override
-    public List<Administrator> getTeacherList(Map<String, Object> param) {
-        List<Administrator> teacherList = new ArrayList<>();
-        List<Elective> electiveList = query(param);
+    public List<TbAdmin> getTeacherList(Map<String, Object> param) {
+        List<TbAdmin> teacherList = new ArrayList<>();
+        List<TbElective> tbElectiveList = query(param);
 
-        if(electiveList.size() != 0){
-            for(Elective elective : electiveList){
-                Administrator teacher = elective.getAdmin();
+        if(tbElectiveList.size() != 0){
+            for(TbElective tbElective : tbElectiveList){
+                TbAdmin teacher = tbElective.getAdmin();
                 teacherList.add(teacher);
             }
         }

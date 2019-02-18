@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.tbSign.mapper.GradeMapper">
+
+    <resultMap type="com.wyk.tbSign.model.TbGrade" id="gradeMap">
+        <id property="id" column="id" javaType="long"/>
+        <id property="courseScore" column="course_score"/>
+        <id property="testScore" column="test_score"/>
+        <association property="tbStudent" javaType="com.wyk.tbSign.model.TbStudent">
+            <result property="wxId" column="stu_wx_id"/>
+            <result property="wxName" column="stu_wx_name"/>
+            <result property="wxAvatarUrl" column="stu_wx_avatar_url"/>
+            <result property="realName" column="stu_real_name"/>
+            <result property="userType" column="stu_user_type"/>
+            <result property="sno" column="stu_sno"/>
+        </association>
+        <association property="tbElective" javaType="com.wyk.tbSign.model.Elective">
+            <id property="id" column="elective_id"/>
+            <id property="courseScoreRatio" column="course_score_ratio"/>
+            <id property="testScoreRatio" column="test_score_ratio"/>
+            <association property="admin" javaType="com.wyk.tbSign.model.TbAdmin">
+                <id property="id" column="admin_id"/>
+                <result property="wxId" column="admin_wx_id"/>
+                <result property="wxName" column="admin_wx_name"/>
+                <result property="wxAvatarUrl" column="admin_wx_avatar_url"/>
+                <result property="realName" column="admin_real_name"/>
+                <result property="userType" column="admin_user_type"/>
+            </association>
+            <association property="TbClass" javaType="com.wyk.tbSign.model.TbClass">
+                <id property="id" column="class_id"/>
+                <result property="name" column="class_name"/>
+                <result property="status" column="class_status"/>
+            </association>
+            <association property="tbCourse" javaType="com.wyk.tbSign.model.TbCourse">
+                <id property="id" column="course_id"/>
+                <result property="name" column="course_name"/>
+                <result property="status" column="course_status"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <sql id="selectSQL">
+		select tbGrade.id,
+		      tbGrade.test_score,
+		      tbGrade.course_score,
+		      stu.wx_id as stu_wx_id,
+		      stu.wx_name as stu_wx_name,
+		      stu.wx_avatar_url as stu_wx_avatar_url,
+		      stu.real_name as stu_real_name,
+		      stu.user_type as stu_user_type,
+		      stu.sno as stu_sno,
+		      ele.id as ele_id,
+		      ele.course_score_ratio as ele_course_score_ratio,
+		      ele.test_score_ratio as ele_test_score_ratio,
+		      ele.term_start_date as term_start_date,
+		      ele.term_stop_date as term_stop_date,
+		      ad.id as ad_id,
+		      ad.wx_name as ad_wx_name,
+		      ad.wx_avatar_url as ad_wx_avatar_url,
+		      ad.real_name as ad_real_name,
+		      ad.user_type as ad_user_type,
+		      cl.id as cl_id,
+		      cl.name as cl_name,
+		      cl.status as cl_status,
+		      co.id as co_id,
+		      co.name as co_name,
+		      co.status as co_status
+		  from tb_grade tbGrade
+		        inner join tb_student stu on tbGrade.stu_id = stu.id
+		        inner join tb_classes_course_admin ele on tbGrade.elective_id = ele.id
+		        inner join tb_admin ad on ele.admin_id = ad.id
+		        inner join tb_classes cl on ele.class_id = cl.id
+		        inner join tb_course co on ele.course_id = co.id
+	</sql>
+
+    <!-- Base Mapper -->
+    <select id="get" parameterType="hashmap" resultMap="gradeMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="id != null">
+                tbGrade.id = #{id}
+            </if>
+            <if test="electiveId != null and stuId != null">
+                and ele.id = #{electiveId} and stu.id = #{stuId}
+            </if>
+        </where>
+        limit 0,1
+    </select>
+
+    <select id="query" resultMap="gradeMap">
+        <include refid="selectSQL"/>
+    </select>
+
+    <select id="queryByMap" parameterType="hashmap" resultMap="gradeMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="wxId != null">
+                stu.wx_id = #{wxId}
+            </if>
+            <if test="wxName != null">
+                and stu.wxName = #{wxName}
+            </if>
+            <if test="realName != null">
+                and stu.real_name = #{realName}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.wyk.tbSign.model.TbGrade"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into tb_grade (
+		elective_id,
+		stu_id,
+		course_score,
+		test_score)
+		values
+		(#{tbElective.id},
+		#{tbStudent.id},
+		#{courseScore},
+		#{testScore})
+	</insert>
+
+    <update id="update" parameterType="com.wyk.tbSign.model.TbGrade">
+		update tb_grade set
+		elective_id=#{tbElective.id},
+		stu_id=#{tbStudent.id},
+		course_score=#{courseScore},
+		test_score=#{testScore}
+		where id = #{id}
+	</update>
+
+    <update id="updateBatch" parameterType="List">
+        <foreach collection="list" separator=";" item="admin">
+            update tb_grade set
+            elective_id=#{tbElective.id},
+            stu_id=#{tbStudent.id},
+            course_score=#{courseScore},
+            test_score=#{testScore}
+            where id = #{id}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="com.wyk.tbSign.model.TbGrade">
+        delete from tb_grade
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteByMap" parameterType="hashmap">
+        delete from tb_grade
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
+
+</mapper>

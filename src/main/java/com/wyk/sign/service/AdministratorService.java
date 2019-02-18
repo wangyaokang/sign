@@ -4,28 +4,21 @@
 package com.wyk.sign.service;
 
 import com.wyk.framework.service.BaseService;
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.User;
+import com.wyk.sign.model.TbAdmin;
 
 /**
  * @author wyk
  *
  */
-public interface AdministratorService extends BaseService<Administrator> {
+public interface AdministratorService extends BaseService<TbAdmin> {
 
-    /**
-     * 匿名登录
-     *
-     * @return
-     */
-    User getAnonymous();
 
     /**
      * 根据token获取admin对象
      * @param token
      * @return
      */
-    Administrator getUserByToken(String token);
+    TbAdmin getUserByToken(String token);
 
     /**
      * 判断缓存中是否存在Administrator对象
@@ -34,4 +27,9 @@ public interface AdministratorService extends BaseService<Administrator> {
      * @return
      */
     boolean hasCacheAdministrator(String token);
+
+    /**
+     * 刷新缓存
+     */
+    void flushCache();
 }

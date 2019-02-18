@@ -10,6 +10,7 @@ import com.wyk.sign.service.ClassesService;
 import com.wyk.sign.service.CourseService;
 import com.wyk.sign.service.ElectiveService;
 import com.wyk.sign.util.Constants;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +56,7 @@ public class UserController extends AbstractController {
         Output result = new Output();
         result.setStatus(SUCCESS);
         result.setMsg("获得个人信息成功！");
-        result.setData(input.getCurrentUser());
+        result.setData(input.getCurrentTbUser());
         return result;
     }
 
@@ -64,8 +65,8 @@ public class UserController extends AbstractController {
      * <p>传入参数：</p>
      * <pre>
      * method:modify
-     * token:当前TOKEN信息
-     * params:{当前所有信息JSON格式}
+     * token:openid
+     * params: {需要修改的参数}
      * </pre>
      *
      * @param input
@@ -74,15 +75,28 @@ public class UserController extends AbstractController {
     @Checked(Item.TYPE)
     public Output modify(Input input) {
         Output result = new Output();
-        String userType = input.getString("userType");
-        if (userType.equals(Constants.User.STUDENT)) {
-            Student student = (Student) input.getCurrentUser();
-            studentService.save(student);
-            result.setData(student);
-        } else if (userType.equals(Constants.User.TEACHER) || userType.equals(Constants.User.COUNSELLOR)) {
-            Administrator admin = (Administrator) input.getCurrentUser();
+        TbUser tbUser = input.getCurrentTbUser();
+        if (Constants.User.STUDENT.equals(tbUser.getUserType())) {
+            TbStudent tbStudent = (TbStudent) input.getCurrentTbUser();
+            if (StringUtils.isNotEmpty(input.getString("realName"))) {
+                tbStudent.setRealName(input.getString("realName"));
+            }
+            if (StringUtils.isNotEmpty(input.getString("classId"))) {
+                TbClass TbClass = classesService.get(input.getLong("classId"));
+                tbStudent.setTbClass(TbClass);
+            }
+            if (StringUtils.isNotEmpty(input.getString("sno"))) {
+                tbStudent.setSno(input.getString("sno"));
+            }
+            studentService.save(tbStudent);
+            result.setData(LoginController.toMap(tbStudent));
+        } else if (Constants.User.TEACHER.equals(tbUser.getUserType()) || Constants.User.COUNSELLOR.equals(tbUser.getUserType())) {
+            TbAdmin admin = (TbAdmin) input.getCurrentTbUser();
+            if (StringUtils.isNotEmpty(input.getString("realName"))) {
+                admin.setRealName(input.getString("realName"));
+            }
             administratorService.save(admin);
-            result.setData(admin);
+            result.setData(LoginController.toMap(admin));
         }
         result.setStatus(SUCCESS);
         result.setMsg("个人信息修改成功");
@@ -102,16 +116,16 @@ public class UserController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output getMyAdminClasses(Input input) {
         Output result = new Output();
-        User user = input.getCurrentUser();
+        TbUser tbUser = input.getCurrentTbUser();
         Map<String, Object> param = new HashMap<>();
-        param.put("adminId", user.getId());
-        Classes classes = classesService.get(param);
-        if(classes == null){
+        param.put("adminId", tbUser.getId());
+        TbClass TbClass = classesService.get(param);
+        if(TbClass == null){
             return new Output(ERROR_NO_RECORD, "没有对应管理的班级！");
         }
         result.setStatus(SUCCESS);
         result.setMsg("获得班级成功！");
-        result.setData(classes);
+        result.setData(TbClass);
         return result;
     }
 
@@ -128,16 +142,16 @@ public class UserController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output getMyTeachClasses(Input input) {
         Output result = new Output();
-        User user = input.getCurrentUser();
+        TbUser tbUser = input.getCurrentTbUser();
         Map<String, Object> param = new HashMap<>();
-        param.put("adminId", user.getId());
-        List<Classes> classesList = electiveService.getClassesList(param);
-        if(classesList.size() == 0){
+        param.put("adminId", tbUser.getId());
+        List<TbClass> TbClassList = electiveService.getClassesList(param);
+        if(TbClassList.size() == 0){
             return new Output(ERROR_NO_RECORD, "没有对应的授课班级！");
         }
         result.setStatus(SUCCESS);
         result.setMsg("获得授课班级成功！");
-        result.setData(classesList);
+        result.setData(TbClassList);
         return result;
     }
 
@@ -154,13 +168,32 @@ public class UserController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output getAdminList(Input input){
         Output result = new Output();
-        List<Administrator> administratorList = administratorService.query();
-        if(administratorList.size() == 0){
+        List<TbAdmin> TbAdminList = administratorService.query();
+        if(TbAdminList.size() == 0){
             return new Output(ERROR_NO_RECORD, "无对应的管理者");
         }
         result.setStatus(SUCCESS);
-        result.setData(administratorList);
+        result.setData(TbAdminList);
         result.setMsg("获取管理者成功！");
+        return result;
+    }
+
+    /**
+     * 缓存刷新
+     * <p>传入参数</p>
+     * <pre>
+     *     token: openid
+     *     method: flushCache
+     * </pre>
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output flushCache(Input input){
+        Output result = new Output();
+        administratorService.flushCache();
+        result.setStatus(SUCCESS);
+        result.setMsg("缓存刷新成功！");
         return result;
     }
 }

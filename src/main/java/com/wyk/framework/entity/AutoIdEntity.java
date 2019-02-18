@@ -4,7 +4,6 @@
 package com.wyk.framework.entity;
 
 import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 拥有自增长主键的Entity基础类

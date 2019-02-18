@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.tbSign.mapper.ElectiveMapper">
+
+    <resultMap type="com.wyk.tbSign.model.Elective" id="electiveMap">
+        <id property="id" column="id" javaType="long"/>
+        <id property="courseScoreRatio" column="course_score_ratio"/>
+        <id property="testScoreRatio" column="test_score_ratio"/>
+        <id property="termStartDate" column="term_start_date"/>
+        <id property="termStopDate" column="term_stop_date"/>
+        <association property="admin" javaType="com.wyk.tbSign.model.TbAdmin">
+            <id property="id" column="admin_id"/>
+            <result property="wxId" column="admin_wx_id"/>
+            <result property="wxName" column="admin_wx_name"/>
+            <result property="wxAvatarUrl" column="admin_wx_avatar_url"/>
+            <result property="realName" column="admin_real_name"/>
+            <result property="userType" column="admin_user_type"/>
+            <result property="status" column="admin_status"/>
+        </association>
+        <association property="TbClass" javaType="com.wyk.tbSign.model.TbClass">
+            <id property="id" column="class_id"/>
+            <result property="name" column="class_name"/>
+            <result property="status" column="class_status"/>
+        </association>
+        <association property="tbCourse" javaType="com.wyk.tbSign.model.TbCourse">
+            <id property="id" column="course_id"/>
+            <result property="name" column="course_name"/>
+            <result property="status" column="course_status"/>
+        </association>
+    </resultMap>
+
+    <sql id="selectSQL">
+		select e.*,
+			ad.id as admin_id,
+			ad.wx_name as admin_wx_name,
+			ad.wx_avatar_url as admin_wx_avatar_url,
+			ad.real_name as admin_real_name,
+			ad.user_type as admin_user_type,
+			cl.id as class_id,
+			cl.name as class_name,
+			cl.status as class_status,
+			cl.admin_id as class_admin_id,
+			co.id as course_id,
+			co.name as course_name,
+			co.status as course_status
+		 from tb_classes_course_admin e
+		 		inner join tb_classes cl on e.class_id = cl.id
+		 		inner join tb_course co on e.course_id = co.id
+		 		inner join tb_admin ad on e.admin_id = ad.id
+	</sql>
+
+    <!-- Base Mapper -->
+    <select id="get" parameterType="hashmap" resultMap="electiveMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="id != null">
+                e.id = #{id}
+            </if>
+            <if test="classId != null and courseId != null and adminId != null">
+                and cl.id = #{classId} and co.id = #{courseId} and ad.id = #{adminId}
+            </if>
+        </where>
+        limit 0,1
+    </select>
+
+    <select id="query" resultMap="electiveMap">
+        <include refid="selectSQL"/>
+    </select>
+
+    <select id="queryByMap" parameterType="hashmap" resultMap="electiveMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="wxId != null">
+                ad.wx_id = #{wxId}
+            </if>
+            <if test="adminId != null">
+                and ad.id = #{adminId}
+            </if>
+            <if test="classId != null">
+                and cl.id = #{classId}
+            </if>
+            <if test="courseId != null">
+                and co.id = #{courseId}
+            </if>
+            <if test="adminId != null">
+                and ad.id = #{adminId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.wyk.tbSign.model.Elective"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into tb_classes_course_admin (
+		course_score_ratio,
+		test_score_ratio,
+		term_start_date,
+		term_stop_date,
+		admin_id,
+		class_id,
+		course_id)
+		values
+		(#{courseScoreRatio},
+		#{testScoreRatio},
+		#{termStartDate},
+		#{termStopDate},
+		#{admin.id},
+		#{TbClass.id},
+		#{tbCourse.id}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.wyk.tbSign.model.Elective">
+		update tb_classes_course_admin set
+		course_score_ratio=#{courseScoreRatio},
+		test_score_ratio=#{testScoreRatio},
+		term_start_date=#{termStartDate},
+		term_stop_date=#{termStopDate},
+		admin_id=#{admin.id},
+		class_id=#{TbClass.id},
+		course_id=#{tbCourse.id}
+		where id = #{id}
+	</update>
+
+    <update id="updateBatch" parameterType="List">
+        <foreach collection="list" separator=";" item="tbElective">
+            update tb_classes_course_admin set
+            course_score_ratio=#{courseScoreRatio},
+            test_score_ratio=#{testScoreRatio},
+            term_start_date=#{termStartDate},
+            term_stop_date=#{termStopDate},
+            admin_id=#{tbElective.admin.id},
+            class_id=#{tbElective.TbClass.id},
+            course_id=#{tbElective.tbCourse.id}
+            where id = #{tbElective.id}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="com.wyk.tbSign.model.Elective">
+        delete from tb_classes_course_admin
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteByMap" parameterType="hashmap">
+        delete from tb_classes_course_admin
+        <where>
+            <if test="courseId != null">
+                course_id = #{courseId}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
+
+</mapper>

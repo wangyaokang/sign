@@ -16,7 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.wyk.framework.utils.FileUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
+import com.wyk.sign.model.TbUser;
 import com.wyk.sign.service.AdministratorService;
+import com.wyk.sign.service.ClassesService;
+import com.wyk.sign.service.ElectiveService;
 import com.wyk.sign.util.Constants;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -35,7 +38,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wyk.sign.exception.SignException;
-import com.wyk.sign.model.User;
 import com.wyk.sign.service.StudentService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
@@ -51,6 +53,15 @@ public abstract class AbstractController implements WebxController {
 
     protected transient Logger logger = LogManager.getLogger(this.getClass());
 
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    AdministratorService administratorService;
+    @Autowired
+    ClassesService classesService;
+    @Autowired
+    ElectiveService electiveService;
+
     @Value("#{properties['web.upload.path']}")
     protected String uploadPath;
 
@@ -60,11 +71,7 @@ public abstract class AbstractController implements WebxController {
     @Autowired
     protected ServletContext context;
 
-    @Autowired
-    StudentService studentService;
 
-    @Autowired
-    AdministratorService administratorService;
 
     /**
      * Dispatch
@@ -105,39 +112,38 @@ public abstract class AbstractController implements WebxController {
             Annotation annotation = md.getAnnotation(Checked.class);
             if (annotation != null) {
                 Item itemValue = ((Checked) annotation).value();
-                User currentUser = input.getCurrentUser() == null ? getCurrentUserByToken(input.getToken()) : input.getCurrentUser();
+                TbUser currentTbUser = input.getCurrentTbUser() == null ? getCurrentUserByToken(input.getToken()) : input.getCurrentTbUser();
                 if (Item.TYPE.equals(itemValue)) {
-                    if (currentUser == null) {
+                    if (currentTbUser == null) {
                         return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
                     }
                 }
 
                 if (Item.STU.equals(itemValue)) {
-                    if (null == currentUser || null == currentUser.getUserType()) {
+                    if (null == currentTbUser || null == currentTbUser.getUserType()) {
                         return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
                     }
 
-                    if (null == currentUser.getClass()) {
+                    if (null == currentTbUser.getClass()) {
                         return new Output(ERROR_UNKNOWN, "未选择【班级】，请先完善个人信息！");
                     }
 
-                    if (!Constants.User.STUDENT.equals(currentUser.getUserType())) {
+                    if (!Constants.User.STUDENT.equals(currentTbUser.getUserType())) {
                         return new Output(ERROR_UNKNOWN, "用户类型非学生！");
                     }
                 }
 
                 if (Item.ADMIN.equals(itemValue)) {
-                    if (null == currentUser || null == currentUser.getUserType()) {
+                    if (null == currentTbUser || null == currentTbUser.getUserType()) {
                         return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
                     }
 
-                    if (!(Constants.User.TEACHER.equals(currentUser.getUserType()) || Constants.User.COUNSELLOR.equals(currentUser.getUserType()))) {
+                    if (!(Constants.User.TEACHER.equals(currentTbUser.getUserType()) || Constants.User.COUNSELLOR.equals(currentTbUser.getUserType()))) {
                         return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
                     }
                 }
 
-                logger.info("验证的对象userType为：{}", itemValue.toString());
-                input.setCurrentUser(currentUser);
+                input.setCurrentTbUser(currentTbUser);
             }
             return (Output) md.invoke(this, input);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -174,12 +180,12 @@ public abstract class AbstractController implements WebxController {
     }
 
     /**
-     * 获得当前用户信息
+     * 获得当前用户信息（可重载）
      *
      * @param token
      * @return
      */
-    protected User getCurrentUserByToken(String token) {
+    protected TbUser getCurrentUserByToken(String token) {
         // 当缓存中存在对象时直接取缓存中的数据
         if(administratorService.hasCacheAdministrator(token)){
             return administratorService.getUserByToken(token);
@@ -190,11 +196,11 @@ public abstract class AbstractController implements WebxController {
         }
 
         // 当缓存中无值时，查询数据库
-        User user = administratorService.getUserByToken(token);
-        if (null == user) {
-            user = studentService.getUserByToken(token);
+        TbUser tbUser = administratorService.getUserByToken(token);
+        if (null == tbUser) {
+            tbUser = studentService.getUserByToken(token);
         }
-        return user;
+        return tbUser;
     }
 
     /**
@@ -237,13 +243,36 @@ public abstract class AbstractController implements WebxController {
     @RequestMapping(value = "deleteUploadFile")
     public @ResponseBody Output deleteFileUrl(@RequestParam("filename") String filename){
         Output result = new Output();
+        try {
+            filename = new String(filename.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return new Output(ERROR_NO_RECORD, "中文转码失败！");
+        }
         String path = context.getRealPath("/") + filename;
+        logger.info("删除文件为：{}", path);
         FileUtil.deleteFile(path);
+
         result.setStatus(SUCCESS);
         result.setMsg("文件删除成功！");
         return result;
     }
 
+    /**
+     * 获得文件完整的URL地址
+     *
+     * @param filePath
+     * @return
+     */
+    protected String getFileUrlPath(String filePath) {
+        if (StringUtils.isEmpty(filePath)) {
+            return "";
+        }
+        if (filePath.startsWith("http://") || filePath.startsWith("https://")) {
+            return filePath;
+        } else {
+            return contextPath.concat(filePath);
+        }
+    }
 
     /**
      * 文件下载
@@ -251,7 +280,8 @@ public abstract class AbstractController implements WebxController {
      * @param filename 文件名
      * @return
      */
-    public ResponseEntity<byte[]> downloadFile(String filename) {
+    @RequestMapping(value = "downloadFile")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam("filename") String filename) {
         String path = context.getRealPath("/") + filename;
         File file = new File(path);
         HttpHeaders headers = new HttpHeaders();
@@ -282,7 +312,7 @@ public abstract class AbstractController implements WebxController {
      * @param list
      * @return
      */
-    protected <T> List<Map<String, Object>> toArray(Collection<T> list, User user) {
+    protected <T> List<Map<String, Object>> toArray(Collection<T> list, TbUser tbUser) {
         if (list == null || list.isEmpty()) {
             return null;
         }
@@ -292,7 +322,7 @@ public abstract class AbstractController implements WebxController {
             // 反射执行 toMap 方法，获得数据
             Class<T> typeClass = (Class<T>) list.iterator().next().getClass();
             Method method = null;
-            if(user == null) {
+            if(tbUser == null) {
                 try {
                     method = this.getClass().getDeclaredMethod("toMap", typeClass);
                 } catch (NoSuchMethodException ex) {
@@ -306,14 +336,14 @@ public abstract class AbstractController implements WebxController {
                 }
             }else{
                 try {
-                    method = this.getClass().getDeclaredMethod("toMap", typeClass, User.class);
+                    method = this.getClass().getDeclaredMethod("toMap", typeClass, TbUser.class);
                 } catch (NoSuchMethodException ex) {
-                    method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass, User.class);
+                    method = this.getClass().getSuperclass().getDeclaredMethod("toMap", typeClass, TbUser.class);
                 }
                 if (method != null) {
                     method.setAccessible(true); // 不让Java对方法进行检查, 可执行私有方法
                     for (T entity : list) {
-                        result.add((Map<String, Object>) method.invoke(this, entity, user));
+                        result.add((Map<String, Object>) method.invoke(this, entity, tbUser));
                     }
                 }
             }

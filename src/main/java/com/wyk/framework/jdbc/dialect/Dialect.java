@@ -6,7 +6,7 @@ package com.wyk.framework.jdbc.dialect;
 /**
  * 针对查询的数据库Dialect
  * 
- * @author bocar
+ * @author wyk
  * 
  */
 public abstract class Dialect {

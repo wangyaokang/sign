@@ -94,6 +94,9 @@ public class FileUtil {
      * @param filePath 文件的绝对路径
      */
     public static void deleteFile(String filePath) {
+        if(null == filePath){
+            return;
+        }
         File file = new File(filePath);
         if (file.exists()) {
             file.delete();

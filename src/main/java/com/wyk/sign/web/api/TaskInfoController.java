@@ -3,6 +3,7 @@
  */
 package com.wyk.sign.web.api;
 
+import com.wyk.framework.page.Paginator;
 import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
@@ -43,38 +44,12 @@ public class TaskInfoController extends AbstractController {
     ElectiveService electiveService;
 
     /**
-     * 获取作业信息
-     * <p>
-     * 传入参数
-     * </p>
-     * <pre>
-     *  method : info
-     *  param：{id}
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.TYPE)
-    public Output info(Input input) {
-        Output result = new Output();
-        TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
-        if(null == taskInfo){
-            return new Output(ERROR_NO_RECORD, "没有对应的作业信息！");
-        }
-        result.setData(taskInfo);
-        result.setMsg("获取作业信息成功！");
-        result.setStatus(SUCCESS);
-        return result;
-    }
-
-    /**
      * 创建作业信息
      * <p>
      * 传入参数
      * </p>
      * <pre>
-     * token : wxid
+     * token : openid
      * method : insert
      * params : {"courseId" : "2", "classId" : "1", "deadlineTime" : "2018-12-12", title: "第一课：有丝分裂", "content" : "带笔记本"}
      * </pre>
@@ -85,34 +60,38 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output insert(Input input) {
         Output result = new Output();
-        Administrator teacher = (Administrator) input.getCurrentUser();
-        if(!teacher.getUserType().equals(Constants.User.TEACHER)){
-            return new Output(ERROR_UNKNOWN,"非教师无创建作业权限！");
+        try {
+            TbAdmin teacher = (TbAdmin) input.getCurrentTbUser();
+            if (!teacher.getUserType().equals(Constants.User.TEACHER)) {
+                return new Output(ERROR_UNKNOWN, "非教师无创建作业权限！");
+            }
+            TbTaskInfo tbTaskInfo = new TbTaskInfo();
+            tbTaskInfo.setAdmin(teacher);
+            tbTaskInfo.setTitle(input.getString("title"));
+            tbTaskInfo.setContent(input.getString("content"));
+            if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
+                tbTaskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
+            }
+            input.getParams().put("adminId", teacher.getId());
+            if (StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))) {
+                return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
+            }
+            TbElective tbElective = electiveService.get(input.getParams());
+            if (null == tbElective) {
+                return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
+            }
+            TbClass TbClass = new TbClass();
+            TbClass.setId(input.getLong("classId"));
+            tbTaskInfo.setTbClass(TbClass);
+            TbCourse tbCourse = new TbCourse();
+            tbCourse.setId(input.getLong("courseId"));
+            tbTaskInfo.setTbCourse(tbCourse);
+            taskInfoService.insert(tbTaskInfo);
+            result.setMsg("创建作业信息成功！");
+            result.setStatus(SUCCESS);
+        } catch (Exception e) {
+            return new Output(ERROR_NO_RECORD, e.getMessage());
         }
-        TaskInfo taskInfo = new TaskInfo();
-        taskInfo.setAdmin(teacher);
-        taskInfo.setTitle(input.getString("title"));
-        taskInfo.setContent(input.getString("content"));
-        if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
-            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
-        }
-        input.getParams().put("adminId", teacher.getId());
-        if(StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))){
-            return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
-        }
-        Elective elective = electiveService.get(input.getParams());
-        if (null == elective) {
-            return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
-        }
-        Classes classes = new Classes();
-        classes.setId(input.getLong("classId"));
-        taskInfo.setClasses(classes);
-        Course course = new Course();
-        course.setId(input.getLong("courseId"));
-        taskInfo.setCourse(course);
-        taskInfoService.insert(taskInfo);
-        result.setMsg("创建作业信息成功！");
-        result.setStatus(SUCCESS);
         return result;
     }
 
@@ -121,8 +100,8 @@ public class TaskInfoController extends AbstractController {
      * <p>传入参数：</p>
      * <pre>
      *      method:modify
-     *      token: wxopenid
-     *      params: 全部信息，例如：{id: "25", adminId: 2, "classId" : "2", "courseId" : "2", deadlineTime : "2019-09-09", "remark" : "错了，带手机"}
+     *      token: wxId
+     *      params: {id:1, 需要修改的信息}
      * </pre>
      *
      * @param input
@@ -131,88 +110,73 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-        TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
-        if(null == taskInfo){
+        TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("id"));
+        if (null == tbTaskInfo) {
             return new Output(ERROR_NO_RECORD, "未获取到对应的作业信息！");
         }
-
-        if(StringUtils.isNotEmpty(input.getString("adminId")) && StringUtils.isNotEmpty(input.getString("courseId")) && StringUtils.isNotEmpty(input.getString("classId"))){
-            return new Output(ERROR_UNKNOWN, "课程或班级为空！");
-        }
-        Elective elective = electiveService.get(input.getParams());
-        if (null == elective) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("classId", input.getString("classId"));
+        param.put("courseId", input.getString("courseId"));
+        param.put("adminId", input.getCurrentTbUser().getId());
+        TbElective tbElective = electiveService.get(param);
+        if (null == tbElective) {
             return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
         }
-        taskInfo.setTitle(input.getString("remark"));
-        if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
-            taskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
+
+        if (StringUtils.isNotEmpty(input.getString("title"))) {
+            tbTaskInfo.setTitle(input.getString("title"));
         }
-        Classes classes = new Classes();
-        classes.setId(input.getLong("classId"));
-        taskInfo.setClasses(classes);
-        Course course = new Course();
-        course.setId(input.getLong("courseId"));
-        taskInfo.setCourse(course);
-        taskInfoService.update(taskInfo);
+
+        if (StringUtils.isNotEmpty(input.getString("content"))) {
+            tbTaskInfo.setContent(input.getString("content"));
+        }
+        if (StringUtils.isNotEmpty(input.getString("deadlineTime"))) {
+            tbTaskInfo.setDeadlineTime(input.getDate("deadlineTime", DateUtil.DATE_FORMAT));
+        }
+        if (StringUtils.isNotEmpty(input.getString("classId"))) {
+            TbClass TbClass = new TbClass();
+            TbClass.setId(input.getLong("classId"));
+            tbTaskInfo.setTbClass(TbClass);
+        }
+        if (StringUtils.isNotEmpty(input.getString("courseId"))) {
+            TbCourse tbCourse = new TbCourse();
+            tbCourse.setId(input.getLong("courseId"));
+            tbTaskInfo.setTbCourse(tbCourse);
+        }
+        taskInfoService.update(tbTaskInfo);
         result.setStatus(SUCCESS);
-        result.setMsg("修改作业信息成功！");
-        result.setData(classes);
+        result.setMsg("作业信息修改成功！");
         return result;
     }
 
     /**
-     * 获取我的作业信息
+     * 根据课程获取我的作业信息
      *
      * <p>传入参数</p>
      * <pre>
      *     method: getTaskInfoListByCourse
-     *     token: wxId
-     *     params: {'courseId': 1}
+     *     token: openid
+     *     params: {courseId: 1}
      * </pre>
      *
      * @param input
      * @return
      */
     @Checked(Item.TYPE)
-    public Output getTaskInfoListByCourse(Input input){
+    public Output getTaskInfoListByCourse(Input input) {
         Output result = new Output();
-        User user = input.getCurrentUser();
+        TbUser tbUser = input.getCurrentTbUser();
         Map<String, Object> param = new HashMap<>();
-        if(Constants.User.TEACHER.equals(user.getUserType())){
-            param.put("adminId", user.getId());
-        }else{
-            param.put("classId", ((Student) user).getClasses().getId());
+        if (Constants.User.TEACHER.equals(tbUser.getUserType())) {
+            param.put("adminId", tbUser.getId());
+        } else {
+            param.put("classId", ((TbStudent) tbUser).getTbClass().getId());
         }
         param.put("courseId", input.getString("courseId"));
-        List<TaskInfo> taskInfoList = taskInfoService.query(param);
-        result.setData(toArray(taskInfoList));
+        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(param);
+        result.setData(toArray(tbTaskInfoList));
         result.setStatus(SUCCESS);
         result.setMsg("获取作业信息成功！");
-        return result;
-    }
-
-    /**
-     * 获取我的作业信息
-     *
-     * <p>传入参数</p>
-     * <pre>
-     *     method: getMySignInfoList
-     *     token: wxId
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.ADMIN)
-    public Output getMyTaskInfoList(Input input){
-        Output result = new Output();
-        User teacher = input.getCurrentUser();
-        Map<String, Object> param = new HashMap<>();
-        param.put("adminId", teacher.getId());
-        List<TaskInfo> signingInfoList = taskInfoService.query(param);
-        result.setStatus(SUCCESS);
-        result.setMsg("获取我的作业信息成功！");
-        result.setData(signingInfoList);
         return result;
     }
 
@@ -222,7 +186,7 @@ public class TaskInfoController extends AbstractController {
      * <p>传入参数</p>
      * <pre>
      *     method: delete
-     *     token: wxId
+     *     token: openid
      *     params: {id: 1}
      * </pre>
      *
@@ -230,17 +194,17 @@ public class TaskInfoController extends AbstractController {
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output delete(Input input){
+    public Output delete(Input input) {
         Output result = new Output();
-        TaskInfo taskInfo = taskInfoService.get(input.getLong("id"));
-        if(null == taskInfo){
+        TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("id"));
+        if (null == tbTaskInfo) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业信息！");
         }
         // 删除作业信息下，所有的作业
         Map<String, Object> param = new HashMap<>();
         param.put("infoId", input.getLong("id"));
         taskService.deleteByMap(param);
-        taskInfoService.delete(taskInfo);
+        taskInfoService.delete(tbTaskInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除作业信息成功！");
         return result;
@@ -253,21 +217,23 @@ public class TaskInfoController extends AbstractController {
      * <pre>
      *     keyWord : 黄老师
      * </pre>
+     *
      * @param input
      * @return
      */
-    public Output searchKeyWord(Input input){
+    public Output searchKeyWord(Input input) {
         Output result = new Output();
-        if(StringUtils.isEmpty(input.getString("keyWord"))){
-           return new Output(ERROR_UNKNOWN, "没有输入对应的关键词！");
+        if (StringUtils.isEmpty(input.getString("keyWord"))) {
+            return new Output(ERROR_UNKNOWN, "没有输入对应的关键词！");
         }
 
         // 防止输入除keyword之外过多的参数，新建一个map
         Map<String, Object> keyMap = new HashMap<>();
         keyMap.put("keyWord", input.getString("keyWord"));
-        List<TaskInfo> taskInfoList = taskInfoService.query(input.getParams());
+        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(input.getParams());
         result.setMsg(SUCCESS);
-        result.setData(taskInfoList);
+        result.setData(tbTaskInfoList);
+        result.setMsg("搜索成功！");
         return result;
     }
 
@@ -276,25 +242,71 @@ public class TaskInfoController extends AbstractController {
      *
      * <p>传入参数</p>
      * <pre>
-     *     method: getMySignInfoList
-     *     token: wxId
+     *     method: getMyTaskInfoList,
+     *     token: openid
      * </pre>
      *
      * @param input
      * @return
      */
     @Checked(Item.TYPE)
-    public Output getTaskInfoListByWxId(Input input){
+    public Output getMyTaskInfoList(Input input) {
         Output result = new Output();
-        User user = input.getCurrentUser();
+        TbUser tbUser = input.getCurrentTbUser();
         Map<String, Object> param = new HashMap<>();
-        if(Constants.User.STUDENT.equals(user.getUserType())){
-            param.put("classId", ((Student) user).getClasses().getId());
-        }else {
-            param.put("adminId", user.getId());
+        if (Constants.User.STUDENT.equals(tbUser.getUserType())) {
+            param.put("classId", ((TbStudent) tbUser).getTbClass().getId());
+        } else {
+            param.put("adminId", tbUser.getId());
         }
-        List<TaskInfo> signingInfoList = taskInfoService.query(param);
-        result.setData(toArray(signingInfoList));
+
+        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(param);
+        result.setData(toArray(tbTaskInfoList));
+        result.setStatus(SUCCESS);
+        result.setMsg("获取作业信息成功！");
+        return result;
+    }
+
+    /**
+     * 获取我的作业信息（分页）
+     *
+     * <p>传入参数</p>
+     * <pre>
+     *     method: getMySignInfoList,
+     *     token: openid,
+     *     params: {page: 1, rows: 10}
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getTaskInfoListByWxId(Input input) {
+        Output result = new Output();
+        TbUser tbUser = input.getCurrentTbUser();
+        Map<String, Object> param = new HashMap<>();
+        if (Constants.User.STUDENT.equals(tbUser.getUserType())) {
+            param.put("classId", ((TbStudent) tbUser).getTbClass().getId());
+        } else {
+            param.put("adminId", tbUser.getId());
+        }
+        Integer page = input.getInteger(PAGE);
+        if (page == null) {
+            page = Paginator.DEFAULT_CURRENT_PAGE;
+        }
+        Integer rows = input.getInteger(ROWS);
+        if (rows == null) {
+            rows = Paginator.DEFAULT_PAGE_SIZE;
+        }
+
+        Paginator paginator = new Paginator(page, rows);
+        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(param, paginator);
+        Map<String, Object> data = new HashMap<>();
+        data.put(LIST, toArray(tbTaskInfoList));
+        data.put(PAGE, page);
+        data.put(ROWS, rows);
+        data.put(TOTAL, paginator.getTotalCount());
+        result.setData(data);
         result.setStatus(SUCCESS);
         result.setMsg("获取作业信息成功！");
         return result;
@@ -303,22 +315,22 @@ public class TaskInfoController extends AbstractController {
     /**
      * 用于展示
      *
-     * @param taskInfo
+     * @param tbTaskInfo
      * @return
      */
-    public Map<String, Object> toMap(TaskInfo taskInfo) {
-        if (taskInfo == null) {
+    public Map<String, Object> toMap(TbTaskInfo tbTaskInfo) {
+        if (tbTaskInfo == null) {
             return null;
         }
         Map<String, Object> result = new HashMap<String, Object>();
-        result.put("id", taskInfo.getId());
-        result.put("title", taskInfo.getTitle());
-        result.put("content", taskInfo.getContent());
-        result.put("deadlineTime", DateUtil.format(taskInfo.getDeadlineTime(), DateUtil.DATE_FORMAT));
-        result.put("upTime", DateUtil.showDateMD(taskInfo.getDeadlineTime()));
-        result.put("admin", taskInfo.getAdmin());
-        result.put("classes", taskInfo.getClasses());
-        result.put("course", taskInfo.getCourse());
+        result.put("id", tbTaskInfo.getId());
+        result.put("title", tbTaskInfo.getTitle());
+        result.put("content", tbTaskInfo.getContent());
+        result.put("deadlineTime", DateUtil.format(tbTaskInfo.getDeadlineTime(), DateUtil.DATE_FORMAT));
+        result.put("upTime", DateUtil.showDateMD(tbTaskInfo.getDeadlineTime()));
+        result.put("admin", tbTaskInfo.getAdmin());
+        result.put("classes", tbTaskInfo.getTbClass());
+        result.put("course", tbTaskInfo.getTbCourse());
         return result;
     }
 }

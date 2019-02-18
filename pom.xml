@@ -4,7 +4,7 @@
          http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wyk</groupId>
-    <artifactId>sign</artifactId>
+    <artifactId>tbSign</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
 
@@ -191,6 +191,24 @@
             <artifactId>log4j-web</artifactId>
             <version>${log4j2.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>se.jiderhamn.classloader-leak-prevention</groupId>
+            <artifactId>classloader-leak-prevention-servlet</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk14</artifactId>
+            <version>1.45</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vdurmont</groupId>
+            <artifactId>emoji-java</artifactId>
+            <version>3.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -220,7 +238,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.version}</version>
                 <configuration>
-                    <url>http://47.93.207.56:8080/manager/text</url>
+                    <url>https://palmcampus.club/manager/text</url>
                     <server>tomcat7</server>
                     <username>admin</username>
                     <password>123456</password>
@@ -229,20 +247,5 @@
                 </configuration>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/Resources</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 </project>

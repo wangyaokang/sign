@@ -32,14 +32,15 @@
     <!-- MyBatis: define the SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:mapper/mybatis-config.xml"/>
-        <property name="typeAliasesPackage" value="com.wyk.sign.model"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="typeAliasesPackage" value="com.wyk.tbSign.model"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
     <!-- MyBatis: scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="markerInterface" value="com.wyk.framework.mybatis.BaseMapper"/>
-        <property name="basePackage" value="com.wyk.sign.persistence"/>
+        <property name="basePackage" value="com.wyk.tbSign.mapper"/>
         <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
     </bean>
 

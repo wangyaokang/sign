@@ -9,7 +9,7 @@ import java.util.Map;
 import com.wyk.framework.page.Paginator;
 
 /**
- * Single Entity<T> CRUD Service
+ * CURD 服务基类
  * 
  * @author wyk
  *
@@ -33,28 +33,31 @@ public interface BaseService<T> {
 	T get(Map<String, Object> map);
 	
 	/**
-	 * 插叙
+	 * 查询全部
 	 * 
 	 * @return
 	 */
 	List<T> query();
 	
 	/**
-	 * 
+	 * 查询全部（分页）
+	 *
 	 * @param page
 	 * @return
 	 */
 	List<T> query(Paginator page);
 	
 	/**
-	 * 
+	 * 按条件查询
+	 *
 	 * @param map
 	 * @return
 	 */
 	List<T> query(Map<String, Object> map);
 	
 	/**
-	 * 
+	 * 按条件查询（分页）
+	 *
 	 * @param map
 	 * @param page
 	 * @return
@@ -62,39 +65,39 @@ public interface BaseService<T> {
 	List<T> query(Map<String, Object> map, Paginator page);
 	
 	/**
-	 * 
+	 * 插入
+	 *
 	 * @param entity
 	 */
 	void insert(T entity);
+
+	/**
+	 * 批量插入
+	 *
+	 * @param entity
+	 * @return
+	 */
+	Integer insertBatch(List<T> entity);
 	
 	/**
-	 * 
+	 * 更新
+	 *
 	 * @param entity
 	 */
 	void update(T entity);
 
 	/**
+	 * 批量更新
 	 *
 	 * @param entity
 	 */
-	void updateBatch(List<T> entity);
+	Integer updateBatch(List<T> entity);
 	
 	/**
-	 * Only For AutoIdEntity
-	 * 
-	 * @param entity
-	 */
-	void save(T entity);
-	
-	/**
-	 * 
+	 * 删除
+	 *
 	 * @param entity
 	 */
 	void delete(T entity);
 
-	/**
-	 *
-	 * @param map
-	 */
-	void deleteByMap(Map<String, Object> map);
 }

@@ -4,7 +4,7 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.Message;
+import com.wyk.sign.model.TbMessage;
 import com.wyk.sign.service.MessageService;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class MessageServiceImpl extends BaseServiceImpl<Message> implements MessageService {
+public class MessageServiceImpl extends BaseServiceImpl<TbMessage> implements MessageService {
 
 }

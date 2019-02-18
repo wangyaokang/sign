@@ -41,6 +41,11 @@
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.8.2" />
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.8.2" />
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-web:2.8.2" />
+          <element id="library" level="project" name="Maven: se.jiderhamn.classloader-leak-prevention:classloader-leak-prevention-servlet:2.1.0" />
+          <element id="library" level="project" name="Maven: se.jiderhamn.classloader-leak-prevention:classloader-leak-prevention-core:2.1.0" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk14:1.45" />
+          <element id="library" level="project" name="Maven: com.vdurmont:emoji-java:3.2.0" />
+          <element id="library" level="project" name="Maven: org.json:json:20140107" />
         </element>
       </element>
       <element id="directory" name="META-INF">

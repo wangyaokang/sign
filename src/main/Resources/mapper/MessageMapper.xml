@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.tbSign.mapper.MessageMapper">
+
+    <resultMap type="com.wyk.tbSign.model.Message" id="messageMap">
+        <id property="id" column="id" javaType="long"/>
+        <id property="topic" column="topic"/>
+        <id property="imageUrl" column="image_url"/>
+        <id property="uploadFileUrl" column="upload_file_url"/>
+        <id property="content" column="content"/>
+        <id property="status" column="status"/>
+        <id property="createTime" column="create_time"/>
+        <id property="modifyTime" column="modify_time"/>
+        <association property="creator" javaType="com.wyk.tbSign.model.TbAdmin">
+            <id property="id" column="admin_id"/>
+            <result property="wxId" column="admin_wx_id"/>
+            <result property="wxName" column="admin_wx_name"/>
+            <result property="wxAvatarUrl" column="admin_wx_avatar_url"/>
+            <result property="realName" column="admin_real_name"/>
+            <result property="userType" column="admin_user_type"/>
+            <result property="status" column="admin_status"/>
+        </association>
+    </resultMap>
+
+    <sql id="selectSQL">
+        select msg.*,
+              creator.id as admin_id,
+              creator.wx_id as admin_wx_id,
+              creator.wx_name as admin_wx_name,
+              creator.wx_avatar_url as admin_wx_avatar_url,
+              creator.real_name as admin_real_name,
+              creator.user_type as admin_user_type,
+              creator.status as admin_status
+            from tb_message msg inner join tb_admin creator on msg.creator_id = creator.id
+	</sql>
+
+    <!-- Base Mapper -->
+    <select id="get" parameterType="hashmap" resultMap="messageMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="id != null">
+                msg.id = #{id}
+            </if>
+        </where>
+        limit 0,1
+    </select>
+
+    <select id="query" resultMap="messageMap">
+        <include refid="selectSQL"/>
+    </select>
+
+    <select id="queryByMap" parameterType="hashmap" resultMap="messageMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="topic != null">
+                msg.topic = #{topic}
+            </if>
+            <if test="wxId != null">
+                and creator.wx_id = #{wxId}
+            </if>
+            <if test="adminId != null">
+                and creator.id = #{adminId}
+            </if>
+            <if test="classId != null">
+                and creator.id = #{classId}
+            </if>
+            <if test="keyWord != null">
+                and (locate(#{keyWord}, msg.topic) + locate(#{keyWord}, msg.content)) > 0
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.wyk.tbSign.model.Message"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into tb_message (
+            topic,
+            image_url,
+            upload_file_url,
+            content,
+            creator_id,
+            status)
+		values
+              (#{topic},
+              #{imageUrl},
+              #{uploadFileUrl},
+              #{content},
+              #{creator.id},
+              #{status})
+	</insert>
+
+    <update id="update" parameterType="com.wyk.tbSign.model.Message">
+		update tb_message set
+		topic=#{topic},
+		image_url=#{imageUrl},
+		upload_file_url=#{uploadFileUrl},
+		content=#{content},
+		creator_id=#{creator.id},
+		status=#{status}
+		where id = #{id}
+	</update>
+
+    <delete id="delete" parameterType="com.wyk.tbSign.model.Message">
+        delete from tb_message
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
+
+</mapper>

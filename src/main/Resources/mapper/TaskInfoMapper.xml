@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.tbSign.mapper.TaskInfoMapper">
+
+	<resultMap type="com.wyk.tbSign.model.TbTaskInfo" id="taskInfoMap">
+		<id property="id" column="id" javaType="long" />
+		<result property="content" column="content" />
+		<result property="title" column="title" />
+		<result property="status" column="status" />
+		<result property="deadlineTime" column="deadline_time" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+		<association property="admin" javaType="com.wyk.tbSign.model.TbAdmin">
+			<id property="id" column="ad_id"/>
+			<result property="wxId" column="ad_wx_id" />
+			<result property="wxName" column="ad_wx_name" />
+			<result property="wxAvatarUrl" column="ad_wx_avatar_url" />
+			<result property="realName" column="ad_real_name" />
+			<result property="userType" column="ad_user_type" />
+			<result property="status" column="ad_status" />
+		</association>
+		<association property="TbClass" javaType="com.wyk.tbSign.model.TbClass">
+			<id property="id" column="cl_id"/>
+			<result property="name" column="cl_name" />
+			<result property="status" column="cl_status" />
+		</association>
+		<association property="tbCourse" javaType="com.wyk.tbSign.model.TbCourse">
+			<id property="id" column="co_id"/>
+			<result property="name" column="co_name" />
+			<result property="status" column="co_status" />
+		</association>
+	</resultMap>
+
+	<sql id="selectSQL">
+		SELECT
+			t.*,
+			ad.id AS ad_id,
+			ad.wx_id AS ad_wx_id,
+			ad.wx_name AS ad_wx_name,
+			ad.wx_avatar_url AS ad_wx_avatar_url,
+			ad.real_name AS ad_real_name,
+			ad.user_type AS ad_user_type,
+			cl.id AS cl_id,
+			cl. NAME AS cl_name,
+			cl. STATUS AS cl_status,
+			co.id AS co_id,
+			co. NAME AS co_name,
+			co. STATUS AS co_status
+		FROM
+			tb_task_info t
+		INNER JOIN tb_classes cl ON t.class_id = cl.id
+		INNER JOIN tb_course co ON t.course_id = co.id
+		INNER JOIN tb_admin ad ON t.admin_id = ad.id
+	</sql>
+
+	<!-- Base Mapper -->
+	<select id="get" parameterType="hashmap" resultMap="taskInfoMap">
+		<include refid="selectSQL" />
+		<where>
+			<if test="id != null">
+				t.id = #{id}
+			</if>
+		</where>
+		limit 0,1
+	</select>
+
+	<select id="query" resultMap="taskInfoMap">
+		<include refid="selectSQL" />
+	</select>
+
+	<select id="queryByMap" parameterType="hashmap" resultMap="taskInfoMap">
+		<include refid="selectSQL" />
+		<where>
+			<if test="adminId != null">
+				ad.id = #{adminId}
+			</if>
+			<if test="wxId != null">
+				and ad.wx_id = #{wxId}
+			</if>
+			<if test="wxName != null">
+				and ad.wx_name = #{wxName}
+			</if>
+			<if test="realName != null">
+				and ad.real_name = #{realName}
+			</if>
+			<if test="classId != null">
+				and cl.id = #{classId}
+			</if>
+			<if test="className != null">
+				and cl.cl_name = #{className}
+			</if>
+			<if test="courseId != null">
+				and co.id = #{courseId}
+			</if>
+			<if test="courseName != null">
+				and co.name = #{courseName}
+			</if>
+            <if test="keyWord != null">
+                and (locate(#{keyWord}, t.title) + locate(#{keyWord}, t.content) + locate(#{keyWord}, co.name) + locate(#{keyWord}, cl.name)) > 0
+            </if>
+			<if test="termStartDate != null and termStopDate != null">
+				and DATE_FORMAT(t.deadline_time, '%Y-%m-%d')
+				between DATE_FORMAT(#{termStartDate}, '%Y-%m-%d') and DATE_FORMAT(#{termStopDate}, '%Y-%m-%d')
+			</if>
+		</where>
+			order by deadline_time desc
+	</select>
+
+	<insert id="insert" parameterType="com.wyk.tbSign.model.TbTaskInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_task_info (
+		admin_id,
+		course_id,
+		class_id,
+		content,
+		deadline_time,
+		title,
+		status)
+		values
+		(#{admin.id},
+		#{tbCourse.id},
+		#{TbClass.id},
+		#{content},
+		#{deadlineTime},
+		#{title},
+		#{status})
+	</insert>
+
+	<update id="update" parameterType="com.wyk.tbSign.model.TbTaskInfo">
+		update tb_task_info set
+		admin_id=#{admin.id},
+		course_id=#{tbCourse.id},
+		class_id=#{TbClass.id},
+		content=#{content},
+		deadline_time=#{deadlineTime},
+		title=#{title},
+		status=#{status},
+		modify_time=#{modifyTime}
+		where id = #{id}
+	</update>
+
+	<update id="updateBatch" parameterType="List">
+		<foreach collection="list" separator=";" item="info">
+			update tb_task_info set
+			admin_id=#{info.admin.id},
+			course_id=#{info.tbCourse.id},
+			class_id=#{info.TbClass.id},
+			content=#{info.content},
+			deadline_time=#{info.deadlineTime},
+			title=#{info.title},
+			status=#{info.status},
+			modify_time=#{info.modifyTime}
+			where id = #{info.id}
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="com.wyk.tbSign.model.TbTaskInfo">
+		delete from tb_task_info
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+
+	<delete id="deleteByMap" parameterType="hashmap">
+		delete from tb_task_info
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+	</delete>
+	<!-- End of Base Mapper -->
+
+</mapper>

@@ -121,7 +121,7 @@ public class HttpInvoker {
 	private void agent(HttpRequestBase request) {
 		request.setHeader("Accept", "text/html,application/xhtml+xml,application/xml,application/json,image/png,image/*;q=0.8,*/*;q=0.5");
 		request.setHeader("Accept-Language", "zh-cn,zh;q=0.5");
-		request.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0");
+		request.setHeader("TbUser-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0");
 		request.setHeader("Accept-Encoding", "gzip, deflate");
 		request.setHeader("Accept-Charset", "GB2312,utf-8;q=0.7,*;q=0.7");
 		request.setHeader("Connection", "Keep-Alive");

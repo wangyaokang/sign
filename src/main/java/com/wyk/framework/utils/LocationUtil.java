@@ -2,6 +2,8 @@ package com.wyk.framework.utils;
 
 /**
  * 定位工具类
+ *
+ * @author wyk
  */
 public class LocationUtil {
 
@@ -57,15 +59,4 @@ public class LocationUtil {
         return dist;
     }
 
-    public static void main(String[] args) {
-        // 凌阳大厦
-        double lan1 = 30.6189190000;
-        double lon1 = 114.2545850000;
-
-        double lan2 = 31.1940680000;
-        double lon2 = 121.3207790000;
-
-        double dis = getDistance(lan1, lon1, lan2, lon2);
-        System.out.println("【凌阳大厦】距离【创智空间】：" + (dis / 1000) + "公里");
-    }
 }

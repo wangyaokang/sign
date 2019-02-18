@@ -5,20 +5,15 @@ package com.wyk.sign.web.api;
 
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Classes;
-import com.wyk.sign.model.Student;
-import com.wyk.sign.service.ClassesService;
-import com.wyk.sign.service.ElectiveService;
+import com.wyk.sign.model.TbAdmin;
+import com.wyk.sign.model.TbClass;
+import com.wyk.sign.model.TbElective;
+import com.wyk.sign.model.TbStudent;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
@@ -31,18 +26,14 @@ import java.util.*;
 @RequestMapping("/api/classes")
 public class ClassesController extends AbstractController {
 
-    @Autowired
-    ClassesService classesService;
 
-    @Autowired
-    ElectiveService electiveService;
 
     /**
      * 新增
      * <p>传入参数</p>
      * <pre>
      *     method: insert
-     *     token: 当前wxId
+     *     token: openid
      *     params: {name："英语11102班"，adminId:"2"}
      * </pre>
      *
@@ -52,41 +43,16 @@ public class ClassesController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output insert(Input input) {
         Output result = new Output();
-        Classes classes = new Classes();
-        classes.setName(input.getString("name"));
+        TbClass TbClass = new TbClass();
+        TbClass.setName(input.getString("name"));
         if (StringUtils.isNotEmpty(input.getString("adminId"))) {
-            Administrator admin = new Administrator();
+            TbAdmin admin = new TbAdmin();
             admin.setId(input.getLong("adminId"));
-            classes.setAdmin(admin);
+            TbClass.setAdmin(admin);
         }
-        classesService.save(classes);
-        result.setData(classes);
-        result.setMsg("班级信息添加成功！");
-        return result;
-    }
-
-    /**
-     * 获取班级信息
-     * <p>传入参数</p>
-     * <pre>
-     *     method: info
-     *     token: 当前wxId
-     *     params: {id：1}
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.TYPE)
-    public Output info(Input input) {
-        Output result = new Output();
-        Classes classes = classesService.get(input.getLong("id"));
-        if (null == classes) {
-            return new Output(ERROR_NO_RECORD, "没有对应的班级！");
-        }
-        result.setStatus(SUCCESS);
-        result.setMsg("查询班级信息成功！");
-        result.setData(classes);
+        classesService.save(TbClass);
+        result.setData(TbClass);
+        result.setMsg("班级新增成功！");
         return result;
     }
 
@@ -95,7 +61,7 @@ public class ClassesController extends AbstractController {
      * <p>传入参数：</p>
      * <pre>
      *      method:modify
-     *      token: wxopenid, 微信wxid
+     *      token: openid
      *      params: {id: 1, name: 英语110班, adminId: 2}
      * </pre>
      *
@@ -105,44 +71,52 @@ public class ClassesController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-        Classes classes = classesService.get(input.getLong("id"));
-        if (null == classes) {
+        TbClass TbClass = classesService.get(input.getLong("id"));
+        if (null == TbClass) {
             return new Output(ERROR_NO_RECORD, "没有对应的班级！");
         }
-        classes.setName(input.getString("name"));
-        Administrator admin = administratorService.getUserByToken(input.getToken());
-        classes.setAdmin(admin);
-        classes.setModifyTime(new Date());
-        classesService.save(classes);
+        TbClass.setName(input.getString("name"));
+        if (StringUtils.isNotEmpty(input.getString("adminId"))) {
+            TbAdmin admin = new TbAdmin();
+            admin.setId(input.getLong("adminId"));
+            TbClass.setAdmin(admin);
+        }
+        TbClass.setModifyTime(new Date());
+        classesService.update(TbClass);
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
-        result.setData(classes);
+        result.setData(TbClass);
         return result;
     }
 
     /**
      * 查询全部班级
+     * <p>传入参数</p>
+     * <pre>
+     *     null
+     * </pre>
      *
+     * @param input
      * @return
      */
     public Output queryClasses(Input input) {
         Output result = new Output();
-        List<Classes> classesList = classesService.query();
-        if(classesList.size() == 0){
+        List<TbClass> TbClassList = classesService.query();
+        if (TbClassList.size() == 0) {
             return new Output(ERROR_NO_RECORD, "无班级记录");
         }
-        result.setData(toArray(classesList));
+        result.setData(toArray(TbClassList));
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
         return result;
     }
 
     /**
-     * 删除班级
+     * 删除班级（同时对应的班级学生所属班级置空）
      * <p>传入参数</p>
      *
      * <pre>
-     *     token: wxId
+     *     token: openid
      *     method: delete
      *     params: {id : 2}
      * </pre>
@@ -153,20 +127,31 @@ public class ClassesController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input) {
         Output result = new Output();
-        Classes classes = classesService.get(input.getLong("id"));
-        Map<String, Object> param = new HashMap<>();
-        param.put("classId", classes.getId());
-        List<Student> studentList = studentService.query(param);
-        if (studentList.size() != 0) {
-            List<Student> paramList = new ArrayList<>();
-            for (Student student : studentList) {
-                student.setClasses(null);
-                paramList.add(student);
+        try {
+            TbClass TbClass = classesService.get(input.getLong("id"));
+            Map<String, Object> param = new HashMap<>();
+            param.put("classId", TbClass.getId());
+            List<TbStudent> tbStudentList = studentService.query(param);
+            if (tbStudentList.size() != 0) {
+                List<TbStudent> paramList = new ArrayList<>();
+                int len = tbStudentList.size();
+                for (int i = 0; i < len; i++) {
+                    TbStudent tbStudent = tbStudentList.get(i);
+                    tbStudent.setTbClass(null);
+                    paramList.add(tbStudent);
+                    if(i % 10 == 0 && i >= 10) {
+                        studentService.updateBatch(paramList);
+                        paramList.clear();
+                    } else if (i == len - 1) {
+                        studentService.updateBatch(paramList);
+                    }
+                }
+                logger.debug("{}条数据更新成功！", tbStudentList.size());
             }
-            studentService.updateBatch(paramList);
-            logger.debug("{}条数据更新成功！", studentList.size());
+            classesService.delete(TbClass);
+        } catch (Exception e) {
+            logger.error(e, e);
         }
-        classesService.delete(classes);
         result.setMsg("删除班级成功");
         result.setStatus(SUCCESS);
         return result;
@@ -176,56 +161,8 @@ public class ClassesController extends AbstractController {
      * 获取班级成员信息
      * <p>传入参数</p>
      * <pre>
-     *     method: getClassStudentList
-     *     token: wxopenid, 微信wxid
-     *     params: {classId: 1}
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.TYPE)
-    public Output getClassStudentList(Input input) {
-        Output result = new Output();
-        Map<String, Object> params = input.getParams();
-        List<Student> studentList = studentService.query(params);
-        params.put("studentList", studentList);
-        result.setData(studentList);
-        result.setStatus(SUCCESS);
-        result.setMsg("修改班级信息成功！");
-        return result;
-    }
-
-    /**
-     * 获取班级授课教师
-     * <p>传入参数</p>
-     * <pre>
-     *     method: getClassTeacherList
-     *     token: wxopenid, 微信wxid
-     *     params: {classId: 1}
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.TYPE)
-    public Output getClassTeacherList(Input input) {
-        Output result = new Output();
-        Map<String, Object> params = input.getParams();
-        List<Administrator> teacherList = electiveService.getTeacherList(params);
-        params.put("teacherList", teacherList);
-        result.setData(teacherList);
-        result.setStatus(SUCCESS);
-        result.setMsg("修改班级信息成功！");
-        return result;
-    }
-
-    /**
-     * 获取班级成员信息
-     * <p>传入参数</p>
-     * <pre>
      *     method: getClassesListByAdmin
-     *     token: wxopenid, 微信wxid
+     *     token: openid
      * </pre>
      *
      * @param input
@@ -235,39 +172,46 @@ public class ClassesController extends AbstractController {
     public Output getClassesListByAdmin(Input input) {
         Output result = new Output();
         Map<String, Object> params = new HashMap<>();
-        params.put("adminId", ((Administrator) input.getCurrentUser()).getId());
-        List<Classes> classesList = classesService.query(params);
-        if(classesList.size() == 0){
+        params.put("adminId", ((TbAdmin) input.getCurrentTbUser()).getId());
+        List<TbClass> TbClassList = classesService.query(params);
+        if (TbClassList.size() == 0) {
             return new Output(ERROR_NO_RECORD, "没有管理的班级！");
         }
-        result.setData(toArray(classesList));
+        result.setData(toArray(TbClassList));
         result.setStatus(SUCCESS);
         result.setMsg("修改班级信息成功！");
         return result;
     }
 
     /**
-     * 获取授课信息
+     * 获取授课班级
      * <p>传入参数</p>
      *
      * <pre>
-     *     token: wxId,
+     *     token: openid,
      *     method: getElectivesByAdmin
      * </pre>
+     *
      * @param input
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output getClassesListFormElective(Input input){
+    public Output getClassesListFormElective(Input input) {
         Output result = new Output();
         String token = input.getToken();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("wxId", token);
-        List<Classes> classesList = electiveService.getClassesList(map);
-        if (classesList.size() == 0) {
+        List<TbElective> tbElectiveList = electiveService.query(map);
+        if (tbElectiveList.size() == 0) {
             return new Output(ERROR_NO_RECORD, "没有授课班级！");
         }
-        result.setData(toArray(classesList));
+        List<TbClass> TbClassList = new ArrayList<>();
+        // 此处班级信息不全，需要重新查询
+        for (TbElective tbElective : tbElectiveList) {
+            TbClass TbClass = classesService.get(tbElective.getTbClass().getId());
+            TbClassList.add(TbClass);
+        }
+        result.setData(toArray(TbClassList));
         result.setStatus(SUCCESS);
         result.setMsg("获取授课班级信息成功！");
         return result;
@@ -275,23 +219,26 @@ public class ClassesController extends AbstractController {
 
     /**
      * 用于展示
-     * @param classes
+     *
+     * @param TbClass
      * @return
      */
-    public Map<String, Object> toMap(Classes classes){
+    public Map<String, Object> toMap(TbClass TbClass) {
         Map<String, Object> result = new HashMap<>();
-        result.put("id", classes.getId());
-        result.put("name", classes.getName());
-        result.put("admin", classes.getAdmin());
+        result.put("id", TbClass.getId());
+        result.put("name", TbClass.getName());
+        result.put("admin", TbClass.getAdmin());
         Map<String, Object> param = new HashMap<>();
-        param.put("classId", classes.getId());
+        param.put("classId", TbClass.getId());
+        // 班级成员（学生）
         Map<String, Object> studentMap = new HashMap<>();
-        List<Student> studentList = studentService.query(param);
-        studentMap.put(LIST, studentList);
-        studentMap.put(TOTAL, studentList.size());
+        List<TbStudent> tbStudentList = studentService.query(param);
+        studentMap.put(LIST, tbStudentList);
+        studentMap.put(TOTAL, tbStudentList.size());
         result.put("studentList", studentMap);
+        // 班级授课教师
         Map<String, Object> teacherMap = new HashMap<>();
-        List<Administrator> teacherList = administratorService.query(param);
+        List<TbAdmin> teacherList = administratorService.query(param);
         teacherMap.put(LIST, teacherList);
         teacherMap.put(TOTAL, teacherList.size());
         param.put("teacherList", teacherList);

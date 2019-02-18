@@ -4,8 +4,8 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.Sign;
-import com.wyk.sign.persistence.SignMapper;
+import com.wyk.sign.model.TbSign;
+import com.wyk.sign.mapper.TbSignMapper;
 import com.wyk.sign.service.SignService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ import java.util.Map;
  *
  */
 @Service
-public class SignServiceImpl extends BaseServiceImpl<Sign> implements SignService {
+public class SignServiceImpl extends BaseServiceImpl<TbSign> implements SignService {
 
     @Autowired
-    SignMapper mapper;
+    TbSignMapper mapper;
 
     @Override
-    public List<Sign> querySignListOfClassByInfoId(String infoId) {
+    public List<TbSign> querySignListOfClassByInfoId(String infoId) {
         if(StringUtils.isEmpty(infoId)){
             return null;
         }

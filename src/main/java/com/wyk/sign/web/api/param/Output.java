@@ -27,7 +27,8 @@ public class Output implements Serializable {
      * 状态消息数据（如：“登录成功”）
      */
     private String msg;
-    
+
+    /** 返回数据 */
     private Object data = new HashMap<String, Object>();
 
 	/**

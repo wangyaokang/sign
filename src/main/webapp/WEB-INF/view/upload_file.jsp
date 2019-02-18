@@ -20,7 +20,7 @@
     <title>文件上传</title>
     <meta charset="utf-8"/>
     <meta name="viewport"
-          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, tbUser-scalable=no"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fileinput.min.css"/>
@@ -41,7 +41,7 @@
                         <input type="hidden" id="token" name="token" value="${token}"/>
                         <input type="hidden" id="infoId" name="infoId" value="${infoId}"/>
                         <input type="hidden" id="fileno" name="fileno" value="${fileno}"/>
-                        <input type="hidden" id="fileInfo" name="fileno"/>
+                        <input type="hidden" id="fileInfo" name="fileInfo"/>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -66,7 +66,7 @@
         control.fileinput({
             language: 'zh', //设置语言
             uploadUrl: "${url}/${method}", //上传的地址
-            allowedFileExtensions: ['jpg', 'gif', 'png', 'doc', 'docx', 'pdf', 'ppt', 'pptx', 'txt'],//接收的文件后缀
+            allowedFileExtensions: ['jpg', 'png', 'doc', 'docx', 'pdf', 'ppt', 'pptx', 'xls', 'xlsx'],//接收的文件后缀
             maxFilesNum: 5,//上传最大的文件数量
             uploadAsync: true, //默认异步上传
             showUpload: true, //是否显示上传按钮

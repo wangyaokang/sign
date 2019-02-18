@@ -4,7 +4,7 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.Course;
+import com.wyk.sign.model.TbCourse;
 import com.wyk.sign.service.CourseService;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class CourseServiceImpl extends BaseServiceImpl<Course> implements CourseService {
+public class CourseServiceImpl extends BaseServiceImpl<TbCourse> implements CourseService {
 
 }

@@ -5,26 +5,23 @@ package com.wyk.sign.web.api;
 
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
-import com.wyk.sign.model.Administrator;
-import com.wyk.sign.model.Classes;
-import com.wyk.sign.model.Student;
-import com.wyk.sign.model.User;
-import com.wyk.sign.service.ClassesService;
-import com.wyk.sign.service.CourseService;
+import com.wyk.sign.model.*;
 import com.wyk.sign.service.ElectiveService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.GradeService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 个人相关接口
+ * 成绩相关接口
  *
  * @author wyk
  */
@@ -33,136 +30,149 @@ import java.util.Map;
 public class GradeController extends AbstractController {
 
     @Autowired
-    ClassesService classesService;
-
-    @Autowired
-    CourseService courseService;
+    GradeService gradeService;
 
     @Autowired
     ElectiveService electiveService;
 
     /**
-     * 获得当前用户的个人信息
-     * <p>传入参数：</p>
-     * <pre>
-     * method:info
-     * token:当前TOKEN信息
-     * </pre>
+     * 保存
      *
      * @param input
      * @return
      */
-    @Checked(Item.TYPE)
-    public Output info(Input input) {
+    public Output save(Input input) {
         Output result = new Output();
-        result.setStatus(SUCCESS);
-        result.setMsg("获得个人信息成功！");
-        result.setData(input.getCurrentUser());
-        return result;
-    }
-
-    /**
-     * 修改个人信息
-     * <p>传入参数：</p>
-     * <pre>
-     * method:modify
-     * token:当前TOKEN信息
-     * params:{当前所有信息JSON格式}
-     * </pre>
-     *
-     * @param input
-     * @return
-     */
-    @Checked(Item.TYPE)
-    public Output modify(Input input) {
-        Output result = new Output();
-        String userType = input.getString("userType");
-        if (userType.equals(Constants.User.STUDENT)) {
-            Student student = (Student) input.getCurrentUser();
-            studentService.save(student);
-            result.setData(student);
-        } else if (userType.equals(Constants.User.TEACHER) || userType.equals(Constants.User.COUNSELLOR)) {
-            Administrator admin = (Administrator) input.getCurrentUser();
-            administratorService.save(admin);
-            result.setData(admin);
+        TbGrade tbGrade = gradeService.get(input.getLong("id"));
+        // 没有成绩时直接新建
+        if (null == tbGrade) {
+            tbGrade = new TbGrade();
         }
-        result.setStatus(SUCCESS);
-        result.setMsg("个人信息修改成功");
-        return result;
-    }
 
-    /**
-     * 获得管理者管理的班级
-     * <p>传入参数：</p>
-     * <pre>
-     * method:getMyAdminClasses
-     * token:当前TOKEN信息
-     * </pre>
-     * @param input
-     * @return
-     */
-    @Checked(Item.ADMIN)
-    public Output getMyAdminClasses(Input input) {
-        Output result = new Output();
-        User user = input.getCurrentUser();
-        Map<String, Object> param = new HashMap<>();
-        param.put("adminId", user.getId());
-        Classes classes = classesService.get(param);
-        if(classes == null){
-            return new Output(ERROR_NO_RECORD, "没有对应管理的班级！");
+        if (StringUtils.isNotEmpty(input.getString("electiveId"))) {
+            TbElective tbElective = new TbElective();
+            tbElective.setId(input.getLong("electiveId"));
+            tbGrade.setTbElective(tbElective);
         }
-        result.setStatus(SUCCESS);
-        result.setMsg("获得班级成功！");
-        result.setData(classes);
-        return result;
-    }
-
-    /**
-     * 获得授课的班级
-     * <p>传入参数：</p>
-     * <pre>
-     * method:getMyTeachClasses
-     * token:当前TOKEN信息
-     * </pre>
-     * @param input
-     * @return
-     */
-    @Checked(Item.ADMIN)
-    public Output getMyTeachClasses(Input input) {
-        Output result = new Output();
-        User user = input.getCurrentUser();
-        Map<String, Object> param = new HashMap<>();
-        param.put("adminId", user.getId());
-        List<Classes> classesList = electiveService.getClassesList(param);
-        if(classesList.size() == 0){
-            return new Output(ERROR_NO_RECORD, "没有对应的授课班级！");
+        if (StringUtils.isNotEmpty(input.getString("stuId"))) {
+            TbStudent tbStudent = new TbStudent();
+            tbStudent.setId(input.getLong("stuId"));
+            tbGrade.setTbStudent(tbStudent);
         }
+        if (StringUtils.isNotEmpty(input.getString("courseScore"))) {
+            tbGrade.setCourseScore(input.getInteger("courseScore"));
+        }
+        if (StringUtils.isNotEmpty(input.getString("testScore"))) {
+            tbGrade.setTestScore(input.getInteger("testScore"));
+        }
+
+        gradeService.save(tbGrade);
+        result.setMsg("成绩保存成功！");
         result.setStatus(SUCCESS);
-        result.setMsg("获得授课班级成功！");
-        result.setData(classesList);
         return result;
     }
 
     /**
-     * 获取管理者
+     * 根据用户id，获取对应的成绩
      * <p>传入参数</p>
+     *
      * <pre>
+     *     method: getUserGradeList
      *     token: wxId
-     *     method: getAdminList
+     *     params: {"stuId": 1}
+     * </pre>
+     *
+     * @param input
+     * @return
+     */
+    @Checked(Item.TYPE)
+    public Output getUserGradeList(Input input) {
+        Output result = new Output();
+        TbStudent tbStudent = studentService.get(input.getLong("stuId"));
+        if (null == tbStudent) {
+            return new Output(ERROR_NO_RECORD, "没有此学生！");
+        }
+        Map<String, Object> param = new HashMap<>();
+        param.put("classId", tbStudent.getTbClass().getId());
+        List<TbElective> tbElectiveList = electiveService.query(param);
+        List<Map<String, Object>> gradeList = new ArrayList<>();
+        for (TbElective tbElective : tbElectiveList) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("electiveId", tbElective.getId());
+            map.put("stuId", tbStudent.getId());
+            TbGrade tbGrade = gradeService.get(map);
+            gradeList.add(toMap(tbGrade, tbElective, tbStudent));
+        }
+
+        result.setStatus(SUCCESS);
+        result.setMsg("获取成绩成功！");
+        result.setData(gradeList);
+        return result;
+    }
+
+    /**
+     * 根据授课信息获取对应班级学生的成绩列表
+     * <p>传入参数</p>
+     *
+     * <pre>
+     *     token: openid
+     *     method: getGradeListByElective
+     *     params: {electiveId : '1'}
      * </pre>
      * @param input
      * @return
      */
     @Checked(Item.ADMIN)
-    public Output getAdminList(Input input){
+    public Output getGradeListByElective(Input input) {
         Output result = new Output();
-        List<Administrator> administratorList = administratorService.query();
-        if(administratorList.size() == 0){
-            return new Output(ERROR_NO_RECORD, "无对应的管理者");
+        TbElective tbElective = electiveService.get(input.getLong("electiveId"));
+        if (null == tbElective) {
+            return new Output(ERROR_NO_RECORD, "没有此授课记录！");
+        }
+        Map<String, Object> param = new HashMap<>();
+        param.put("classId", tbElective.getTbClass().getId());
+        List<TbStudent> tbStudentList = studentService.query(param);
+        if (tbStudentList.size() == 0) {
+            return new Output(ERROR_NO_RECORD, "此班级没有学生！");
+        }
+        List<Map<String, Object>> gradeList = new ArrayList<>();
+        for (TbStudent tbStudent : tbStudentList) {
+            Map<String, Object> gradeParam = new HashMap<>();
+            gradeParam.put("electiveId", tbElective.getId());
+            gradeParam.put("stuId", tbStudent.getId());
+            TbGrade tbGrade = gradeService.get(gradeParam);
+            gradeList.add(toMap(tbGrade, tbElective, tbStudent));
         }
         result.setStatus(SUCCESS);
-        result.setData(administratorList);
-        result.setMsg("获取管理者成功！");
+        result.setMsg("获取成绩列表成功！");
+        result.setData(gradeList);
+        return result;
+    }
+
+    /**
+     * 用于展示
+     *
+     * @param tbGrade 成绩类
+     * @param tbElective 授课信息
+     * @param tbStudent 学生
+     * @return
+     */
+    public Map<String, Object> toMap(TbGrade tbGrade, TbElective tbElective, TbStudent tbStudent) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("student", tbStudent);
+        result.put("elective", tbElective);
+        double courseScore = gradeService.getCourseScore(tbElective, tbStudent);
+        result.put("courseScore", courseScore);
+        double testScore = 0;
+        if (tbGrade == null) {
+            result.put("testScore", testScore);
+        } else {
+            result.put("id", tbGrade.getId());
+            testScore = tbGrade.getTestScore();
+            result.put("testScore", testScore);
+        }
+        double total = courseScore * tbElective.getCourseScoreRatio() / 100 + testScore * tbElective.getTestScoreRatio() / 100;
+        result.put("total", total);
         return result;
     }
 }

@@ -15,7 +15,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.wyk.sign.model.User;
+import com.wyk.sign.model.TbUser;
 import com.wyk.framework.utils.DateUtil;
 
 /**
@@ -28,16 +28,17 @@ public class Input implements Serializable {
 
 	private static final long serialVersionUID = -10090147927893672L;
 
-	/** TOKEN （用微信ID作为token） */
+	/** TOKEN （用微信openid作为token） */
 	private String token;
-	
+
+	/** 执行的方法 */
 	private String method;
 	
 	/** 业务参数 */
 	private Map<String, Object> params = new HashMap<String, Object>();
 
 	/** 当前用户 */
-	private User currentUser;
+	private TbUser currentTbUser;
 
 	/**
 	 * 
@@ -226,17 +227,17 @@ public class Input implements Serializable {
 	}
 
 	/**
-	 * @return the currentUser
+	 * @return the currentTbUser
 	 */
-	public User getCurrentUser() {
-		return currentUser;
+	public TbUser getCurrentTbUser() {
+		return currentTbUser;
 	}
 
 	/**
-	 * @param currentUser the currentUser to set
+	 * @param currentTbUser the currentTbUser to set
 	 */
-	public void setCurrentUser(User currentUser) {
-		this.currentUser = currentUser;
+	public void setCurrentTbUser(TbUser currentTbUser) {
+		this.currentTbUser = currentTbUser;
 	}
 	
 }

@@ -13,7 +13,7 @@ import java.util.Map;
  * @author wyk
  *
  */
-public interface ElectiveService extends BaseService<Elective> {
+public interface ElectiveService extends BaseService<TbElective> {
 
 
     /**
@@ -21,19 +21,19 @@ public interface ElectiveService extends BaseService<Elective> {
      * @param param
      * @return
      */
-    List<Course> getCourseList(Map<String, Object> param);
+    List<TbCourse> getCourseList(Map<String, Object> param);
 
     /**
      * 通过courseId 或 adminId 获取班级列表
      * @param param
      * @return
      */
-    List<Classes> getClassesList(Map<String, Object> param);
+    List<TbClass> getClassesList(Map<String, Object> param);
 
     /**
      * 通过courseId 或 classId 获取授课老师列表
      * @param param
      * @return
      */
-    List<Administrator> getTeacherList(Map<String, Object> param);
+    List<TbAdmin> getTeacherList(Map<String, Object> param);
 }

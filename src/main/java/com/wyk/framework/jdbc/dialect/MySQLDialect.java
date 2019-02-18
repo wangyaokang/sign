@@ -3,7 +3,7 @@ package com.wyk.framework.jdbc.dialect;
 /**
  * MySQL的方言
  *
- * @author bocar
+ * @author wyk
  */
 public class MySQLDialect extends Dialect {
 

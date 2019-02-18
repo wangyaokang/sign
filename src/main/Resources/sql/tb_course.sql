@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 签到
-Source Server Version : 80011
+Source Server Version : 50624
 Source Host           : 127.0.0.1:3306
-Source Database       : sign
+Source Database       : tbSign
 
 Target Server Type    : MYSQL
-Target Server Version : 80011
+Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2018-07-18 00:19:02
+Date: 2018-09-14 11:03:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,10 +21,11 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `tb_course`;
 CREATE TABLE `tb_course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '课程名称',
-  `admin_id` int(11) DEFAULT NULL COMMENT '管理者名称',
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '课程名',
+  `letter` varchar(2) DEFAULT NULL COMMENT '首字母',
   `status` int(1) DEFAULT NULL,
-  `created_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `ft_co_name` (`name`) COMMENT '课程名'
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=gbk;

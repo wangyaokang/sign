@@ -4,8 +4,8 @@
 package com.wyk.sign.service.impl;
 
 import com.wyk.framework.service.impl.BaseServiceImpl;
-import com.wyk.sign.model.SignInfo;
-import com.wyk.sign.persistence.SignInfoMapper;
+import com.wyk.sign.model.TbSignInfo;
+import com.wyk.sign.mapper.TbSignInfoMapper;
 import com.wyk.sign.service.SignInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +18,14 @@ import java.util.Map;
  *
  */
 @Service
-public class SignInfoServiceImpl extends BaseServiceImpl<SignInfo> implements SignInfoService {
+public class SignInfoServiceImpl extends BaseServiceImpl<TbSignInfo> implements SignInfoService {
 
     @Autowired
-    SignInfoMapper mapper;
+    TbSignInfoMapper mapper;
 
     @Override
     public List<String> getSignDatesByCurMonth(Map<String, Object> map) {
-        String tokenKey = String.format("%s_query_map_%s", this.getClass().getSimpleName(), map.keySet().toString());
+        String tokenKey = String.format("SignInfoServiceImpl_query_map_%s", map.toString());
         if (null != cacheMap.getContainsKeyOfValue(tokenKey)) {
             logger.info("获取缓存key:{} ", tokenKey);
             return (List<String>) cacheMap.getContainsKeyOfValue(tokenKey);
@@ -38,5 +38,13 @@ public class SignInfoServiceImpl extends BaseServiceImpl<SignInfo> implements Si
         }
 
         return objList;
+    }
+
+    @Override
+    public void batchSave(List<TbSignInfo> tbSignInfoList) {
+        mapper.batchSave(tbSignInfoList);
+        String tokenKey = "SignInfoServiceImpl";
+        cacheMap.removeContainsKey(tokenKey);
+        logger.info("删除包含 {} 的所有缓存！", tokenKey);
     }
 }

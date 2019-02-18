@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wyk.tbSign.mapper.SignInfoMapper">
+
+    <resultMap type="com.wyk.tbSign.model.TbSignInfo" id="signInfoMap">
+        <id property="id" column="id" javaType="long"/>
+        <result property="startDate" column="start_date"/>
+        <result property="stopDate" column="stop_date"/>
+        <result property="address" column="address"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <association property="admin" javaType="com.wyk.tbSign.model.TbAdmin">
+            <id property="id" column="admin_id"/>
+            <result property="wxId" column="admin_wx_id"/>
+            <result property="wxName" column="admin_wx_name"/>
+            <result property="wxAvatarUrl" column="admin_wx_avatar_url"/>
+            <result property="realName" column="admin_real_name"/>
+            <result property="userType" column="admin_user_type"/>
+            <result property="status" column="admin_status"/>
+        </association>
+        <association property="TbClass" javaType="com.wyk.tbSign.model.TbClass">
+            <id property="id" column="class_id"/>
+            <result property="name" column="class_name"/>
+            <result property="status" column="class_status"/>
+        </association>
+        <association property="tbCourse" javaType="com.wyk.tbSign.model.TbCourse">
+            <id property="id" column="course_id"/>
+            <result property="name" column="course_name"/>
+            <result property="status" column="course_status"/>
+        </association>
+    </resultMap>
+
+    <sql id="selectSQL">
+		select s.*,
+			ad.wx_id as admin_wx_id,
+			ad.wx_name as admin_wx_name,
+			ad.wx_avatar_url as admin_wx_avatar_url,
+			ad.real_name as admin_real_name,
+			ad.user_type as admin_user_type,
+			cl.id as class_id,
+			cl.name as class_name,
+			cl.status as class_status,
+			co.name as course_name,
+			co.status as course_status
+		 from tb_sign_info s
+		        inner join tb_classes cl on s.class_id = cl.id
+		 		left join tb_admin ad on s.admin_id = ad.id
+		 		left join tb_course co on s.course_id = co.id
+	</sql>
+
+    <!-- Base Mapper -->
+    <select id="get" parameterType="hashmap" resultMap="signInfoMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="id != null">
+                s.id = #{id}
+            </if>
+        </where>
+        limit 0,1
+    </select>
+
+    <select id="query" resultMap="signInfoMap">
+        <include refid="selectSQL"/>
+    </select>
+
+    <select id="queryByMap" parameterType="hashmap" resultMap="signInfoMap">
+        <include refid="selectSQL"/>
+        <where>
+            <if test="classId != null">
+                cl.id = #{classId}
+            </if>
+            <if test="className != null">
+                and cl.name = #{className}
+            </if>
+            <if test="courseId != null">
+                and co.id = #{courseId}
+            </if>
+            <if test="courseName != null">
+                and co.name = #{courseName}
+            </if>
+            <if test="adminId != null">
+                and ad.id = #{adminId}
+            </if>
+            <if test="wxId != null">
+                and ad.wx_id = #{wxId}
+            </if>
+            <if test="wxName != null">
+                and ad.wx_name = #{wxName}
+            </if>
+            <if test="realName != null">
+                and ad.real_name = #{realName}
+            </if>
+            <if test="selectDate != null">
+                and DATEDIFF(s.start_date, #{selectDate}) = 0
+            </if>
+            <if test="termStartDate != null and termStopDate != null">
+                and DATE_FORMAT(s.start_date, '%Y-%m-%d')
+                between DATE_FORMAT(#{termStartDate}, '%Y-%m-%d') and DATE_FORMAT(#{termStopDate}, '%Y-%m-%d')
+            </if>
+        </where>
+        order by start_date desc
+    </select>
+
+    <insert id="insert" parameterType="com.wyk.tbSign.model.TbSignInfo"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sign_info (
+			admin_id,
+			class_id,
+			course_id,
+			start_date,
+			stop_date,
+			address,
+			latitude,
+			longitude,
+			remark,
+			status)
+		values
+			(#{admin.id},
+			#{TbClass.id},
+			#{tbCourse.id},
+			#{startDate},
+			#{stopDate},
+			#{address},
+			#{latitude},
+			#{longitude},
+			#{remark},
+			#{status})
+	</insert>
+
+    <insert id="batchSave" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_sign_info (
+        admin_id,
+        class_id,
+        course_id,
+        start_date,
+        stop_date,
+        address,
+        latitude,
+        longitude,
+        remark,
+        status)
+        values
+        <foreach collection="list" index="index" item="info" separator=",">
+            (#{info.admin.id},
+            #{info.TbClass.id},
+            #{info.tbCourse.id},
+            #{info.startDate},
+            #{info.stopDate},
+            #{info.address},
+            #{info.latitude},
+            #{info.longitude},
+            #{info.remark},
+            #{info.status})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.wyk.tbSign.model.TbSignInfo">
+		update tb_sign_info set
+		admin_id=#{admin.id},
+		class_id=#{TbClass.id},
+		course_id=#{tbCourse.id},
+		start_date=#{startDate},
+		stop_date=#{stopDate},
+		address=#{address},
+		latitude=#{latitude},
+		longitude=#{longitude},
+		remark=#{remark},
+		status=#{status},
+		modify_time=#{modifyTime}
+		where id = #{id}
+	</update>
+
+    <update id="updateBatch" parameterType="List">
+        <foreach collection="list" separator=";" item="info">
+            update tb_sign_info set
+            admin_id=#{info.admin.id},
+            class_id=#{info.TbClass.id},
+            course_id=#{info.tbCourse.id},
+            start_date=#{info.startDate},
+            stop_date=#{info.stopDate},
+            address=#{info.address},
+            latitude=#{latitude},
+            longitude=#{longitude},
+            remark=#{remark},
+            status=#{info.status},
+            modify_time=#{info.modifyTime}
+            where id = #{info.id}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="com.wyk.tbSign.model.TbSignInfo">
+        delete from tb_sign_info
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteByMap" parameterType="hashmap">
+        delete from tb_sign_info
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+    <!-- End of Base Mapper -->
+
+    <sql id="selectSignDate">
+        SELECT 
+          DISTINCT(DATE_FORMAT(start_date, '%Y-%m-%d')) as start_date 
+        FROM tb_sign_info
+	</sql>
+
+    <select id="getSignDatesByCurMonth" parameterType="hashmap" resultType="String">
+        <include refid="selectSignDate"/>
+        <where>
+            <if test="adminId != null">
+                admin_id = #{adminId}
+            </if>
+            <if test="classId != null">
+                and class_id = #{classId}
+            </if>
+            <if test="curMonth != null">
+                and DATE_FORMAT(start_date, '%Y-%m') = #{curMonth}
+            </if>
+            order by start_date desc
+        </where>
+    </select>
+
+</mapper>

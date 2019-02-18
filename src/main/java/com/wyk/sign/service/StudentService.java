@@ -3,30 +3,21 @@
  */
 package com.wyk.sign.service;
 
-import com.wyk.sign.model.Student;
+import com.wyk.sign.model.TbStudent;
 import com.wyk.framework.service.BaseService;
-
-import java.util.List;
 
 /**
  * @author wyk
  *
  */
-public interface StudentService extends BaseService<Student> {
-
-    /**
-     * 匿名登录
-     *
-     * @return
-     */
-    Student getAnonymous();
+public interface StudentService extends BaseService<TbStudent> {
 
     /**
      * 根据token获取user对象
      * @param token
      * @return
      */
-    Student getUserByToken(String token);
+    TbStudent getUserByToken(String token);
 
     /**
      * 判断缓存中是否存在Student对象

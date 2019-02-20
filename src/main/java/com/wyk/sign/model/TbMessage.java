@@ -1,5 +1,10 @@
 package com.wyk.sign.model;
 
+/**
+ * 消息
+ *
+ * @author  wyk
+ */
 public class TbMessage extends BaseModel{
 
     private static final long serialVersionUID = -2500187394698101974L;

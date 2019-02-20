@@ -4,7 +4,6 @@
 package com.wyk.sign.web.api;
 
 import java.io.*;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -14,13 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wyk.framework.utils.FileUtil;
-import com.wyk.sign.annotation.Checked;
-import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.TbUser;
-import com.wyk.sign.service.AdministratorService;
-import com.wyk.sign.service.ClassesService;
-import com.wyk.sign.service.ElectiveService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +32,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wyk.sign.exception.SignException;
-import com.wyk.sign.service.StudentService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import com.wyk.framework.web.WebxController;
@@ -54,24 +47,32 @@ public abstract class AbstractController implements WebxController {
     protected transient Logger logger = LogManager.getLogger(this.getClass());
 
     @Autowired
-    StudentService studentService;
+    protected TbStudentService tbStudentService;
     @Autowired
-    AdministratorService administratorService;
+    protected TbAdminService tbAdminService;
     @Autowired
-    ClassesService classesService;
+    protected TbClassService tbClassService;
     @Autowired
-    ElectiveService electiveService;
+    protected TbElectiveService tbElectiveService;
+    @Autowired
+    protected TbCourseService tbCourseService;
+    @Autowired
+    protected TbGradeService tbGradeService;
+    @Autowired
+    protected TbSignService tbSignService;
+    @Autowired
+    protected TbTaskService tbTaskService;
+    @Autowired
+    protected TbSignInfoService tbSignInfoService;
+    @Autowired
+    protected TbTaskInfoService tbTaskInfoService;
 
     @Value("#{properties['web.upload.path']}")
     protected String uploadPath;
-
     @Value("#{properties['web.context.path']}")
     protected String contextPath;
-
     @Autowired
     protected ServletContext context;
-
-
 
     /**
      * Dispatch
@@ -91,10 +92,10 @@ public abstract class AbstractController implements WebxController {
             logger.info("执行了的接口, 返回数据: " + JSONObject.toJSONString(result));
             return result;
         } catch (SignException ae) {
-            return new Output(ae.getStatus(), ae.getMessage());
+            return Output.getFail(ae.getStatus(), ae.getMessage());
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new Output(ERROR_UNKNOWN, ex.getMessage());
+            return Output.getFail(ERROR_UNKNOWN, ex.getMessage());
         }
     }
 
@@ -108,43 +109,6 @@ public abstract class AbstractController implements WebxController {
         String method = input.getMethod();
         try {
             Method md = this.getClass().getDeclaredMethod(method, Input.class);
-            // 如果有@Checked注解的需要做信息检测判断
-            Annotation annotation = md.getAnnotation(Checked.class);
-            if (annotation != null) {
-                Item itemValue = ((Checked) annotation).value();
-                TbUser currentTbUser = input.getCurrentTbUser() == null ? getCurrentUserByToken(input.getToken()) : input.getCurrentTbUser();
-                if (Item.TYPE.equals(itemValue)) {
-                    if (currentTbUser == null) {
-                        return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
-                    }
-                }
-
-                if (Item.STU.equals(itemValue)) {
-                    if (null == currentTbUser || null == currentTbUser.getUserType()) {
-                        return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
-                    }
-
-                    if (null == currentTbUser.getClass()) {
-                        return new Output(ERROR_UNKNOWN, "未选择【班级】，请先完善个人信息！");
-                    }
-
-                    if (!Constants.User.STUDENT.equals(currentTbUser.getUserType())) {
-                        return new Output(ERROR_UNKNOWN, "用户类型非学生！");
-                    }
-                }
-
-                if (Item.ADMIN.equals(itemValue)) {
-                    if (null == currentTbUser || null == currentTbUser.getUserType()) {
-                        return new Output(ERROR_UNKNOWN, "未选择【用户类型】，请先完善个人信息！");
-                    }
-
-                    if (!(Constants.User.TEACHER.equals(currentTbUser.getUserType()) || Constants.User.COUNSELLOR.equals(currentTbUser.getUserType()))) {
-                        return new Output(ERROR_UNKNOWN, "非管理员，无权限操作！");
-                    }
-                }
-
-                input.setCurrentTbUser(currentTbUser);
-            }
             return (Output) md.invoke(this, input);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
@@ -170,37 +134,13 @@ public abstract class AbstractController implements WebxController {
         }
         String jsonStr = sb.toString();
         if (StringUtils.isEmpty(jsonStr)) {
-            jsonStr = request.getParameter("data");
+            jsonStr = request.getParameter(DATA);
         }
         logger.info("接口请求数据: " + jsonStr);
         if (StringUtils.isEmpty(jsonStr)) {
             throw new SignException(ERROR_NO_RECORD, "请求参数为空");
         }
         return JSONObject.parseObject(jsonStr, Input.class);
-    }
-
-    /**
-     * 获得当前用户信息（可重载）
-     *
-     * @param token
-     * @return
-     */
-    protected TbUser getCurrentUserByToken(String token) {
-        // 当缓存中存在对象时直接取缓存中的数据
-        if(administratorService.hasCacheAdministrator(token)){
-            return administratorService.getUserByToken(token);
-        }
-
-        if(studentService.hasCacheStudent(token)){
-            return studentService.getUserByToken(token);
-        }
-
-        // 当缓存中无值时，查询数据库
-        TbUser tbUser = administratorService.getUserByToken(token);
-        if (null == tbUser) {
-            tbUser = studentService.getUserByToken(token);
-        }
-        return tbUser;
     }
 
     /**
@@ -353,5 +293,4 @@ public abstract class AbstractController implements WebxController {
         }
         return result;
     }
-
 }

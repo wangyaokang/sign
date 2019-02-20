@@ -3,15 +3,15 @@ package com.wyk.sign.model;
 import com.wyk.framework.entity.AutoIdEntity;
 
 /**
- * 课程
+ * 组别
+ *
+ * <pre>XX级XX专业XX组</pre>
  *
  * @author wyk
  */
-public class TbCourse extends AutoIdEntity {
+public class TbGroup extends BaseModel {
 
-    private static final long serialVersionUID = -7522836192412894623L;
-
-    /** 课程名 */
+    /** 组别名称 */
     private String name;
 
     public String getName() {
@@ -21,5 +21,4 @@ public class TbCourse extends AutoIdEntity {
     public void setName(String name) {
         this.name = name;
     }
-
 }

@@ -28,8 +28,8 @@ public class Input implements Serializable {
 
 	private static final long serialVersionUID = -10090147927893672L;
 
-	/** TOKEN （用微信openid作为token） */
-	private String token;
+	/** 微信openid */
+	private String openid;
 
 	/** 执行的方法 */
 	private String method;
@@ -184,18 +184,12 @@ public class Input implements Serializable {
 		return bean;
 	}
 
-	/**
-	 * @return the token
-	 */
-	public String getToken() {
-		return token;
+	public String getOpenid() {
+		return openid;
 	}
 
-	/**
-	 * @param token the token to set
-	 */
-	public void setToken(String token) {
-		this.token = token;
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	/**

@@ -6,8 +6,8 @@ package com.wyk.sign.web.api;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.TbCourse;
-import com.wyk.sign.service.CourseService;
-import com.wyk.sign.service.ElectiveService;
+import com.wyk.sign.service.TbCourseService;
+import com.wyk.sign.service.TbElectiveService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -26,13 +26,6 @@ import java.util.Map;
 @Controller("apiCourse")
 @RequestMapping("/api/course")
 public class CourseController extends AbstractController {
-
-    @Autowired
-    CourseService courseService;
-
-    @Autowired
-    ElectiveService electiveService;
-
     /**
      * 新增
      * <p>传入参数</p>
@@ -53,7 +46,7 @@ public class CourseController extends AbstractController {
             return new Output(ERROR_NO_RECORD, "课程名不能为空！");
         }
         tbCourse.setName(input.getString("name"));
-        courseService.insert(tbCourse);
+        tbCourseService.insert(tbCourse);
         result.setData(tbCourse);
         result.setStatus(SUCCESS);
         result.setMsg("课程新增成功！");
@@ -75,7 +68,7 @@ public class CourseController extends AbstractController {
     @Checked(Item.TYPE)
     public Output info(Input input) {
         Output result = new Output();
-        TbCourse tbCourse = courseService.get(input.getLong("id"));
+        TbCourse tbCourse = tbCourseService.get(input.getLong("id"));
         if (null == tbCourse) {
             return new Output(ERROR_NO_RECORD, "没有对应的课程");
         }
@@ -100,15 +93,15 @@ public class CourseController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input){
         Output result = new Output();
-        TbCourse tbCourse = courseService.get(input.getLong("id"));
+        TbCourse tbCourse = tbCourseService.get(input.getLong("id"));
         if(null == tbCourse){
             return new Output(ERROR_NO_RECORD, "没有此课程！");
         }
         // 删除对应课程的授课信息
         Map<String, Object> param = new HashMap<>();
         param.put("courseId", tbCourse.getId());
-        electiveService.deleteByMap(param);
-        courseService.delete(tbCourse);
+        tbElectiveService.deleteByMap(param);
+        tbCourseService.delete(tbCourse);
         result.setMsg("删除课程成功");
         result.setStatus(SUCCESS);
         return result;
@@ -127,7 +120,7 @@ public class CourseController extends AbstractController {
      */
     public Output queryCourses(Input input){
         Output result = new Output();
-        List<TbCourse> tbCourseList = courseService.query();
+        List<TbCourse> tbCourseList = tbCourseService.query();
         if(tbCourseList.size() == 0){
             return new Output(ERROR_NO_RECORD, "没有创建任何课程！");
         }

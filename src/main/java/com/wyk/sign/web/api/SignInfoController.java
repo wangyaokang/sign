@@ -7,10 +7,10 @@ import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.ElectiveService;
-import com.wyk.sign.service.SignInfoService;
-import com.wyk.sign.service.SignService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.TbElectiveService;
+import com.wyk.sign.service.TbSignInfoService;
+import com.wyk.sign.service.TbSignService;
+import com.wyk.sign.conts.Constants;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -34,13 +34,13 @@ import java.util.*;
 public class SignInfoController extends AbstractController {
 
     @Autowired
-    SignInfoService signInfoService;
+    TbSignInfoService tbSignInfoService;
 
     @Autowired
-    SignService signService;
+    TbSignService tbSignService;
 
     @Autowired
-    ElectiveService electiveService;
+    TbElectiveService tbElectiveService;
 
     /**
      * 创建签到
@@ -86,7 +86,7 @@ public class SignInfoController extends AbstractController {
 
         if (admin.getUserType().equals(Constants.User.TEACHER) && StringUtils.isNotEmpty(input.getString("courseId"))) {
             input.getParams().put("adminId", admin.getId());
-            TbElective tbElective = electiveService.get(input.getParams());
+            TbElective tbElective = tbElectiveService.get(input.getParams());
             if (null == tbElective) {
                 return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
             }
@@ -129,10 +129,10 @@ public class SignInfoController extends AbstractController {
                     tbSignInfoList.add(tbSignInfo);
 
                     if (i % 10 == 0 && i >= 10) {
-                        signInfoService.batchSave(tbSignInfoList);
+                        tbSignInfoService.batchSave(tbSignInfoList);
                         tbSignInfoList.clear();
                     } else if (i == diffDays) {
-                        signInfoService.batchSave(tbSignInfoList);
+                        tbSignInfoService.batchSave(tbSignInfoList);
                     }
                 }
             } catch (Exception e) {
@@ -153,7 +153,7 @@ public class SignInfoController extends AbstractController {
             String stopDate = input.getString("signDate").concat(DateUtil.BLANK).concat(input.getString("signStopTime"));
             tbSignInfo.setStartDate(DateUtil.parse(startDate, "yyyy-MM-dd HH:mm"));
             tbSignInfo.setStopDate(DateUtil.parse(stopDate, "yyyy-MM-dd HH:mm"));
-            signInfoService.insert(tbSignInfo);
+            tbSignInfoService.insert(tbSignInfo);
         } else {
             return new Output(ERROR_NO_RECORD, "签到日期为空，请重填！");
         }
@@ -198,7 +198,7 @@ public class SignInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-        TbSignInfo tbSignInfo = signInfoService.get(input.getLong("id"));
+        TbSignInfo tbSignInfo = tbSignInfoService.get(input.getLong("id"));
         if (null == tbSignInfo) {
             return new Output(ERROR_NO_RECORD, "未获取到对应的签到信息！");
         }
@@ -238,7 +238,7 @@ public class SignInfoController extends AbstractController {
                 tbSignInfo.setTbCourse(tbCourse);
             }
             tbSignInfo.setModifyTime(new Date());
-            signInfoService.update(tbSignInfo);
+            tbSignInfoService.update(tbSignInfo);
         }catch (Exception e){
             logger.error(e, e);
         }
@@ -272,7 +272,7 @@ public class SignInfoController extends AbstractController {
             }
             param.put("adminId", tbUser.getId());
         }
-        List<TbSignInfo> signingInfoList = signInfoService.query(param);
+        List<TbSignInfo> signingInfoList = tbSignInfoService.query(param);
         result.setData(toArray(signingInfoList, tbUser));
         result.setStatus(SUCCESS);
         result.setMsg("获取签到信息成功！");
@@ -295,15 +295,15 @@ public class SignInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input) {
         Output result = new Output();
-        TbSignInfo signingInfo = signInfoService.get(input.getLong("id"));
+        TbSignInfo signingInfo = tbSignInfoService.get(input.getLong("id"));
         if (null == signingInfo) {
             return new Output(ERROR_NO_RECORD, "没有对应的签到信息！");
         }
         // 删除签到信息下，所有的签到
         Map<String, Object> param = new HashMap<>();
         param.put("infoId", input.getLong("id"));
-        signService.deleteByMap(param);
-        signInfoService.delete(signingInfo);
+        tbSignService.deleteByMap(param);
+        tbSignInfoService.delete(signingInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除签到信息成功！");
         return result;
@@ -333,7 +333,7 @@ public class SignInfoController extends AbstractController {
             param.put("adminId", tbUser.getId());
         }
         param.put("selectDate", input.getString("selectDate"));
-        List<TbSignInfo> tbSignInfoList = signInfoService.query(param);
+        List<TbSignInfo> tbSignInfoList = tbSignInfoService.query(param);
         if (null == tbSignInfoList || tbSignInfoList.size() == 0) {
             return new Output(SUCCESS, "当天无签到信息！");
         }
@@ -368,7 +368,7 @@ public class SignInfoController extends AbstractController {
             param.put("adminId", tbUser.getId());
         }
         param.put("curMonth", input.getString("curMonth"));
-        List<String> signInfoList = signInfoService.getSignDatesByCurMonth(param);
+        List<String> signInfoList = tbSignInfoService.getSignDatesByCurMonth(param);
         result.setData(signInfoList);
         result.setStatus(SUCCESS);
         result.setMsg("获取当月签到日期成功！");
@@ -402,7 +402,7 @@ public class SignInfoController extends AbstractController {
         Map<String, Object> param = new HashMap<>();
         param.put("classId", tbSignInfo.getTbClass().getId());
         Map<String, Object> studentMap = new HashMap<>();
-        List<TbStudent> tbStudentList = studentService.query(param);
+        List<TbStudent> tbStudentList = tbStudentService.query(param);
         studentMap.put(LIST, tbStudentList);
         studentMap.put(TOTAL, tbStudentList.size());
         classesMap.put("studentList", studentMap);
@@ -414,7 +414,7 @@ public class SignInfoController extends AbstractController {
         Map<String, Object> signDetailMap = new HashMap<>();
         param.put("infoId", tbSignInfo.getId());
         param.put("status", Constants.Sign.SIGNED);
-        List<TbSign> tbSignList = signService.query(param);
+        List<TbSign> tbSignList = tbSignService.query(param);
         signDetailMap.put(LIST, tbSignList);
         signDetailMap.put(TOTAL, tbSignList.size());
         result.put("signedList", signDetailMap);
@@ -423,7 +423,7 @@ public class SignInfoController extends AbstractController {
             param = new HashMap<>();
             param.put("infoId", tbSignInfo.getId());
             param.put("wxId", tbUser.getWxId());
-            TbSign tbSign = signService.get(param);
+            TbSign tbSign = tbSignService.get(param);
             result.put("sign", tbSign);
         }
         return result;

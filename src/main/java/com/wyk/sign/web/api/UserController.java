@@ -3,13 +3,11 @@
  */
 package com.wyk.sign.web.api;
 
-import com.wyk.sign.annotation.Checked;
-import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.ClassesService;
-import com.wyk.sign.service.CourseService;
-import com.wyk.sign.service.ElectiveService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.TbClassService;
+import com.wyk.sign.service.TbCourseService;
+import com.wyk.sign.service.TbElectiveService;
+import com.wyk.sign.conts.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,13 +30,13 @@ import java.util.Map;
 public class UserController extends AbstractController {
 
     @Autowired
-    ClassesService classesService;
+    TbClassService tbClassService;
 
     @Autowired
-    CourseService courseService;
+    TbCourseService tbCourseService;
 
     @Autowired
-    ElectiveService electiveService;
+    TbElectiveService tbElectiveService;
 
     /**
      * 获得当前用户的个人信息
@@ -82,20 +80,20 @@ public class UserController extends AbstractController {
                 tbStudent.setRealName(input.getString("realName"));
             }
             if (StringUtils.isNotEmpty(input.getString("classId"))) {
-                TbClass TbClass = classesService.get(input.getLong("classId"));
+                TbClass TbClass = tbClassService.get(input.getLong("classId"));
                 tbStudent.setTbClass(TbClass);
             }
             if (StringUtils.isNotEmpty(input.getString("sno"))) {
                 tbStudent.setSno(input.getString("sno"));
             }
-            studentService.save(tbStudent);
+            tbStudentService.save(tbStudent);
             result.setData(LoginController.toMap(tbStudent));
         } else if (Constants.User.TEACHER.equals(tbUser.getUserType()) || Constants.User.COUNSELLOR.equals(tbUser.getUserType())) {
             TbAdmin admin = (TbAdmin) input.getCurrentTbUser();
             if (StringUtils.isNotEmpty(input.getString("realName"))) {
                 admin.setRealName(input.getString("realName"));
             }
-            administratorService.save(admin);
+            tbAdminService.save(admin);
             result.setData(LoginController.toMap(admin));
         }
         result.setStatus(SUCCESS);
@@ -119,7 +117,7 @@ public class UserController extends AbstractController {
         TbUser tbUser = input.getCurrentTbUser();
         Map<String, Object> param = new HashMap<>();
         param.put("adminId", tbUser.getId());
-        TbClass TbClass = classesService.get(param);
+        TbClass TbClass = tbClassService.get(param);
         if(TbClass == null){
             return new Output(ERROR_NO_RECORD, "没有对应管理的班级！");
         }
@@ -145,7 +143,7 @@ public class UserController extends AbstractController {
         TbUser tbUser = input.getCurrentTbUser();
         Map<String, Object> param = new HashMap<>();
         param.put("adminId", tbUser.getId());
-        List<TbClass> TbClassList = electiveService.getClassesList(param);
+        List<TbClass> TbClassList = tbElectiveService.getClassesList(param);
         if(TbClassList.size() == 0){
             return new Output(ERROR_NO_RECORD, "没有对应的授课班级！");
         }
@@ -168,7 +166,7 @@ public class UserController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output getAdminList(Input input){
         Output result = new Output();
-        List<TbAdmin> TbAdminList = administratorService.query();
+        List<TbAdmin> TbAdminList = tbAdminService.query();
         if(TbAdminList.size() == 0){
             return new Output(ERROR_NO_RECORD, "无对应的管理者");
         }
@@ -191,7 +189,7 @@ public class UserController extends AbstractController {
     @Checked(Item.TYPE)
     public Output flushCache(Input input){
         Output result = new Output();
-        administratorService.flushCache();
+        tbAdminService.flushCache();
         result.setStatus(SUCCESS);
         result.setMsg("缓存刷新成功！");
         return result;

@@ -13,6 +13,17 @@ public class TbSignInfo extends BaseModel{
 
     private static final long serialVersionUID = 3447772102234030500L;
 
+
+    /**
+     * 签到名称
+     *
+     * <pre>默认是课程名</pre>
+     */
+    private String name;
+
+    /** 对应班级 */
+    private TbClass TbClass;
+
     /** 管理者 */
     private TbAdmin admin;
 
@@ -31,17 +42,19 @@ public class TbSignInfo extends BaseModel{
     /** 纬度 */
     private String latitude;
 
-    /** 对应班级 */
-    private TbClass TbClass;
-
-    /** 对应课程 */
-    private TbCourse tbCourse;
-
     /** 备注 */
     private String remark;
 
     /** 对应签到情况 */
     private List<TbSign> tbSignList;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public TbAdmin getAdmin() {
         return admin;
@@ -97,14 +110,6 @@ public class TbSignInfo extends BaseModel{
 
     public void setTbClass(TbClass tbClass) {
         this.TbClass = tbClass;
-    }
-
-    public TbCourse getTbCourse() {
-        return tbCourse;
-    }
-
-    public void setTbCourse(TbCourse tbCourse) {
-        this.tbCourse = tbCourse;
     }
 
     public String getRemark() {

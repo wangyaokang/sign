@@ -6,8 +6,8 @@ package com.wyk.sign.web.api;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.ElectiveService;
-import com.wyk.sign.service.GradeService;
+import com.wyk.sign.service.TbElectiveService;
+import com.wyk.sign.service.TbGradeService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -29,11 +29,10 @@ import java.util.Map;
 @RequestMapping("/api/grade")
 public class GradeController extends AbstractController {
 
-    @Autowired
-    GradeService gradeService;
+
 
     @Autowired
-    ElectiveService electiveService;
+    TbElectiveService tbElectiveService;
 
     /**
      * 保存
@@ -43,7 +42,7 @@ public class GradeController extends AbstractController {
      */
     public Output save(Input input) {
         Output result = new Output();
-        TbGrade tbGrade = gradeService.get(input.getLong("id"));
+        TbGrade tbGrade = tbGradeService.get(input.getLong("id"));
         // 没有成绩时直接新建
         if (null == tbGrade) {
             tbGrade = new TbGrade();
@@ -66,7 +65,7 @@ public class GradeController extends AbstractController {
             tbGrade.setTestScore(input.getInteger("testScore"));
         }
 
-        gradeService.save(tbGrade);
+        tbGradeService.save(tbGrade);
         result.setMsg("成绩保存成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -88,19 +87,19 @@ public class GradeController extends AbstractController {
     @Checked(Item.TYPE)
     public Output getUserGradeList(Input input) {
         Output result = new Output();
-        TbStudent tbStudent = studentService.get(input.getLong("stuId"));
+        TbStudent tbStudent = tbStudentService.get(input.getLong("stuId"));
         if (null == tbStudent) {
             return new Output(ERROR_NO_RECORD, "没有此学生！");
         }
         Map<String, Object> param = new HashMap<>();
         param.put("classId", tbStudent.getTbClass().getId());
-        List<TbElective> tbElectiveList = electiveService.query(param);
+        List<TbElective> tbElectiveList = tbElectiveService.query(param);
         List<Map<String, Object>> gradeList = new ArrayList<>();
         for (TbElective tbElective : tbElectiveList) {
             Map<String, Object> map = new HashMap<>();
             map.put("electiveId", tbElective.getId());
             map.put("stuId", tbStudent.getId());
-            TbGrade tbGrade = gradeService.get(map);
+            TbGrade tbGrade = tbGradeService.get(map);
             gradeList.add(toMap(tbGrade, tbElective, tbStudent));
         }
 
@@ -125,13 +124,13 @@ public class GradeController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output getGradeListByElective(Input input) {
         Output result = new Output();
-        TbElective tbElective = electiveService.get(input.getLong("electiveId"));
+        TbElective tbElective = tbElectiveService.get(input.getLong("electiveId"));
         if (null == tbElective) {
             return new Output(ERROR_NO_RECORD, "没有此授课记录！");
         }
         Map<String, Object> param = new HashMap<>();
         param.put("classId", tbElective.getTbClass().getId());
-        List<TbStudent> tbStudentList = studentService.query(param);
+        List<TbStudent> tbStudentList = tbStudentService.query(param);
         if (tbStudentList.size() == 0) {
             return new Output(ERROR_NO_RECORD, "此班级没有学生！");
         }
@@ -140,7 +139,7 @@ public class GradeController extends AbstractController {
             Map<String, Object> gradeParam = new HashMap<>();
             gradeParam.put("electiveId", tbElective.getId());
             gradeParam.put("stuId", tbStudent.getId());
-            TbGrade tbGrade = gradeService.get(gradeParam);
+            TbGrade tbGrade = tbGradeService.get(gradeParam);
             gradeList.add(toMap(tbGrade, tbElective, tbStudent));
         }
         result.setStatus(SUCCESS);
@@ -161,7 +160,7 @@ public class GradeController extends AbstractController {
         Map<String, Object> result = new HashMap<>();
         result.put("student", tbStudent);
         result.put("elective", tbElective);
-        double courseScore = gradeService.getCourseScore(tbElective, tbStudent);
+        double courseScore = tbGradeService.getCourseScore(tbElective, tbStudent);
         result.put("courseScore", courseScore);
         double testScore = 0;
         if (tbGrade == null) {

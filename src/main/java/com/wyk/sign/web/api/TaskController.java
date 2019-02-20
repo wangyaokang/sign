@@ -8,9 +8,9 @@ import com.wyk.framework.utils.FileUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.TaskInfoService;
-import com.wyk.sign.service.TaskService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.TbTaskInfoService;
+import com.wyk.sign.service.TbTaskService;
+import com.wyk.sign.conts.Constants;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -37,10 +37,10 @@ import java.util.*;
 public class TaskController extends AbstractController {
 
     @Autowired
-    TaskInfoService taskInfoService;
+    TbTaskInfoService tbTaskInfoService;
 
     @Autowired
-    TaskService taskService;
+    TbTaskService tbTaskService;
 
     /**
      * 创建作业（上交作业）
@@ -58,7 +58,7 @@ public class TaskController extends AbstractController {
     public Output insert(Input input) {
         Output result = new Output();
         try{
-            TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("infoId"));
+            TbTaskInfo tbTaskInfo = tbTaskInfoService.get(input.getLong("infoId"));
             if (null == tbTaskInfo) {
                 return new Output(ERROR_NO_RECORD, "没有对应作业信息！");
             }
@@ -66,7 +66,7 @@ public class TaskController extends AbstractController {
             Map<String, Object> param = new HashMap<>();
             param.put("infoId", tbTaskInfo.getId());
             param.put("stuId", tbStudent.getId());
-            TbTask tbTask = taskService.get(param);
+            TbTask tbTask = tbTaskService.get(param);
             if (null == tbTask) {
                 tbTask = new TbTask();
             }
@@ -82,7 +82,7 @@ public class TaskController extends AbstractController {
             tbTask.setDesc(input.getString("desc"));
             tbTask.setStatus(Constants.Task.UPLOAD_STATUS_YJ);
             tbTask.setScore(Constants.Task.DEFAULT_SCORE);
-            taskService.save(tbTask);
+            tbTaskService.save(tbTask);
             result.setMsg("作业上交成功！");
             result.setStatus(SUCCESS);
         }catch (Exception e){
@@ -108,7 +108,7 @@ public class TaskController extends AbstractController {
     @Checked(Item.STU)
     public Output modify(Input input) {
         Output result = new Output();
-        TbTask tbTask = taskService.get(input.getLong("id"));
+        TbTask tbTask = tbTaskService.get(input.getLong("id"));
         if (tbTask == null) {
             return new Output(ERROR_NO_RECORD, "没有上交作业！");
         }
@@ -119,7 +119,7 @@ public class TaskController extends AbstractController {
             tbTask.setDesc(input.getString("desc"));
         }
         tbTask.setCreateTime(new Date());
-        taskService.update(tbTask);
+        tbTaskService.update(tbTask);
         result.setMsg("修改作业成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -142,11 +142,11 @@ public class TaskController extends AbstractController {
     @Checked(Item.TYPE)
     public Output delete(Input input) {
         Output result = new Output();
-        TbTask tbTask = taskService.get(input.getLong("id"));
+        TbTask tbTask = tbTaskService.get(input.getLong("id"));
         if (null == tbTask) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业！");
         }
-        taskService.delete(tbTask);
+        tbTaskService.delete(tbTask);
         result.setMsg("删除作业成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -167,12 +167,12 @@ public class TaskController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output score(Input input) {
         Output result = new Output();
-        TbTask tbTask = taskService.get(input.getLong("id"));
+        TbTask tbTask = tbTaskService.get(input.getLong("id"));
         if (null == tbTask) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业！");
         }
         tbTask.setScore(input.getInteger("score"));
-        taskService.update(tbTask);
+        tbTaskService.update(tbTask);
         result.setMsg("评分成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -238,14 +238,14 @@ public class TaskController extends AbstractController {
     @Checked(Item.TYPE)
     public Output getTaskListByInfoId(Input input) {
         Output result = new Output();
-        TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("infoId"));
+        TbTaskInfo tbTaskInfo = tbTaskInfoService.get(input.getLong("infoId"));
         if (null == tbTaskInfo) {
             return new Output(ERROR_UNKNOWN, "没有对应的作业信息，请重试！");
         }
 
         Map<String, Object> param = new HashMap<>();
         param.put("classId", tbTaskInfo.getTbClass().getId());
-        List<TbStudent> tbStudentList = studentService.query(param);
+        List<TbStudent> tbStudentList = tbStudentService.query(param);
         List<Map<String, Object>> taskList = new ArrayList<>();
         for (TbStudent tbStudent : tbStudentList) {
             taskList.add(toMap(tbStudent, tbTaskInfo));
@@ -285,7 +285,7 @@ public class TaskController extends AbstractController {
         Map<String, Object> param = new HashMap<>();
         param.put("infoId", tbTaskInfo.getId());
         param.put("stuId", tbStudent.getId());
-        TbTask tbTask = taskService.get(param);
+        TbTask tbTask = tbTaskService.get(param);
         if (tbTask == null) {
             result.put("upFileUrl", null);
             result.put("desc", null);

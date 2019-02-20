@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * 学生
- * <pre> userType = 3</pre>
  *
  * @author wyk
  *
@@ -16,8 +15,14 @@ public class TbStudent extends TbUser {
     /** 学号 */
     private String sno;
 
+    /** 组别 */
+    private TbGroup tbGroup;
+
+    /** 课程 */
+    private List<TbCourse> tbCourseList;
+
     /** 所属班级 */
-    private TbClass TbClass;
+    private List<TbClass> tbClassList;
 
     /** 我的作业 */
     private List<TbTask> tbTaskList;
@@ -25,12 +30,28 @@ public class TbStudent extends TbUser {
     /** 我的签到 */
     private List<TbSign> tbSignList;
 
-    public TbClass getTbClass() {
-        return TbClass;
+    public TbGroup getTbGroup() {
+        return tbGroup;
     }
 
-    public void setTbClass(TbClass tbClass) {
-        this.TbClass = tbClass;
+    public void setTbGroup(TbGroup tbGroup) {
+        this.tbGroup = tbGroup;
+    }
+
+    public List<TbCourse> getTbCourseList() {
+        return tbCourseList;
+    }
+
+    public void setTbCourseList(List<TbCourse> tbCourseList) {
+        this.tbCourseList = tbCourseList;
+    }
+
+    public List<TbClass> getTbClassList() {
+        return tbClassList;
+    }
+
+    public void setTbClassList(List<TbClass> tbClassList) {
+        this.tbClassList = tbClassList;
     }
 
     public String getSno() {

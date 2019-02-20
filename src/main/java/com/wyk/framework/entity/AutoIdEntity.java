@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 拥有自增长主键的Entity基础类
  * <p>推荐使用</p>
  *
- * @author wyk
+ * @author Peter Wang
  */
 public abstract class AutoIdEntity implements Serializable {
 

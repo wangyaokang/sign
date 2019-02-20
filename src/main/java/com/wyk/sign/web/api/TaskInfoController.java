@@ -8,10 +8,10 @@ import com.wyk.framework.utils.DateUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.ElectiveService;
-import com.wyk.sign.service.TaskInfoService;
-import com.wyk.sign.service.TaskService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.TbElectiveService;
+import com.wyk.sign.service.TbTaskInfoService;
+import com.wyk.sign.service.TbTaskService;
+import com.wyk.sign.conts.Constants;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -35,13 +35,13 @@ import java.util.Map;
 public class TaskInfoController extends AbstractController {
 
     @Autowired
-    TaskInfoService taskInfoService;
+    TbTaskInfoService tbTaskInfoService;
 
     @Autowired
-    TaskService taskService;
+    TbTaskService tbTaskService;
 
     @Autowired
-    ElectiveService electiveService;
+    TbElectiveService tbElectiveService;
 
     /**
      * 创建作业信息
@@ -76,7 +76,7 @@ public class TaskInfoController extends AbstractController {
             if (StringUtils.isEmpty(input.getString("courseId")) || StringUtils.isEmpty(input.getString("classId"))) {
                 return new Output(ERROR_UNKNOWN, "请选择对应的课程和班级！");
             }
-            TbElective tbElective = electiveService.get(input.getParams());
+            TbElective tbElective = tbElectiveService.get(input.getParams());
             if (null == tbElective) {
                 return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
             }
@@ -86,7 +86,7 @@ public class TaskInfoController extends AbstractController {
             TbCourse tbCourse = new TbCourse();
             tbCourse.setId(input.getLong("courseId"));
             tbTaskInfo.setTbCourse(tbCourse);
-            taskInfoService.insert(tbTaskInfo);
+            tbTaskInfoService.insert(tbTaskInfo);
             result.setMsg("创建作业信息成功！");
             result.setStatus(SUCCESS);
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-        TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("id"));
+        TbTaskInfo tbTaskInfo = tbTaskInfoService.get(input.getLong("id"));
         if (null == tbTaskInfo) {
             return new Output(ERROR_NO_RECORD, "未获取到对应的作业信息！");
         }
@@ -118,7 +118,7 @@ public class TaskInfoController extends AbstractController {
         param.put("classId", input.getString("classId"));
         param.put("courseId", input.getString("courseId"));
         param.put("adminId", input.getCurrentTbUser().getId());
-        TbElective tbElective = electiveService.get(param);
+        TbElective tbElective = tbElectiveService.get(param);
         if (null == tbElective) {
             return new Output(ERROR_NO_RECORD, "没有此授课信息，请检查对应的授课课程和班级！");
         }
@@ -143,7 +143,7 @@ public class TaskInfoController extends AbstractController {
             tbCourse.setId(input.getLong("courseId"));
             tbTaskInfo.setTbCourse(tbCourse);
         }
-        taskInfoService.update(tbTaskInfo);
+        tbTaskInfoService.update(tbTaskInfo);
         result.setStatus(SUCCESS);
         result.setMsg("作业信息修改成功！");
         return result;
@@ -173,7 +173,7 @@ public class TaskInfoController extends AbstractController {
             param.put("classId", ((TbStudent) tbUser).getTbClass().getId());
         }
         param.put("courseId", input.getString("courseId"));
-        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(param);
+        List<TbTaskInfo> tbTaskInfoList = tbTaskInfoService.query(param);
         result.setData(toArray(tbTaskInfoList));
         result.setStatus(SUCCESS);
         result.setMsg("获取作业信息成功！");
@@ -196,15 +196,15 @@ public class TaskInfoController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input) {
         Output result = new Output();
-        TbTaskInfo tbTaskInfo = taskInfoService.get(input.getLong("id"));
+        TbTaskInfo tbTaskInfo = tbTaskInfoService.get(input.getLong("id"));
         if (null == tbTaskInfo) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业信息！");
         }
         // 删除作业信息下，所有的作业
         Map<String, Object> param = new HashMap<>();
         param.put("infoId", input.getLong("id"));
-        taskService.deleteByMap(param);
-        taskInfoService.delete(tbTaskInfo);
+        tbTaskService.deleteByMap(param);
+        tbTaskInfoService.delete(tbTaskInfo);
         result.setStatus(SUCCESS);
         result.setMsg("删除作业信息成功！");
         return result;
@@ -230,7 +230,7 @@ public class TaskInfoController extends AbstractController {
         // 防止输入除keyword之外过多的参数，新建一个map
         Map<String, Object> keyMap = new HashMap<>();
         keyMap.put("keyWord", input.getString("keyWord"));
-        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(input.getParams());
+        List<TbTaskInfo> tbTaskInfoList = tbTaskInfoService.query(input.getParams());
         result.setMsg(SUCCESS);
         result.setData(tbTaskInfoList);
         result.setMsg("搜索成功！");
@@ -260,7 +260,7 @@ public class TaskInfoController extends AbstractController {
             param.put("adminId", tbUser.getId());
         }
 
-        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(param);
+        List<TbTaskInfo> tbTaskInfoList = tbTaskInfoService.query(param);
         result.setData(toArray(tbTaskInfoList));
         result.setStatus(SUCCESS);
         result.setMsg("获取作业信息成功！");
@@ -300,7 +300,7 @@ public class TaskInfoController extends AbstractController {
         }
 
         Paginator paginator = new Paginator(page, rows);
-        List<TbTaskInfo> tbTaskInfoList = taskInfoService.query(param, paginator);
+        List<TbTaskInfo> tbTaskInfoList = tbTaskInfoService.query(param, paginator);
         Map<String, Object> data = new HashMap<>();
         data.put(LIST, toArray(tbTaskInfoList));
         data.put(PAGE, page);

@@ -33,6 +33,7 @@ public class TbTaskInfo extends BaseModel{
     /** 题目 */
     private String title;
 
+    /** 作业情况 */
     private List<Task> taskList;
 
     public String getContent() {

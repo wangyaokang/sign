@@ -9,7 +9,7 @@ import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.TbAdmin;
 import com.wyk.sign.model.TbMessage;
-import com.wyk.sign.service.MessageService;
+import com.wyk.sign.service.TbMessageService;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +37,7 @@ import java.util.Map;
 public class MessageController extends AbstractController {
 
     @Autowired
-    MessageService messageService;
+    TbMessageService tbMessageService;
 
     /**
      * 新增
@@ -62,7 +62,7 @@ public class MessageController extends AbstractController {
         tbMessage.setCreator((TbAdmin) input.getCurrentTbUser());
         tbMessage.setImageUrl(input.getString("imageUrl"));
         tbMessage.setUploadFileUrl(input.getString("uploadFileUrl"));
-        messageService.insert(tbMessage);
+        tbMessageService.insert(tbMessage);
         result.setStatus(SUCCESS);
         result.setMsg("消息新增成功！");
         return result;
@@ -84,7 +84,7 @@ public class MessageController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output modify(Input input) {
         Output result = new Output();
-        TbMessage tbMessage = messageService.get(input.getLong("id"));
+        TbMessage tbMessage = tbMessageService.get(input.getLong("id"));
         if (null == tbMessage) {
             return new Output(ERROR_UNKNOWN, "没有此活动消息");
         }
@@ -104,7 +104,7 @@ public class MessageController extends AbstractController {
         if (StringUtils.isNotEmpty(input.getString("uploadFileUrl"))) {
             tbMessage.setUploadFileUrl(input.getString("uploadFileUrl"));
         }
-        messageService.save(tbMessage);
+        tbMessageService.save(tbMessage);
         result.setStatus(SUCCESS);
         result.setMsg("消息修改成功！");
         return result;
@@ -126,7 +126,7 @@ public class MessageController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output delete(Input input) {
         Output result = new Output();
-        TbMessage tbMessage = messageService.get(input.getLong("id"));
+        TbMessage tbMessage = tbMessageService.get(input.getLong("id"));
         if (null == tbMessage) {
             return new Output(ERROR_NO_RECORD, "没有对应的作业信息！");
         }
@@ -145,7 +145,7 @@ public class MessageController extends AbstractController {
                 return new Output(ERROR_UNKNOWN, "获取附件失败，请稍后重试！");
             }
         }
-        messageService.delete(tbMessage);
+        tbMessageService.delete(tbMessage);
         result.setStatus(SUCCESS);
         result.setMsg("删除作业信息成功！");
         return result;
@@ -202,7 +202,7 @@ public class MessageController extends AbstractController {
      */
     public Output getMessages(Input input) {
         Output result = new Output();
-        List<TbMessage> tbMessageList = messageService.query();
+        List<TbMessage> tbMessageList = tbMessageService.query();
         result.setData(toArray(tbMessageList));
         result.setMsg("获取消息成功！");
         result.setStatus(SUCCESS);
@@ -229,7 +229,7 @@ public class MessageController extends AbstractController {
         // 防止输入除keyword之外过多的参数，新建一个map
         Map<String, Object> keyMap = new HashMap<>();
         keyMap.put("keyWord", input.getString("keyWord"));
-        List<TbMessage> tbMessageList = messageService.query(keyMap);
+        List<TbMessage> tbMessageList = tbMessageService.query(keyMap);
         result.setStatus(SUCCESS);
         result.setMsg("关键字搜索成功！");
         result.setData(tbMessageList);

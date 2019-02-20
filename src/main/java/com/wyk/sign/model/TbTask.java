@@ -1,5 +1,7 @@
 package com.wyk.sign.model;
 
+import java.util.List;
+
 /**
  * 上交作业（学生）
  *
@@ -9,32 +11,24 @@ public class TbTask extends BaseModel {
 
     private static final long serialVersionUID = 8178932499847268791L;
 
-    /**
-     * 作业信息
-     */
+    /** 作业信息 */
     private TbTaskInfo info;
 
-    /**
-     * 学生
-     */
+    /** 学生 */
     private TbStudent tbStudent;
 
     /**
-     * 作业文件url
+     * 作业文件
      *
      * <pre>可以为空</pre>
      */
-    private String upFileUrl;
+    private List<TbFile> tbFileList;
 
-    /**
-     * 描述
-     */
+    /** 描述 */
     private String desc;
 
-    /**
-     * 评分
-     */
-    private Integer score;
+    /** 评分 */
+    private Double score;
 
     public TbTaskInfo getInfo() {
         return info;
@@ -52,12 +46,12 @@ public class TbTask extends BaseModel {
         this.tbStudent = tbStudent;
     }
 
-    public String getUpFileUrl() {
-        return upFileUrl;
+    public List<TbFile> getTbFileList() {
+        return tbFileList;
     }
 
-    public void setUpFileUrl(String upFileUrl) {
-        this.upFileUrl = upFileUrl;
+    public void setTbFileList(List<TbFile> tbFileList) {
+        this.tbFileList = tbFileList;
     }
 
     public String getDesc() {
@@ -68,11 +62,11 @@ public class TbTask extends BaseModel {
         this.desc = desc;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 }

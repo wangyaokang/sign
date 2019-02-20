@@ -3,7 +3,6 @@ package com.wyk.sign;
 import com.wyk.sign.utils.HttpInvoker;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.TestName;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

@@ -8,9 +8,9 @@ import com.wyk.framework.utils.LocationUtil;
 import com.wyk.sign.annotation.Checked;
 import com.wyk.sign.annotation.Item;
 import com.wyk.sign.model.*;
-import com.wyk.sign.service.SignInfoService;
-import com.wyk.sign.service.SignService;
-import com.wyk.sign.util.Constants;
+import com.wyk.sign.service.TbSignInfoService;
+import com.wyk.sign.service.TbSignService;
+import com.wyk.sign.conts.Constants;
 import com.wyk.sign.web.api.param.Input;
 import com.wyk.sign.web.api.param.Output;
 import org.apache.commons.lang.StringUtils;
@@ -31,12 +31,6 @@ import java.util.*;
 @RequestMapping("/api/sign")
 public class SignController extends AbstractController {
 
-    @Autowired
-    SignInfoService signInfoService;
-
-    @Autowired
-    SignService signService;
-
     /**
      * 创建签到
      * <p>
@@ -56,7 +50,7 @@ public class SignController extends AbstractController {
         Output result = new Output();
         try {
             TbSign tbSign = new TbSign();
-            TbSignInfo tbSignInfo = signInfoService.get(input.getLong("infoId"));
+            TbSignInfo tbSignInfo = tbSignInfoService.get(input.getLong("infoId"));
             if (null == tbSignInfo) {
                 return new Output(ERROR_UNKNOWN, "没有对应的签到信息！");
             }
@@ -88,7 +82,7 @@ public class SignController extends AbstractController {
                 tbSign.setStatus(Constants.Sign.SIGNED);
             }
             try {
-                signService.insert(tbSign);
+                tbSignService.insert(tbSign);
             } catch (Exception e) {
                 logger.error(e.getStackTrace());
                 return new Output(ERROR_NO_RECORD, "已经签到！");
@@ -118,11 +112,11 @@ public class SignController extends AbstractController {
     @Checked(Item.STU)
     public Output delete(Input input) {
         Output result = new Output();
-        TbSign tbSign = signService.get(input.getLong("id"));
+        TbSign tbSign = tbSignService.get(input.getLong("id"));
         if (null == tbSign) {
             return new Output(ERROR_NO_RECORD, "未能获取签到信息！");
         }
-        signService.delete(tbSign);
+        tbSignService.delete(tbSign);
         result.setMsg("删除签到成功！");
         result.setStatus(SUCCESS);
         return result;
@@ -143,7 +137,7 @@ public class SignController extends AbstractController {
     @Checked(Item.STU)
     public Output suppleSign(Input input) {
         Output result = new Output();
-        TbSignInfo info = signInfoService.get(input.getLong("infoId"));
+        TbSignInfo info = tbSignInfoService.get(input.getLong("infoId"));
         if (null == info) {
             return new Output(ERROR_UNKNOWN, "没有对应的签到信息！");
         }
@@ -151,7 +145,7 @@ public class SignController extends AbstractController {
         TbStudent tbStudent = (TbStudent) input.getCurrentTbUser();
         param.put("wxId", tbStudent.getWxId());
         param.put("infoId", info.getId());
-        TbSign tbSign = signService.get(param);
+        TbSign tbSign = tbSignService.get(param);
 
         if (null == tbSign) {
             if (new Date().before(info.getStopDate())) {
@@ -170,7 +164,7 @@ public class SignController extends AbstractController {
             tbSign.setModifyTime(new Date());
         }
         tbSign.setStatus(Constants.Sign.SUPPLE_SIGN);
-        signService.save(tbSign);
+        tbSignService.save(tbSign);
         result.setStatus(SUCCESS);
         result.setMsg("申请补签成功，待教师同意！");
         result.setData(tbSign);
@@ -192,7 +186,7 @@ public class SignController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output acceptSign(Input input) {
         Output result = new Output();
-        TbSign tbSign = signService.get(input.getLong("id"));
+        TbSign tbSign = tbSignService.get(input.getLong("id"));
         if (null == tbSign) {
             return new Output(ERROR_NO_RECORD, "没有对应的签到！");
         }
@@ -206,7 +200,7 @@ public class SignController extends AbstractController {
         } else {
             return new Output(ERROR_NO_RECORD, "请选择是否同意补签！【1：批准；2：不批准】");
         }
-        signService.update(tbSign);
+        tbSignService.update(tbSign);
         result.setStatus(SUCCESS);
         result.setData(tbSign);
         return result;
@@ -228,14 +222,14 @@ public class SignController extends AbstractController {
     @Checked(Item.ADMIN)
     public Output querySignListByInfoId(Input input) {
         Output result = new Output();
-        TbSignInfo tbSignInfo = signInfoService.get(input.getLong("infoId"));
+        TbSignInfo tbSignInfo = tbSignInfoService.get(input.getLong("infoId"));
         if (null == tbSignInfo) {
             return new Output(ERROR_UNKNOWN, "没有对应的签到信息，请重试！");
         }
 
         Map<String, Object> param = new HashMap<>();
         param.put("classId", tbSignInfo.getTbClass().getId());
-        List<TbStudent> tbStudentList = studentService.query(param);
+        List<TbStudent> tbStudentList = tbStudentService.query(param);
         List<Map<String, Object>> signList = new ArrayList<>();
         for (TbStudent tbStudent : tbStudentList) {
             signList.add(toMap(tbStudent, tbSignInfo));
@@ -258,7 +252,7 @@ public class SignController extends AbstractController {
         Map<String, Object> param = new HashMap<>();
         param.put("infoId", tbSignInfo.getId());
         param.put("stuId", tbStudent.getId());
-        TbSign tbSign = signService.get(param);
+        TbSign tbSign = tbSignService.get(param);
         if (tbSign == null) {
             result.put("status", Constants.Sign.NOT_SIGNED);
             result.put("signDate", "");

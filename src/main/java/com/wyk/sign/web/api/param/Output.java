@@ -2,11 +2,7 @@
  * 
  */
 package com.wyk.sign.web.api.param;
-
-import static com.wyk.framework.web.WebxController.*;
-
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * 输出参数封装类
@@ -14,14 +10,14 @@ import java.util.HashMap;
  * @author wyk
  *
  */
-public class Output implements Serializable {
+public class Output<T> implements Serializable {
 
 	private static final long serialVersionUID = -8271862834018775105L;
 
 	/**
      * 操作状态代码（如：成功“200”等等）
      */
-	private String status = SUCCESS;
+	private String status;
 	
 	 /**
      * 状态消息数据（如：“登录成功”）
@@ -29,74 +25,54 @@ public class Output implements Serializable {
     private String msg;
 
     /** 返回数据 */
-    private Object data = new HashMap<String, Object>();
+    private T data;
 
-	/**
-	 * 
-	 */
 	public Output() {}
-	
-	/**
-	 * @param status
-	 * @param msg
-	 */
+
 	public Output(String status, String msg) {
-		super();
 		this.status = status;
 		this.msg = msg;
 	}
-	
-	/**
-	 * @param status
-	 * @param msg
-	 * @param data
-	 */
-	public Output(String status, String msg, Object data) {
-		super();
+
+	public Output(String status, String msg, T data) {
 		this.status = status;
 		this.msg = msg;
 		this.data = data;
 	}
 
-	/**
-	 * @return the status
-	 */
+	public static Output getSuccess(String status, String msg) {
+		return new Output(status, msg);
+	}
+
+	public static <T> Output getSuccess(String status, String msg, T data){
+		return new Output(status, msg, data);
+	}
+
+	public static Output getFail(String status, String msg) {
+		return new Output(status, msg);
+	}
+
 	public String getStatus() {
 		return status;
 	}
 
-	/**
-	 * @param status the status to set
-	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	/**
-	 * @return the msg
-	 */
 	public String getMsg() {
 		return msg;
 	}
 
-	/**
-	 * @param msg the msg to set
-	 */
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
 
-	/**
-	 * @return the data
-	 */
 	public Object getData() {
 		return data;
 	}
 
-	/**
-	 * @param data the data to set
-	 */
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
     

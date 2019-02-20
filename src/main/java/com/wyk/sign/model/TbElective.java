@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * 授课（班级->课程->老师 一一对应）
+ *  授课
  *
  * @author wyk
  */
@@ -24,10 +24,10 @@ public class TbElective extends AutoIdEntity {
     private TbAdmin admin;
 
     /** 平时分占比（%） */
-    private Integer courseScoreRatio;
+    private Double courseScoreRatio;
 
     /** 考试分占比（%） */
-    private Integer testScoreRatio;
+    private Double testScoreRatio;
 
     /** 学期起始时间 */
     private Date termStartDate;
@@ -75,19 +75,19 @@ public class TbElective extends AutoIdEntity {
         this.admin = admin;
     }
 
-    public Integer getCourseScoreRatio() {
+    public Double getCourseScoreRatio() {
         return courseScoreRatio;
     }
 
-    public void setCourseScoreRatio(Integer courseScoreRatio) {
+    public void setCourseScoreRatio(Double courseScoreRatio) {
         this.courseScoreRatio = courseScoreRatio;
     }
 
-    public Integer getTestScoreRatio() {
+    public Double getTestScoreRatio() {
         return testScoreRatio;
     }
 
-    public void setTestScoreRatio(Integer testScoreRatio) {
+    public void setTestScoreRatio(Double testScoreRatio) {
         this.testScoreRatio = testScoreRatio;
     }
 }
